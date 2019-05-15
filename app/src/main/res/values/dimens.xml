@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="marginLR_login">30dp</dimen>
+    <dimen name="padding_login">20dp</dimen>
+    <dimen name="login_width_logo">150dp</dimen>
+    <dimen name="login_height_logo">100dp</dimen>
+    <dimen name="heighAllbox_login">40dp</dimen>
+    <dimen name="marginTopAllbox_login">20dp</dimen>
+    <dimen name="textsize_btn">20sp</dimen>
+    <dimen name="textsize_tv">15sp</dimen>
+    <dimen name="marginTopBtn_login">10dp</dimen>
+    <dimen name="Textheight_login">50dp</dimen>
+</resources>
