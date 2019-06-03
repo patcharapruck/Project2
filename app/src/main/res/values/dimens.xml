@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="marginLR_login">30dp</dimen>
     <dimen name="padding_login">20dp</dimen>
     <dimen name="login_width_logo">150dp</dimen>
@@ -10,6 +11,22 @@
     <dimen name="textsize_tv">15sp</dimen>
     <dimen name="marginTopBtn_login">10dp</dimen>
     <dimen name="Textheight_login">50dp</dimen>
+
+
     <dimen name="textsize_grown_head">15sp</dimen>
     <dimen name="textsize_grown">12sp</dimen>
+
+
+    <dimen name="width_card_kids_items">130dp</dimen>
+    <dimen name="height_card_kids_items">150dp</dimen>
+    <dimen name="text_nickname">14sp</dimen>
+    <dimen name="text_brithday_kids_items">12sp</dimen>
+
+    <dimen name="textsize_develor_head">15sp</dimen>
+    <dimen name="textsize_develor">12sp</dimen>
+
+    <dimen name="textsize_vaccine_head">15sp</dimen>
+    <dimen name="textsize_vaccine">12sp</dimen>
+
+
 </resources>

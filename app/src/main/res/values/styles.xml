@@ -21,4 +21,30 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="textstyle_develor_head">
+        <item name="android:fontFamily">@font/prompt_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/textsize_develor_head</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textstyle_develor">
+        <item name="android:fontFamily">@font/prompt_regular</item>
+        <item name="android:textSize">@dimen/textsize_develor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textstyle_vaccine_head">
+        <item name="android:fontFamily">@font/prompt_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/textsize_vaccine_head</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textstyle_vaccine">
+        <item name="android:fontFamily">@font/prompt_regular</item>
+        <item name="android:textSize">@dimen/textsize_vaccine</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
