@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import baby.com.project2.R;
 import baby.com.project2.adapter.KidListItemsAdapter;
 import baby.com.project2.fragment.HomeFragment;
+import baby.com.project2.fragment.MenuFragment;
 import baby.com.project2.view.KidModelClass;
 
 public class HomeActivity extends AppCompatActivity {
@@ -78,8 +79,8 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.item_home:
                         fragment = new HomeFragment();
                         break;
-                    case R.id.item_revrnue:
-                      //  fragment = new RevenueFragment();
+                    case R.id.item_menu:
+                        fragment = new MenuFragment();
                         break;
 
                     case R.id.item_drink:

@@ -6,9 +6,9 @@
         android:title="หน้าแรก"
         />
     <item
-        android:id="@+id/item_revrnue"
+        android:id="@+id/item_menu"
 
-        android:title="การเงิน"
+        android:title="เพิ่มข้อมูล"
         />
     <item
         android:id="@+id/item_pr"
