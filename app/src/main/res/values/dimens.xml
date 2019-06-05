@@ -32,5 +32,8 @@
     <dimen name="imagebtn_add_child_width">150dp</dimen>
     <dimen name="imagebtn_add_child_height">140dp</dimen>
 
+    <dimen name="imagebtn_add_childgrow_width">150dp</dimen>
+    <dimen name="imagebtn_add_childgrow_height">140dp</dimen>
+
 
 </resources>

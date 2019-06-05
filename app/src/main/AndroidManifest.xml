@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AddChildActivity"></activity>
+        <activity android:name=".activity.ChildGrowActivity"></activity>
+        <activity android:name=".activity.AddChildActivity" />
         <activity android:name=".activity.DevelopMentActivity" />
         <activity android:name=".activity.VaccineActivity" />
         <activity android:name=".activity.LoginActivity" />
