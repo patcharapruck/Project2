@@ -44,14 +44,14 @@ public class HomeActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-//        if (id == R.id.item_logout) {
-//
+        if (id == R.id.item_logout) {
+
 //            SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).logout();
-//
-//            Intent intent = new Intent(HomeActivity.this,LoginActivity.class);
-//            this.startActivity(intent);
-//            return true;
-//        }
+
+            Intent intent = new Intent(HomeActivity.this,LoginActivity.class);
+            this.startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.DevelopMentActivity;
+import baby.com.project2.activity.VaccineActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +45,7 @@ public class VaccineHomeFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getContext(), VaccineHomeFragment.class);
+        Intent intent = new Intent(getContext(), VaccineActivity.class);
         getContext().startActivity(intent);
     }
 }
