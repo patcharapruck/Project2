@@ -79,6 +79,7 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_status_language"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -133,6 +134,7 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_status_use_language"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -187,6 +189,7 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_status_muscle"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -241,6 +244,7 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_status_movement"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -295,6 +299,7 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/cardview_status_justmyself"
                     android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"

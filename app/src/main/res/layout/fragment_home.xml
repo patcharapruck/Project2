@@ -19,31 +19,52 @@
 
             <!--_________________________grown_________________________-->
 
-            <fragment
+            <!--<fragment-->
+                <!--android:id="@+id/fragment1"-->
+                <!--android:name="baby.com.project2.fragment.GrownHomeFragment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--tools:layout="@layout/fragment_grown_home" />-->
+
+            <FrameLayout
                 android:id="@+id/fragment1"
-                android:name="baby.com.project2.fragment.GrownHomeFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_grown_home" />
+                android:layout_height="wrap_content">
+
+            </FrameLayout>
 
             <!--_________________________develor_________________________-->
 
-            <fragment
+            <!--<fragment-->
+                <!--android:id="@+id/fragment2"-->
+                <!--android:name="baby.com.project2.fragment.DevelorHomeFragment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--tools:layout="@layout/fragment_develor_home" />-->
+
+            <FrameLayout
                 android:id="@+id/fragment2"
-                android:name="baby.com.project2.fragment.DevelorHomeFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_develor_home" />
+                android:layout_height="wrap_content">
+
+            </FrameLayout>
 
             <!--_________________________vaccine_________________________-->
-            <fragment
-                android:id="@+id/fragment3"
-                android:name="baby.com.project2.fragment.VaccineHomeFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_vaccine_home" />
+            <!--<fragment-->
+                <!--android:id="@+id/fragment3"-->
+                <!--android:name="baby.com.project2.fragment.VaccineHomeFragment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--tools:layout="@layout/fragment_vaccine_home" />-->
 
-        </LinearLayout>
+            <FrameLayout
+                android:id="@+id/fragment3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </FrameLayout>
+
+        </LinearLayout>jz
 
     </ScrollView>
 

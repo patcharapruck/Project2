@@ -83,7 +83,7 @@
                     android:textSize="@dimen/textsize_tv" />
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/btnLogin"
+                    android:id="@+id/btnlogin"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/heighAllbox_login"
                     android:layout_marginTop="@dimen/marginTopAllbox_login"
@@ -91,7 +91,7 @@
                     app:cardCornerRadius="10dp">
 
                     <TextView
-                        android:id="@+id/tvLogin"
+                        android:id="@+id/tvlogin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
