@@ -33,7 +33,7 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -62,8 +62,9 @@
                 </ImageButton>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:id="@+id/image_delete_photo"
+                    android:layout_width="12dp"
+                    android:layout_height="13dp"
                     android:layout_alignRight="@id/imagebtn_grow"
                     android:layout_gravity="center"
                     android:src="@mipmap/ic_close" />
@@ -106,7 +107,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="วันเกิด" />
+                                    android:text="วันที่" />
 
                                 <TextView
                                     android:id="@+id/textview_add_child_birthday"
@@ -145,6 +146,7 @@
                                     android:singleLine="true" />
 
                                 <ImageView
+                                    android:id="@+id/image_alert_width"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_gravity="center"
@@ -178,6 +180,7 @@
                                     android:singleLine="true" />
 
                                 <ImageView
+                                    android:id="@+id/image_alert_height"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_gravity="center"
@@ -188,6 +191,7 @@
                         </LinearLayout>
 
                         <Button
+                            android:id="@+id/button_save"
                             style="@style/textstyle_add_child_header"
                             android:layout_width="120dp"
                             android:layout_height="50dp"
@@ -205,6 +209,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

@@ -24,12 +24,12 @@ import baby.com.project2.view.KidModelClass;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
-    BottomNavigationView bottomNavigationView;
+    private Toolbar toolbar;
+    private BottomNavigationView bottomNavigationView;
 
     ArrayList<KidModelClass> items;
     KidListItemsAdapter adapter;
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
 
     @Override

@@ -51,18 +51,20 @@
                 </LinearLayout>
 
                 <android.support.design.circularreveal.cardview.CircularRevealCardView
+                    android:id="@+id/status_dev"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
-                    app:cardBackgroundColor="@color/colorMain"
                     android:layout_centerVertical="true"
-                    android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="@color/colorMain">
 
                 </android.support.design.circularreveal.cardview.CircularRevealCardView>
 
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
+
 
         <com.github.aakira.expandablelayout.ExpandableRelativeLayout
             android:id="@+id/mycontent"
@@ -72,9 +74,7 @@
             app:ael_duration="500"
             app:ael_expanded="false"
             app:ael_interpolator="fastOutSlowIn"
-            app:ael_orientation="vertical"
-
-            >
+            app:ael_orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -92,7 +92,9 @@
                         android:id="@+id/imageview_dev"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:layout_margin="10dp" />
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp" />
 
                     <TextView
                         android:id="@+id/textview_date_dev"
@@ -152,7 +154,6 @@
             </android.support.v7.widget.CardView>
 
         </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
-
 
     </RelativeLayout>
 
