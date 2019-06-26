@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -22,10 +23,11 @@ import baby.com.project2.fragment.HomeFragment;
 import baby.com.project2.fragment.MenuFragment;
 import baby.com.project2.view.KidModelClass;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
+    private ImageView ImageViewKidsAdd;
 
     ArrayList<KidModelClass> items;
     KidListItemsAdapter adapter;
@@ -65,12 +67,24 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initInstances() {
 
-        toolbar = findViewById(R.id.toolbar);
+        toolbar              = (Toolbar)findViewById(R.id.toolbar);
+        ImageViewKidsAdd     = (ImageView)findViewById(R.id.image_view_kids_add);
+        recyclerView         = (RecyclerView)findViewById(R.id.recycler_view_kids);
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
 
+        ImageViewKidsAdd.setOnClickListener(this);
+
+        setToolBar();
+        setNavigation();
+        setRecyclerView();
+    }
+
+    private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
 
-        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+    private void setNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -84,11 +98,11 @@ public class HomeActivity extends AppCompatActivity {
                         break;
 
                     case R.id.item_drink:
-                      //  fragment = new DrinkFragment();
+                        //  fragment = new DrinkFragment();
                         break;
 
                     case R.id.item_pr:
-                      //  fragment = new PRFragment();
+                        //  fragment = new PRFragment();
                         break;
                 }
 
@@ -96,8 +110,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.item_home);
-
-        setRecyclerView();
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -114,8 +126,6 @@ public class HomeActivity extends AppCompatActivity {
     private void setRecyclerView() {
         items = new ArrayList<>();
         adapter = new KidListItemsAdapter(HomeActivity.this, items);
-
-        recyclerView = findViewById(R.id.recycler_view_kids);
         recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
 
@@ -127,6 +137,14 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == ImageViewKidsAdd){
+            Intent intent = new Intent(HomeActivity.this, AddChildActivity.class);
+            startActivity(intent);
         }
     }
 }

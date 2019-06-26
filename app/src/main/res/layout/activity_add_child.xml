@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white"
     android:fillViewport="true">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorMain"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/prompt_medium"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +46,7 @@
             android:padding="20dp">
 
             <ImageButton
-                android:id="@+id/imageView"
+                android:id="@+id/imagebtn_addprofile_addchild"
                 android:layout_width="@dimen/imagebtn_add_child_width"
                 android:layout_height="@dimen/imagebtn_add_child_height"
                 android:layout_centerInParent="true"
@@ -30,10 +57,11 @@
             </ImageButton>
 
             <ImageView
+                android:id="@+id/close_imgbtn_addchild"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_alignRight="@id/imageView"
+                android:layout_alignRight="@id/imagebtn_addprofile_addchild"
                 android:src="@mipmap/ic_close" />
 
         </RelativeLayout>
@@ -86,6 +114,7 @@
                                 android:singleLine="true" />
 
                             <ImageView
+                                android:id="@+id/image_alert_name_addchild"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_gravity="center"
@@ -107,7 +136,7 @@
                                 android:text="ืเพศ" />
 
                             <RadioGroup
-                                android:id="@+id/gender"
+                                android:id="@+id/gender_addchild"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -118,7 +147,7 @@
                                 android:weightSum="2">
 
                                 <RadioButton
-                                    android:id="@+id/rd_gender_boy"
+                                    android:id="@+id/rd_gender_boy_addchild"
                                     style="@style/textstyle_add_child"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -126,7 +155,7 @@
                                     android:text="ชาย" />
 
                                 <RadioButton
-                                    android:id="@+id/rd_gender_girl"
+                                    android:id="@+id/rd_gender_girl_addchild"
                                     style="@style/textstyle_add_child"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -151,17 +180,24 @@
                                 android:layout_gravity="center"
                                 android:text="วันเกิด" />
 
+                            <ImageView
+                                android:id="@+id/imageview_calendar_add_child"
+                                android:layout_width="40dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:src="@mipmap/ic_calender" />
+
                             <TextView
                                 android:id="@+id/textview_add_child_birthday"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
                                 android:singleLine="true" />
 
                             <ImageView
+                                android:id="@+id/image_alert_birthday_addchild"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_gravity="center"
@@ -237,6 +273,7 @@
                                 android:text="กรุ๊บเลือด " />
 
                             <android.support.v7.widget.AppCompatSpinner
+                                android:id="@+id/spinner_bloodtype_add_child"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -267,4 +304,4 @@
 
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>
