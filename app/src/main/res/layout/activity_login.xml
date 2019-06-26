@@ -44,7 +44,7 @@
                         android:layout_height="match_parent"
                         android:drawableRight="@drawable/ic_action_user"
                         android:fontFamily="@font/prompt_regular"
-                        android:hint="Username"
+                        android:hint="Email ผู้ใช้"
                         android:paddingRight="10dp"
                         android:singleLine="true" />
 
@@ -67,20 +67,38 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/prompt_regular"
-                        android:hint="Password"
+                        android:hint="รหัสผ่าน"
                         android:inputType="textPassword"
                         android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
 
-                <CheckBox
-                    android:id="@+id/cbRemember"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remember Password"
-                    android:fontFamily="@font/prompt_regular"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/textsize_tv" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:id="@+id/cbRemember"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="จำรหัสผ่าน"
+                        android:fontFamily="@font/prompt_regular"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textsize_tv" />
+
+                    <TextView
+                        android:id="@+id/create_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="สมัครสมาชิก"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/prompt_regular"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:textStyle="italic"/>
+
+                </RelativeLayout>
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/btnlogin"
@@ -96,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/prompt_regular"
-                        android:text="LOGIN"
+                        android:text="เข้าสู่ระบบ"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize_btn" />
 
@@ -126,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/marginTopBtn_login"
                     android:gravity="center"
-                    android:text="Sign In With"
+                    android:text="หรือ เข้าสู่ระบบผ่าน"
                     android:fontFamily="@font/prompt_regular"
                     android:textColor="@color/black"
                     android:textSize="@dimen/textsize_tv" />
@@ -136,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/heighAllbox_login"
                     android:layout_marginTop="@dimen/marginTopBtn_login"
-                    app:cardBackgroundColor="@color/colorMain"
+                    app:cardBackgroundColor="#03A9F4"
                     app:cardCornerRadius="10dp">
 
                     <TextView
@@ -144,7 +162,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="FACEBOOK"
+                        android:text="facebook"
                         android:fontFamily="@font/prompt_regular"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize_btn" />

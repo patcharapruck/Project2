@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA"> </uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".MyApplication"
@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ChildGrowActivity"></activity>
+        <activity android:name=".activity.NutritionActivity"></activity>
+        <activity android:name=".activity.CreateAccountActivity" />
+        <activity android:name=".activity.ChildGrowActivity" />
         <activity android:name=".activity.AddChildActivity" />
         <activity android:name=".activity.DevelopMentActivity" />
         <activity android:name=".activity.VaccineActivity" />

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardview_development"
+            android:id="@+id/cardview_vaccine"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_gravity="center|center_vertical"
@@ -51,6 +51,7 @@
                 </LinearLayout>
 
                 <android.support.design.circularreveal.cardview.CircularRevealCardView
+                    android:id="@+id/status_vac"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentRight="true"
@@ -89,7 +90,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/textview_date_dev"
+                        android:id="@+id/textview_date_vac"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/prompt_medium"
@@ -98,7 +99,7 @@
                         android:textSize="16sp"/>
 
                     <RadioGroup
-                        android:id="@+id/check_dev"
+                        android:id="@+id/check_vac"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textview_date_dev"
@@ -106,7 +107,7 @@
                         android:weightSum="2">
 
                         <RadioButton
-                            android:id="@+id/yes_dev"
+                            android:id="@+id/yes_vac"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -115,7 +116,7 @@
                             android:textSize="14sp" />
 
                         <RadioButton
-                            android:id="@+id/no_dev"
+                            android:id="@+id/no_vac"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
