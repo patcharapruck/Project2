@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
+import baby.com.project2.manager.singleton.SelectChildManager;
 import baby.com.project2.view.KidModelClass;
 
 public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapter.CustomViewKidsList>{
@@ -32,12 +33,13 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewKidsList customViewKidsList, int i) {
-
+        customViewKidsList.TextViewNicknameKids.setText(items.get(i).getNickName());
+        customViewKidsList.TextViewBirthday.setText(items.get(i).getBirthDay());
     }
 
     @Override
     public int getItemCount() {
-        return 8;
+        return SelectChildManager.getInstance().getItemsDto().getResult().size();
     }
 
     public class CustomViewKidsList extends RecyclerView.ViewHolder {

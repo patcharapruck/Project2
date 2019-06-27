@@ -1,5 +1,6 @@
 package baby.com.project2.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.annotation.NonNull;
@@ -14,14 +15,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import baby.com.project2.R;
 import baby.com.project2.adapter.KidListItemsAdapter;
+import baby.com.project2.dto.DateDto;
+import baby.com.project2.dto.LoginItemsDto;
+import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.fragment.HomeFragment;
 import baby.com.project2.fragment.MenuFragment;
+import baby.com.project2.manager.Contextor;
+import baby.com.project2.manager.http.HttpManager;
+import baby.com.project2.manager.singleton.DateManager;
+import baby.com.project2.manager.singleton.LoginManager;
+import baby.com.project2.manager.singleton.SelectChildManager;
 import baby.com.project2.view.KidModelClass;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,6 +53,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     KidListItemsAdapter adapter;
     private RecyclerView recyclerView;
 
+    SelectChildDto dto;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,13 +69,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         if (id == R.id.item_logout) {
 
-//            SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).logout();
-
             Intent intent = new Intent(HomeActivity.this,LoginActivity.class);
             this.startActivity(intent);
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -63,6 +81,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initInstances();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDateTime();
+        setShowDataChild();
     }
 
     private void initInstances() {
@@ -76,7 +106,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         setToolBar();
         setNavigation();
-        setRecyclerView();
+    }
+
+    private void setShowDataChild() {
+        DecimalFormat formatter = new DecimalFormat("00");
+        LoginItemsDto loginItemsDto = LoginManager.getInstance().getItemsDto();
+        String uid = formatter.format(Integer.valueOf(loginItemsDto.getId()));
+
+        reqselectchild(uid);
     }
 
     private void setToolBar() {
@@ -129,9 +166,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
 
-        for (int i = 0; i < 8; i++) {
+        int size = dto.getResult().size();
+
+
+        for (int i = 0; i < size; i++) {
+
+            String name = dto.getResult().get(i).getC_name();
+            String birthday = dto.getResult().get(i).getC_birthday();
+
             try {
-                items.add(new KidModelClass("kkk","Fluk","09/06/2540"));
+                items.add(new KidModelClass("kkk",name,birthday));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;
             }
@@ -146,5 +190,55 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(HomeActivity.this, AddChildActivity.class);
             startActivity(intent);
         }
+    }
+
+    public void reqselectchild(String uid) {
+
+        final Context mcontext = Contextor.getInstance().getmContext();
+        String reqBody = "{\"id\":\""+uid+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<SelectChildDto> call = HttpManager.getInstance().getService().loadAPISelect(requestBody);
+        call.enqueue(new Callback<SelectChildDto>() {
+
+            @Override
+            public void onResponse(Call<SelectChildDto> call, Response<SelectChildDto> response) {
+                if(response.isSuccessful()){
+                    dto = response.body();
+                    SelectChildManager.getInstance().setItemsDto(dto);
+
+                    setRecyclerView();
+
+                }else {
+                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<SelectChildDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void getDateTime() {
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        String formatDateTime = dateFormat.format(calendar.getTime());
+
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int year = calendar.get(Calendar.YEAR);
+
+        DateDto dateDto = new DateDto();
+        dateDto.setCalendar(calendar);
+        dateDto.setDateToday(date);
+        dateDto.setDateString(formatDateTime);
+        dateDto.setDay(day);
+        dateDto.setMonth(month);
+        dateDto.setYear(year);
+        DateManager.getInstance().setDateDto(dateDto);
     }
 }
