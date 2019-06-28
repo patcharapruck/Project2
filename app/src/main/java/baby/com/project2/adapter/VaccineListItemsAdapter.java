@@ -18,6 +18,9 @@ import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
+import baby.com.project2.dto.vaccine.SelectListVaccineDto;
+import baby.com.project2.dto.vaccine.SelectVaccineDto;
+import baby.com.project2.manager.singleton.VaccineManager;
 import baby.com.project2.view.DevelopMentModelClass;
 import baby.com.project2.view.VaccineModelClass;
 
@@ -39,6 +42,10 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
 
     @Override
     public void onBindViewHolder(@NonNull final CustomViewVaccineList customViewVaccineList, int i) {
+
+        customViewVaccineList.Vaccine.setText(items.get(i).getVaccine());
+        customViewVaccineList.Type.setText(items.get(i).getType());
+
         customViewVaccineList.Mycontent.collapse();
         customViewVaccineList.CardViewVaccine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +57,8 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
 
     @Override
     public int getItemCount() {
-        return 8;
+        SelectVaccineDto vaccineDto = VaccineManager.getInstance().getItemsDto();
+        return vaccineDto.getVaccine().size();
     }
 
     public class CustomViewVaccineList extends RecyclerView.ViewHolder {
