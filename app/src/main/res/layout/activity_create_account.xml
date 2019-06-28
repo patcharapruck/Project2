@@ -59,6 +59,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@mipmap/ic_name_user"
                     android:hint="ชื่อผู้สมัคร"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 

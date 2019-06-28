@@ -142,7 +142,7 @@
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="10dp"
                                     android:layout_weight="1"
-                                    android:inputType="number"
+                                    android:inputType="numberDecimal"
                                     android:singleLine="true" />
 
                                 <ImageView
@@ -176,7 +176,7 @@
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="10dp"
                                     android:layout_weight="1"
-                                    android:inputType="number"
+                                    android:inputType="numberDecimal"
                                     android:singleLine="true" />
 
                                 <ImageView
