@@ -21,10 +21,12 @@ import baby.com.project2.adapter.VaccineListItemsAdapter;
 import baby.com.project2.dto.child.InsertChildDto;
 import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
+import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
 import baby.com.project2.dto.vaccine.SelectVaccineDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.AgeVaccineManager;
+import baby.com.project2.manager.singleton.DataVaccineManager;
 import baby.com.project2.manager.singleton.InsertChildManager;
 import baby.com.project2.manager.singleton.SelectChildManager;
 import baby.com.project2.manager.singleton.VaccineManager;
@@ -64,7 +66,7 @@ public class VaccineActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview_vaccine);
-        reqAgeVaccine();
+        reqDatavaccine("01");
     }
 
     @Override
@@ -88,7 +90,7 @@ public class VaccineActivity extends AppCompatActivity {
 
         for (int i = 0; i < size; i++) {
             try {
-                items.add(new VaccineModelClass(dto.getVaccine().get(i).getV_name(),dto.getVaccine().get(i).getV_type()));
+                items.add(new VaccineModelClass(dto.getVaccine().get(i).getV_id(),dto.getVaccine().get(i).getV_name(),dto.getVaccine().get(i).getV_type()));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;
             }
@@ -109,7 +111,7 @@ public class VaccineActivity extends AppCompatActivity {
 
     public void reqAgeVaccine() {
 
-        final Context mcontext = Contextor.getInstance().getmContext();
+        final Context mcontext = VaccineActivity.this;
         Call<SelectAgeVaccineDto> call = HttpManager.getInstance().getService().loadAPIAgeVaccine();
         call.enqueue(new Callback<SelectAgeVaccineDto>() {
 
@@ -118,7 +120,6 @@ public class VaccineActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     dtoage = response.body();
                     AgeVaccineManager.getInstance().setItemsDto(dtoage);
-
                     createTypeSearchData();
 
                 }else {
@@ -153,7 +154,7 @@ public class VaccineActivity extends AppCompatActivity {
 
     public void reqvaccine(String vid) {
 
-        final Context mcontext = Contextor.getInstance().getmContext();
+        final Context mcontext = VaccineActivity.this;
         String reqBody = "{\"id_agevac\":\""+vid+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<SelectVaccineDto> call = HttpManager.getInstance().getService().loadAPIvaccine(requestBody);
@@ -172,6 +173,32 @@ public class VaccineActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<SelectVaccineDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void reqDatavaccine(String cid) {
+
+        final Context mcontext = VaccineActivity.this;
+        String reqBody = "{\"C_id\":\""+cid+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<SelectDataVaccineDto> call = HttpManager.getInstance().getService().loadAPIVaccineData(requestBody);
+        call.enqueue(new Callback<SelectDataVaccineDto>() {
+
+            @Override
+            public void onResponse(Call<SelectDataVaccineDto> call, Response<SelectDataVaccineDto> response) {
+                if(response.isSuccessful()){
+                    SelectDataVaccineDto dtovac = response.body();
+                    DataVaccineManager.getInstance().setItemsDto(dtovac);
+                    reqAgeVaccine();
+
+                }else {
+                    Toast.makeText(VaccineActivity.this,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<SelectDataVaccineDto> call, Throwable t) {
                 Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
             }
         });

@@ -6,7 +6,9 @@ import baby.com.project2.dto.child.DeleteChildDto;
 import baby.com.project2.dto.child.InsertChildDto;
 import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.dto.child.UpdateChildDto;
+import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
+import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
 import baby.com.project2.dto.vaccine.SelectVaccineDto;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -39,4 +41,10 @@ public interface Project2Service {
 
     @POST("listvaccine/selete")
     Call<SelectVaccineDto> loadAPIvaccine(@Body RequestBody vaccine);
+
+    @POST("manage_vaccine")
+    Call<InsertVaccineDto> loadAPIVaccineinsert(@Body RequestBody insertvaccine);
+
+    @POST("manage_vaccine/selete")
+    Call<SelectDataVaccineDto> loadAPIVaccineData(@Body RequestBody datavaccine);
 }

@@ -12,56 +12,66 @@
         <android.support.v7.widget.CardView
             android:id="@+id/cardview_vaccine"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center|center_vertical"
             android:layout_margin="10dp"
             app:cardCornerRadius="9dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/vaccine"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:fontFamily="@font/prompt_medium"
                         android:text="Vaccine"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:maxLines="2"/>
 
                     <TextView
                         android:id="@+id/type"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:fontFamily="@font/prompt_medium"
                         android:text="Type"
                         android:textSize="14sp"
-                        android:textStyle="italic" />
+                        android:textStyle="italic"
+                        android:maxLines="2"/>
 
                 </LinearLayout>
 
-                <android.support.design.circularreveal.cardview.CircularRevealCardView
-                    android:id="@+id/status_vac"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    app:cardBackgroundColor="@color/colorMain"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="10dp">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                </android.support.design.circularreveal.cardview.CircularRevealCardView>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/status_vac"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        app:cardBackgroundColor="@color/colorMain"
+                        app:cardCornerRadius="1000dp">
 
-            </RelativeLayout>
+                    </android.support.v7.widget.CardView>
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -69,17 +79,16 @@
             android:id="@+id/mycontent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="85dp"
+            android:layout_marginTop="90dp"
             app:ael_duration="500"
             app:ael_expanded="false"
             app:ael_interpolator="fastOutSlowIn"
             app:ael_orientation="vertical"
-
             >
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:elevation="2dp"
@@ -89,49 +98,77 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/textview_date_vac"
+                    <LinearLayout
+                        android:id="@+id/linear_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/prompt_medium"
-                        android:gravity="center"
-                        android:text="วันที่"
-                        android:textSize="16sp"/>
+                        android:orientation="vertical">
 
-                    <RadioGroup
-                        android:id="@+id/check_vac"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/textview_date_dev"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <RadioButton
-                            android:id="@+id/yes_vac"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:id="@+id/textview_date_vac"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
                             android:fontFamily="@font/prompt_medium"
-                            android:text="ทำได้"
-                            android:textSize="14sp" />
+                            android:gravity="center"
+                            android:text="วันที่"
+                            android:textSize="16sp" />
 
-                        <RadioButton
-                            android:id="@+id/no_vac"
-                            android:layout_width="0dp"
+                        <RadioGroup
+                            android:id="@+id/check_vac"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <RadioButton
+                                android:id="@+id/yes_vac"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/prompt_medium"
+                                android:text="ทำได้"
+                                android:textSize="14sp" />
+
+                            <RadioButton
+                                android:id="@+id/no_vac"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/prompt_medium"
+                                android:text="ทำไม่ได้"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </RadioGroup>
+
+                        <TextView
+                            android:id="@+id/text_birthday"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/prompt_medium"
-                            android:text="ทำไม่ได้"
-                            android:textSize="14sp"
+                            android:gravity="left"
+                            android:text="สถานที่เกิด"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
-                    </RadioGroup>
+                        <EditText
+                            android:id="@+id/edittext_place"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp" />
+
+                    </LinearLayout>
+
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
+                        android:layout_below="@+id/linear_1"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
+                        android:layout_margin="10dp"
                         android:background="@drawable/buttonadddata"
                         android:fontFamily="@font/prompt_medium"
                         android:text="บันทึก"
