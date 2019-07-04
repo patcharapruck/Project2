@@ -52,7 +52,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
 
     public void reqregister(String email,String password,String name) {
 
-        final Context mcontext = Contextor.getInstance().getmContext();
+        final Context mcontext = CreateAccountActivity.this;
         String reqBody = "{\"user_email\": \""+email+"\",\"user_pass\":\""+password+"\",\"user_name\":\""+name+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<RegisterDto> call = HttpManager.getInstance().getService().loadAPIRegister(requestBody);

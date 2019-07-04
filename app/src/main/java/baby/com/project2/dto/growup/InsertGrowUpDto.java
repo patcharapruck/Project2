@@ -1,6 +1,6 @@
-package baby.com.project2.dto.vaccine;
+package baby.com.project2.dto.growup;
 
-public class InsertVaccineDto {
+public class InsertGrowUpDto {
     private int id;
     private boolean success;
 

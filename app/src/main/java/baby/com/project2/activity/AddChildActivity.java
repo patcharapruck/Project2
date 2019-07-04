@@ -153,7 +153,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
 
     public void reqinsert(String name,int gender,float weight,float height,String birthday,String blood,String uid) {
 
-        final Context mcontext = Contextor.getInstance().getmContext();
+        final Context mcontext = AddChildActivity.this;
         String reqBody = "{\"c_name\": \""+name+"\",\"c_gender\":"+gender+",\"c_weight\" :"+weight+",\"c_height\":"+height+","+
                 "\"c_birthday\":\""+birthday+"\",\"c_blood\":\""+blood+"\",\"u_id\":\""+uid+"\" }";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);

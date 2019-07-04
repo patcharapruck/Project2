@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
@@ -22,19 +24,35 @@ import java.util.ArrayList;
 
 import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
+import baby.com.project2.dto.child.InsertChildDto;
+import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
 import baby.com.project2.dto.vaccine.SelectListVaccineDto;
 import baby.com.project2.dto.vaccine.SelectVaccineDto;
+import baby.com.project2.manager.Contextor;
+import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DataVaccineManager;
 import baby.com.project2.manager.singleton.DateManager;
+import baby.com.project2.manager.singleton.InsertChildManager;
+import baby.com.project2.manager.singleton.InsertVaccineManager;
 import baby.com.project2.manager.singleton.VaccineManager;
 import baby.com.project2.view.DevelopMentModelClass;
 import baby.com.project2.view.VaccineModelClass;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListItemsAdapter.CustomViewVaccineList>{
 
     private Context context;
     private ArrayList<VaccineModelClass> items;
+    private int statuss = 0;
+    private String V_id;
+    private String datetoday;
+    private String place;
+
 
     public VaccineListItemsAdapter(Context context, ArrayList<VaccineModelClass> item){
         this.context = context;
@@ -52,7 +70,19 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
     public void onBindViewHolder(@NonNull final CustomViewVaccineList customViewVaccineList, int i) {
 
         int size = 0;
-        String datetoday = customViewVaccineList.dateDto.getDateString();
+        datetoday = customViewVaccineList.dateDto.getDateString();
+        DecimalFormat formatter = new DecimalFormat("00");
+        V_id = items.get(i).getV_id();
+
+        switch (customViewVaccineList.CheckVac.getCheckedRadioButtonId()){
+            case R.id.no_vac:
+                statuss = 0;
+                break;
+            case R.id.yes_vac:
+                statuss = 1;
+                break;
+        }
+
         try {
             size = customViewVaccineList.dataVaccineDto.getDatavaccine().size();
         }catch (Exception e){
@@ -66,12 +96,11 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
 
 
         for(int j=0;j<size;j++){
-            DecimalFormat formatter = new DecimalFormat("00");
 
             String id = formatter.format(customViewVaccineList.dataVaccineDto.getDatavaccine().get(j).getV_id());
             int ck = customViewVaccineList.dataVaccineDto.getDatavaccine().get(j).getFKcv_status();
 
-            String place = "";
+            place = "";
 
             try {
                 place = customViewVaccineList.dataVaccineDto.getDatavaccine().get(j).getFKcv_plase();
@@ -81,7 +110,7 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
 
             String date = customViewVaccineList.dataVaccineDto.getDatavaccine().get(j).getFKcv_date();
 
-            if(id.equals(items.get(i).getV_id())){
+            if(id.equals(V_id)){
 
                 customViewVaccineList.TextViewDateVac.setText(date);
 
@@ -94,7 +123,7 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
                     case 1:
                         customViewVaccineList.StatusVac.setVisibility(View.VISIBLE);
                         customViewVaccineList.StatusVac.setCardBackgroundColor(R.color.colorMain);
-                        customViewVaccineList.YesVac.setChecked(true);;
+                        customViewVaccineList.YesVac.setChecked(true);
                         break;
                 }
 
@@ -107,6 +136,14 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
             @Override
             public void onClick(View v) {
                 customViewVaccineList.Mycontent.toggle();
+            }
+        });
+
+        customViewVaccineList.BtnSaveVaccine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    customViewVaccineList.reqinsert("01",V_id,datetoday,statuss,place);
             }
         });
     }
@@ -125,6 +162,7 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
         RadioGroup CheckVac;
         RadioButton YesVac,NoVac;
         EditText EditTextPlace;
+        Button BtnSaveVaccine;
 
         SelectDataVaccineDto dataVaccineDto;
         DateDto dateDto;
@@ -142,9 +180,43 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
             NoVac               = (RadioButton)itemView.findViewById(R.id.no_vac);
             Mycontent           = (ExpandableRelativeLayout) itemView.findViewById(R.id.mycontent);
             EditTextPlace       = (EditText) itemView.findViewById(R.id.edittext_place);
+            BtnSaveVaccine      = (Button) itemView.findViewById(R.id.btn_savevaccine);
 
             dateDto = DateManager.getInstance().getDateDto();
             dataVaccineDto = DataVaccineManager.getInstance().getItemsDto();
+        }
+
+        public void reqinsert(String cid,String vid,String date,int status,String place) {
+
+            final Context mcontext = Contextor.getInstance().getmContext();
+            String reqBody = "{\"C_id\": \""+cid+"\",\"V_id\":\""+vid+"\",\"FKcv_date\":\""+date+"\",\"FKcv_status\":"+status+","+
+                    "\"FKcv_plase\":\""+place+"\"}";
+            final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+            Call<InsertVaccineDto> call = HttpManager.getInstance().getService().loadAPIVaccineinsert(requestBody);
+            call.enqueue(new Callback<InsertVaccineDto>() {
+
+                @Override
+                public void onResponse(Call<InsertVaccineDto> call, Response<InsertVaccineDto> response) {
+                    if(response.isSuccessful()){
+                        InsertVaccineDto dto = response.body();
+                        InsertVaccineManager.getInstance().setItemsDto(dto);
+                        if(response.body().getSuccess()){
+
+//                            ShowAlertDialog(response.body().getSuccess());
+                        }
+                        else{
+//                            ShowAlertDialog(response.body().getSuccess());
+                        //Toast.makeText(mcontext,dto.getSuccess(),Toast.LENGTH_LONG).show();
+                        }
+                    }else {
+                        Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<InsertVaccineDto> call, Throwable t) {
+//                    Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }

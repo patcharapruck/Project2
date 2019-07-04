@@ -6,6 +6,9 @@ import baby.com.project2.dto.child.DeleteChildDto;
 import baby.com.project2.dto.child.InsertChildDto;
 import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.dto.child.UpdateChildDto;
+import baby.com.project2.dto.growup.DeleteGrowUpDto;
+import baby.com.project2.dto.growup.InsertGrowUpDto;
+import baby.com.project2.dto.growup.SelectGrowUpDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
@@ -47,4 +50,13 @@ public interface Project2Service {
 
     @POST("manage_vaccine/selete")
     Call<SelectDataVaccineDto> loadAPIVaccineData(@Body RequestBody datavaccine);
+
+    @POST("manage_growup")
+    Call<InsertGrowUpDto> loadAPIGrowup(@Body RequestBody requestBody);
+
+    @POST("manage_growup/select")
+    Call<SelectGrowUpDto> loadAPIGrowUpSelect(@Body RequestBody requestBody);
+
+    @POST("manage_growup/delete")
+    Call<DeleteGrowUpDto> loadAPIDeleteGrow(@Body RequestBody requestBody);
 }

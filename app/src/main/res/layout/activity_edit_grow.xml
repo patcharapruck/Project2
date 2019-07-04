@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".activity.EditGrowActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -62,7 +64,7 @@
                 </ImageButton>
 
                 <ImageView
-                    android:id="@+id/image_delete_photo"
+                    android:id="@+id/image_delete_photo_grow"
                     android:layout_width="12dp"
                     android:layout_height="13dp"
                     android:layout_alignRight="@id/imagebtn_grow"
@@ -110,7 +112,7 @@
                                     android:text="วันที่" />
 
                                 <TextView
-                                    android:id="@+id/textview_add_child_birthday"
+                                    android:id="@+id/textview_edit_child_birthday"
                                     style="@style/textstyle_add_child"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -137,7 +139,7 @@
                                     android:text="น้ำหนักแรกเกิด(กิโลกรัม)" />
 
                                 <EditText
-                                    android:id="@+id/edittext_add_child_weight"
+                                    android:id="@+id/edittext_edit_child_weight"
                                     style="@style/textstyle_add_child"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -148,7 +150,7 @@
                                     android:singleLine="true" />
 
                                 <ImageView
-                                    android:id="@+id/image_alert_width"
+                                    android:id="@+id/image_alert_width_grow"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_gravity="center"
@@ -171,7 +173,7 @@
                                     android:text="ส่วนสูงแรกเกิด(เซนติเมตร)" />
 
                                 <EditText
-                                    android:id="@+id/edittext_add_child_height"
+                                    android:id="@+id/edittext_edit_child_height"
                                     style="@style/textstyle_add_child"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -182,7 +184,7 @@
                                     android:singleLine="true" />
 
                                 <ImageView
-                                    android:id="@+id/image_alert_height"
+                                    android:id="@+id/image_alert_height_grow"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:layout_gravity="center"
@@ -193,7 +195,7 @@
                         </LinearLayout>
 
                         <Button
-                            android:id="@+id/button_save"
+                            android:id="@+id/button_save_editgrow"
                             style="@style/textstyle_add_child_header"
                             android:layout_width="120dp"
                             android:layout_height="50dp"
