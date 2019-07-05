@@ -3,6 +3,7 @@ package baby.com.project2.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import baby.com.project2.R;
 import baby.com.project2.activity.EditChildActivity;
 import baby.com.project2.manager.singleton.SelectChildManager;
+import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.KidModelClass;
 
 public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapter.CustomViewKidsList>{
@@ -45,6 +47,14 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
                 context.startActivity(intent);
             }
         });
+
+        customViewKidsList.CardViewListChild.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPrefUser.getInstance(context)
+                        .saveChidId(items.get(i).getId());
+            }
+        });
     }
 
     @Override
@@ -57,6 +67,8 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
         TextView TextViewBirthday,TextViewNicknameKids;
         ImageView ImageViewKids,ImageViewEditChild;
 
+        CardView CardViewListChild;
+
         public CustomViewKidsList(@NonNull View itemView) {
             super(itemView);
 
@@ -64,6 +76,7 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
             TextViewBirthday = (TextView) itemView.findViewById(R.id.textview_birthday);
             ImageViewKids = (ImageView) itemView.findViewById(R.id.image_view_kids);
             ImageViewEditChild = (ImageView) itemView.findViewById(R.id.imageview_edit_child);
+            CardViewListChild = (CardView) itemView.findViewById(R.id.cardview_list_child);
         }
     }
 }

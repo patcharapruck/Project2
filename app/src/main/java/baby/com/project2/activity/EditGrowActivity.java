@@ -41,6 +41,7 @@ import baby.com.project2.manager.singleton.DeleteChildManager;
 import baby.com.project2.manager.singleton.DeleteGrowManager;
 import baby.com.project2.manager.singleton.InsertGrowupManager;
 import baby.com.project2.manager.singleton.SelectGrowManager;
+import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -188,7 +189,7 @@ public class EditGrowActivity extends AppCompatActivity implements View.OnClickL
         if(EdittextEditChildWeight.length()>0&&EdittextEditChildHeight.length()>0) {
             Weight = Float.valueOf(EdittextEditChildWeight.getText().toString());
             Height = Float.valueOf(EdittextEditChildHeight.getText().toString());
-            reqinsert(dateStr, Weight, Height, "01");
+            reqinsert(dateStr, Weight, Height, SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
         }
     }
 

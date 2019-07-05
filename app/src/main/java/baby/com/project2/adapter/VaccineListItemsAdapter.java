@@ -37,6 +37,7 @@ import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.InsertChildManager;
 import baby.com.project2.manager.singleton.InsertVaccineManager;
 import baby.com.project2.manager.singleton.VaccineManager;
+import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.DevelopMentModelClass;
 import baby.com.project2.view.VaccineModelClass;
 import okhttp3.MediaType;
@@ -136,10 +137,7 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
             @Override
             public void onClick(View v) {
 
-
                 V_id = items.get(i).getV_id();
-                String s = V_id;
-
                 switch (customViewVaccineList.CheckVac.getCheckedRadioButtonId()){
                     case R.id.no_vac:
                         statuss = 0;
@@ -148,7 +146,7 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
                         statuss = 1;
                         break;
                 }
-                customViewVaccineList.reqinsert("01",V_id,datetoday,statuss,place);
+                customViewVaccineList.reqinsert(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild(),V_id,datetoday,statuss,place);
             }
         });
     }
@@ -219,7 +217,7 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
                 }
                 @Override
                 public void onFailure(Call<InsertVaccineDto> call, Throwable t) {
-//                    Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
                 }
             });
         }

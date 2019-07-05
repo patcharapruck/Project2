@@ -30,6 +30,7 @@ import baby.com.project2.manager.singleton.DataVaccineManager;
 import baby.com.project2.manager.singleton.InsertChildManager;
 import baby.com.project2.manager.singleton.SelectChildManager;
 import baby.com.project2.manager.singleton.VaccineManager;
+import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.VaccineModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -66,7 +67,7 @@ public class VaccineActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview_vaccine);
-        reqDatavaccine("01");
+        reqDatavaccine(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
     }
 
     @Override

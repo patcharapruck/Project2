@@ -37,6 +37,7 @@ import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.LoginManager;
 import baby.com.project2.manager.singleton.SelectChildManager;
+import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.KidModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -176,7 +177,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             String birthday = dto.getResult().get(i).getC_birthday();
 
             try {
-                items.add(new KidModelClass("kkk",name,birthday));
+                items.add(new KidModelClass(dto.getResult().get(i).getC_id(),"kkk",name,birthday));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;
             }
@@ -195,7 +196,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public void reqselectchild(String uid) {
 
-        final Context mcontext = Contextor.getInstance().getmContext();
+        final Context mcontext = HomeActivity.this;
         String reqBody = "{\"id\":\""+uid+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<SelectChildDto> call = HttpManager.getInstance().getService().loadAPISelect(requestBody);
@@ -206,6 +207,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 if(response.isSuccessful()){
                     dto = response.body();
                     SelectChildManager.getInstance().setItemsDto(dto);
+
+                    SharedPrefUser.getInstance(mcontext)
+                            .saveChidId(dto.getResult().get(0).getC_id());
 
                     setRecyclerView();
 

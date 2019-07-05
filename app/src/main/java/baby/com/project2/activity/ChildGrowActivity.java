@@ -21,10 +21,12 @@ import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.child.InsertChildDto;
 import baby.com.project2.dto.growup.InsertGrowUpDto;
+import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.InsertChildManager;
 import baby.com.project2.manager.singleton.InsertGrowupManager;
+import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -90,7 +92,7 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
         if(EdittextAddChildWeight.length()>0&&EdittextAddChildHeight.length()>0){
             Weight = Float.valueOf(EdittextAddChildWeight.getText().toString());
             Height = Float.valueOf(EdittextAddChildHeight.getText().toString());
-            reqinsert(dateStr,Weight,Height,"01");
+            reqinsert(dateStr,Weight,Height, SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
         }
     }
 
