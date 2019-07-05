@@ -112,7 +112,8 @@
                             android:fontFamily="@font/prompt_medium"
                             android:gravity="center"
                             android:text="วันที่"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <RadioGroup
                             android:id="@+id/check_vac"
@@ -127,8 +128,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/prompt_medium"
-                                android:text="ทำได้"
-                                android:textSize="14sp" />
+                                android:text="ฉีดแล้ว"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
 
                             <RadioButton
                                 android:id="@+id/no_vac"
@@ -136,7 +138,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/prompt_medium"
-                                android:text="ทำไม่ได้"
+                                android:text="ยังไม่ฉีด"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
 
@@ -151,7 +153,8 @@
                             android:text="สถานที่เกิด"
                             android:textColor="@color/black"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"/>
 
                         <EditText
                             android:id="@+id/edittext_place"

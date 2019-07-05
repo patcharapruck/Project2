@@ -2,6 +2,7 @@ package baby.com.project2.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.circularreveal.cardview.CircularRevealCardView;
 import android.support.v7.widget.CardView;
@@ -67,21 +68,13 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
 
     @SuppressLint("ResourceAsColor")
     @Override
-    public void onBindViewHolder(@NonNull final CustomViewVaccineList customViewVaccineList, int i) {
+    public void onBindViewHolder(@NonNull final CustomViewVaccineList customViewVaccineList, final int i) {
 
         int size = 0;
         datetoday = customViewVaccineList.dateDto.getDateString();
         DecimalFormat formatter = new DecimalFormat("00");
         V_id = items.get(i).getV_id();
 
-        switch (customViewVaccineList.CheckVac.getCheckedRadioButtonId()){
-            case R.id.no_vac:
-                statuss = 0;
-                break;
-            case R.id.yes_vac:
-                statuss = 1;
-                break;
-        }
 
         try {
             size = customViewVaccineList.dataVaccineDto.getDatavaccine().size();
@@ -117,12 +110,12 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
                 switch (ck){
                     case 0:
                         customViewVaccineList.StatusVac.setVisibility(View.VISIBLE);
-                        customViewVaccineList.StatusVac.setCardBackgroundColor(R.color.very_low);
+                        customViewVaccineList.StatusVac.setCardBackgroundColor(Color.parseColor("#FF0000"));
                         customViewVaccineList.NoVac.setChecked(true);
                         break;
                     case 1:
                         customViewVaccineList.StatusVac.setVisibility(View.VISIBLE);
-                        customViewVaccineList.StatusVac.setCardBackgroundColor(R.color.colorMain);
+                        customViewVaccineList.StatusVac.setCardBackgroundColor(Color.parseColor("#1CC50B"));
                         customViewVaccineList.YesVac.setChecked(true);
                         break;
                 }
@@ -143,7 +136,19 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
             @Override
             public void onClick(View v) {
 
-                    customViewVaccineList.reqinsert("01",V_id,datetoday,statuss,place);
+
+                V_id = items.get(i).getV_id();
+                String s = V_id;
+
+                switch (customViewVaccineList.CheckVac.getCheckedRadioButtonId()){
+                    case R.id.no_vac:
+                        statuss = 0;
+                        break;
+                    case R.id.yes_vac:
+                        statuss = 1;
+                        break;
+                }
+                customViewVaccineList.reqinsert("01",V_id,datetoday,statuss,place);
             }
         });
     }
