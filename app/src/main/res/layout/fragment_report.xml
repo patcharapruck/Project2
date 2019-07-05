@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".fragment.ReportFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout_report"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="30dp">
 
-</FrameLayout>
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabItem_grow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="การเจริญเติบโต" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabItem_dev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/prompt_regular"
+            android:text="พัฒนาการ" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabItem_vaccine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="วัคซีน" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabItem_milk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/prompt_regular"
+            android:text="โภชนาการ" />
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_revanus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

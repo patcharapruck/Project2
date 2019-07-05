@@ -17,8 +17,8 @@
     <dimen name="textsize_grown">12sp</dimen>
 
 
-    <dimen name="width_card_kids_items">130dp</dimen>
-    <dimen name="height_card_kids_items">150dp</dimen>
+    <dimen name="width_card_kids_items">100dp</dimen>
+    <dimen name="height_card_kids_items">120dp</dimen>
     <dimen name="text_nickname">14sp</dimen>
     <dimen name="text_brithday_kids_items">12sp</dimen>
 

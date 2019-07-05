@@ -72,28 +72,26 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
         ImageAlertWidth.setVisibility(View.INVISIBLE);
         ImageAlertHeight.setVisibility(View.INVISIBLE);
 
-        setDate();
+        DateDto dateDto = DateManager.getInstance().getDateDto();
+        dateStr = dateDto.getDateString();
+        TextViewAddChildBirthday.setText(dateStr);
+
+        ButtonSave.setOnClickListener(this);
     }
 
     private void setDate() {
 
-        DateDto dateDto = DateManager.getInstance().getDateDto();
-        dateStr = dateDto.getDateString();
+        if(EdittextAddChildHeight.length()<=0){
 
-        try {
+        }
+        if(EdittextAddChildWeight.length()<=0){
+
+        }
+        if(EdittextAddChildWeight.length()>0&&EdittextAddChildHeight.length()>0){
             Weight = Float.valueOf(EdittextAddChildWeight.getText().toString());
-        }catch (Exception e){
-            Weight = 0f;
-        }
-
-        try {
             Height = Float.valueOf(EdittextAddChildHeight.getText().toString());
-        }catch (Exception e){
-            Height = 0f;
+            reqinsert(dateStr,Weight,Height,"01");
         }
-
-        TextViewAddChildBirthday.setText(dateStr);
-        ImageBtnGrow.setOnClickListener(this);
     }
 
     @Override
@@ -109,20 +107,14 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
 
-        if(v == ImageBtnGrow){
-            if(Height==0||Weight==0){
-
-
-            }else {
-                reqinsert(dateStr,Weight,Height,"01");
-            }
+        if(v == ButtonSave){
+            setDate();
         }
     }
-
     public void reqinsert(String date,float weight,float height,String Cid) {
 
         final Context mcontext = ChildGrowActivity.this;
-        String reqBody = "{\"H_height\": "+height+",\"G_weight\" :"+weight+",\"G_date\":\""+date+"\","+
+        String reqBody = "{\"G_height\":"+height+",\"G_weight\" :"+weight+",\"G_date\":\""+date+"\","+
                 "\"C_id\":\""+Cid+"\" }";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<InsertGrowUpDto> call = HttpManager.getInstance().getService().loadAPIGrowup(requestBody);

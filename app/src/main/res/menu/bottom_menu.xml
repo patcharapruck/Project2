@@ -11,13 +11,13 @@
         android:title="เพิ่มข้อมูล"
         />
     <item
-        android:id="@+id/item_pr"
+        android:id="@+id/item_report"
 
-        android:title="PR"/>
+        android:title="ประวัติสุขภาพ"/>
     <item
-        android:id="@+id/item_drink"
+        android:id="@+id/item_intro"
 
-        android:title="เครื่องดื่ม"/>
+        android:title="คำแนะนำ"/>
 
     <!--<item-->
         <!--android:id="@+id/item_table"-->

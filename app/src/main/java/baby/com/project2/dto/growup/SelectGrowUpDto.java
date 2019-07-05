@@ -6,13 +6,13 @@ import baby.com.project2.dto.vaccine.SelectDataVaccineItemsDto;
 
 public class SelectGrowUpDto {
 
-    private List<SelectGrowItemsDto> datavaccine;
+    private List<SelectGrowItemsDto> growup;
 
-    public List<SelectGrowItemsDto> getDatavaccine() {
-        return datavaccine;
+    public List<SelectGrowItemsDto> getGrowup() {
+        return growup;
     }
 
-    public void setDatavaccine(List<SelectGrowItemsDto> datavaccine) {
-        this.datavaccine = datavaccine;
+    public void setGrowup(List<SelectGrowItemsDto> growup) {
+        this.growup = growup;
     }
 }

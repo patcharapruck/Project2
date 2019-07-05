@@ -351,7 +351,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
 
     public void requpdate(String cid,String name,int gender,float weight,float height,String birthday,String blood) {
 
-        final Context mcontext = Contextor.getInstance().getmContext();
+        final Context mcontext = EditChildActivity.this;
         String reqBody = "{\"id\" :\""+cid+"\",\"name\": \""+name+"\",\"gender\":"+gender+",\"weight\" :"+weight+"," +
                 "\"height\" :"+height+",\"birthday\":\""+birthday+"\",\"blood\" : \""+blood+"\" }";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
