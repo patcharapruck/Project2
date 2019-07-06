@@ -14,65 +14,68 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
-import baby.com.project2.activity.VaccineActivity;
 import baby.com.project2.adapter.ReportGrowListItemsAdapter;
-import baby.com.project2.adapter.VaccineListItemsAdapter;
+import baby.com.project2.adapter.ReportMilkListItemsAdapter;
 import baby.com.project2.dto.growup.SelectGrowUpDto;
-import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
+import baby.com.project2.dto.milk.SelectMilkDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
-import baby.com.project2.manager.singleton.AgeVaccineManager;
 import baby.com.project2.manager.singleton.SelectGrowManager;
+import baby.com.project2.manager.singleton.SelectMilkManager;
 import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.ReportGrowModelClass;
-import baby.com.project2.view.VaccineModelClass;
+import baby.com.project2.view.ReportMilkModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReportGrowFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ReportMilkFragment extends Fragment {
 
 
-    ArrayList<ReportGrowModelClass> items;
-    ReportGrowListItemsAdapter adapter;
+    ArrayList<ReportMilkModelClass> items;
+    ReportMilkListItemsAdapter adapter;
     private RecyclerView recyclerView;
 
-    SelectGrowUpDto dto;
+    SelectMilkDto dto;
 
-    public ReportGrowFragment() {
+    public ReportMilkFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_report_grow, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_report_milk, container, false);
         initInstances(rootView);
         return rootView;
     }
 
     private void initInstances(View rootView) {
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_report_grow);
-        reqListGrow(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_report_milk);
+        reqListMilk(Integer.parseInt(SharedPrefUser.getInstance(getContext()).getKeyChild()));
 
     }
 
-    public void reqListGrow(String C_id) {
+    public void reqListMilk(int C_id) {
 
-        final Context mcontext = Contextor.getInstance().getmContext();
-        String reqBody = "{\"C_id\":\""+C_id+"\"}";
+        final Context mcontext = getContext();
+        String reqBody = "{\"C_id\":"+C_id+"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
-        Call<SelectGrowUpDto> call = HttpManager.getInstance().getService().loadAPIGrowUpSelect(requestBody);
-        call.enqueue(new Callback<SelectGrowUpDto>() {
+        Call<SelectMilkDto> call = HttpManager.getInstance().getService().loadAPISelectMilk(requestBody);
+        call.enqueue(new Callback<SelectMilkDto>() {
 
             @Override
-            public void onResponse(Call<SelectGrowUpDto> call, Response<SelectGrowUpDto> response) {
+            public void onResponse(Call<SelectMilkDto> call, Response<SelectMilkDto> response) {
                 if(response.isSuccessful()){
                     dto = response.body();
-                    SelectGrowManager.getInstance().setItemsDto(dto);
+                    SelectMilkManager.getInstance().setItemsDto(dto);
                     setRecyclerView();
 
                 }else {
@@ -80,7 +83,7 @@ public class ReportGrowFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<SelectGrowUpDto> call, Throwable t) {
+            public void onFailure(Call<SelectMilkDto> call, Throwable t) {
                 Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
             }
         });
@@ -90,19 +93,23 @@ public class ReportGrowFragment extends Fragment {
 
         Context context = getContext();
         items = new ArrayList<>();
-        adapter = new ReportGrowListItemsAdapter(context, items);
+        adapter = new ReportMilkListItemsAdapter(context, items);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 
-        int size = dto.getGrowup().size();
+        int size = dto.getMilk().size();
 
         for (int i = 0; i < size; i++) {
             try {
-                items.add(new ReportGrowModelClass(dto.getGrowup().get(i).getG_id()
-                        ,dto.getGrowup().get(i).getG_height()
-                        ,dto.getGrowup().get(i).getG_weight()
-                        ,dto.getGrowup().get(i).getG_date()));
+                items.add(new ReportMilkModelClass(dto.getMilk().get(i).getM_id()
+                        ,dto.getMilk().get(i).getM_date()
+                        ,dto.getMilk().get(i).getM_time()
+                        ,dto.getMilk().get(i).getM_foodname()
+                        ,dto.getMilk().get(i).getM_age()+" เดือน"
+                        ,dto.getMilk().get(i).getM_Milk()
+                        ,dto.getMilk().get(i).getM_unit()
+                        ,dto.getMilk().get(i).getM_amount()));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;
             }
@@ -110,5 +117,4 @@ public class ReportGrowFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
     }
-
 }

@@ -60,7 +60,7 @@ public class ReportFragment extends Fragment {
                 case 2:
                     return new ReportVaccineFragment();
                 default:
-                    return new ReportGrowFragment();
+                    return new ReportMilkFragment();
             }
         }
         @Override

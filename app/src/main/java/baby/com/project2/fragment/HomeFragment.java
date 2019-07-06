@@ -21,7 +21,7 @@ import baby.com.project2.view.KidModelClass;
  */
 public class HomeFragment extends Fragment {
 
-    FragmentTransaction f1,f2,f3;
+    FragmentTransaction f1,f2,f3,f4;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -56,6 +56,10 @@ public class HomeFragment extends Fragment {
         f3 = getChildFragmentManager().beginTransaction();
         f3.replace(R.id.fragment3, new VaccineHomeFragment());
         f3.commit();
+
+        f4 = getChildFragmentManager().beginTransaction();
+        f4.replace(R.id.fragment4, new MilkHomeFragment());
+        f4.commit();
 
     }
 

@@ -30,6 +30,7 @@ import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.LoginItemsDto;
 import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.fragment.HomeFragment;
+import baby.com.project2.fragment.ListintroFragment;
 import baby.com.project2.fragment.MenuFragment;
 import baby.com.project2.fragment.ReportFragment;
 import baby.com.project2.manager.Contextor;
@@ -141,7 +142,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         break;
 
                     case R.id.item_intro:
-                        //  fragment = new PRFragment();
+                        fragment = new ListintroFragment();
                         break;
                 }
 

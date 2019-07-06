@@ -34,9 +34,11 @@ import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.LoginItemsDto;
 import baby.com.project2.dto.child.InsertChildDto;
+import baby.com.project2.dto.milk.InsertMilkDto;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.InsertChildManager;
+import baby.com.project2.manager.singleton.InsertMilkManager;
 import baby.com.project2.manager.singleton.LoginManager;
 import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
@@ -90,8 +92,8 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
         EditTextAddMilkAge = (EditText)findViewById(R.id.edittext_add_milk_age);
         EditTextAddMilkNamefood = (EditText)findViewById(R.id.edittext_add_milk_namefood);
         EditTextVolume = (EditText)findViewById(R.id.edittext_volume);
-        SpinnerFood = (Spinner) findViewById(R.id.spinner_volume);
-        SpinnerVolume = (Spinner)findViewById(R.id.spinner_food);
+        SpinnerFood = (Spinner) findViewById(R.id.spinner_food);
+        SpinnerVolume = (Spinner)findViewById(R.id.spinner_volume);
         ImageViewCalendarAddMilk = (ImageView)findViewById(R.id.imageview_calendar_add_milk);
         ImageViewClock = (ImageView)findViewById(R.id.imageview_clock);
         CloseImgbtnAddmilk = (ImageView)findViewById(R.id.close_imgbtn_addmilk);
@@ -147,8 +149,8 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
         ArrayAdapter<String> spinsSearch = new ArrayAdapter<String>(AddMilkActivity.this
                 ,R.layout.support_simple_spinner_dropdown_item,mType);
 
-        SpinnerFood.setAdapter(spinsSearch);
-        SpinnerFood.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        SpinnerVolume.setAdapter(spinsSearch);
+        SpinnerVolume.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Volume = mType.get(position);
@@ -246,19 +248,19 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
         String reqBody = "{\"M_foodname\": \""+nameType+"\",\"M_Milk\":\""+name+"\",\"M_age\" :"+age+",\"M_amount\":"+amount+","+
                 "\"M_unit\":\""+volume+"\",\"M_date\":\""+birthday+"\",\"M_time\":\""+time+"\",\"C_id\":\""+cid+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
-        Call<InsertChildDto> call = HttpManager.getInstance().getService().loadAPIInsertChild(requestBody);
-        call.enqueue(new Callback<InsertChildDto>() {
+        Call<InsertMilkDto> call = HttpManager.getInstance().getService().loadAPIInsertMilk(requestBody);
+        call.enqueue(new Callback<InsertMilkDto>() {
 
             @Override
-            public void onResponse(Call<InsertChildDto> call, Response<InsertChildDto> response) {
+            public void onResponse(Call<InsertMilkDto> call, Response<InsertMilkDto> response) {
                 if(response.isSuccessful()){
-                    InsertChildDto dto = response.body();
-                    if(response.body().getSuccess().equals("Acount created")){
-                        InsertChildManager.getInstance().setItemsDto(dto);
-                        ShowAlertDialog(response.body().getSuccess());
+                    InsertMilkDto dto = response.body();
+                    InsertMilkManager.getInstance().setItemsDto(dto);
+                    if(response.body().isSuccess()){
+                        ShowAlertDialog(response.body().isSuccess());
                     }
                     else{
-                        ShowAlertDialog(response.body().getSuccess());
+                        ShowAlertDialog(response.body().isSuccess());
 //                        Toast.makeText(mcontext,dto.getSuccess(),Toast.LENGTH_LONG).show();
                     }
                 }else {
@@ -266,16 +268,16 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
             @Override
-            public void onFailure(Call<InsertChildDto> call, Throwable t) {
+            public void onFailure(Call<InsertMilkDto> call, Throwable t) {
                 Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void ShowAlertDialog(String success) {
+    private void ShowAlertDialog(boolean success) {
         AlertDialog.Builder builder = new AlertDialog.Builder(AddMilkActivity.this);
 
-        if(success.equals("Acount created")){
+        if(success){
             builder.setTitle("เพิ่มข้อมูลโภชนาการเด็ก");
             builder.setMessage("เพิ่มข้อมูลสำเร็จ");
             builder.setIcon(R.mipmap.ic_success);

@@ -7,33 +7,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".activity.AddMilkActivity">
+    tools:context=".activity.EditMilkActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorMain"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="?attr/actionBarSize">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:background="@color/colorMain"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/prompt_medium"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp" />
 
-        </LinearLayout>
+        </android.support.v7.widget.Toolbar>
 
-    </android.support.v7.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/delete_milk"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_delete"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +57,7 @@
             android:padding="20dp">
 
             <ImageButton
-                android:id="@+id/imagebtn_addprofile_addmilk"
+                android:id="@+id/imagebtn_addprofile_editmilk"
                 android:layout_width="@dimen/imagebtn_add_child_width"
                 android:layout_height="@dimen/imagebtn_add_child_height"
                 android:layout_centerInParent="true"
@@ -59,11 +68,11 @@
             </ImageButton>
 
             <ImageView
-                android:id="@+id/close_imgbtn_addmilk"
+                android:id="@+id/close_imgbtn_editmilk"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_alignRight="@id/imagebtn_addprofile_addmilk"
+                android:layout_alignRight="@id/imagebtn_addprofile_editmilk"
                 android:src="@mipmap/ic_close" />
 
         </RelativeLayout>
@@ -131,7 +140,7 @@
                                 android:text="อาหาร" />
 
                             <EditText
-                                android:id="@+id/edittext_add_milk_namefood"
+                                android:id="@+id/edittext_edit_milk_namefood"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -141,7 +150,7 @@
                                 android:singleLine="true" />
 
                             <ImageView
-                                android:id="@+id/image_alert_name_addmilk"
+                                android:id="@+id/image_alert_name_editmilk"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_gravity="center"
@@ -163,7 +172,7 @@
                                 android:text="อายุ" />
 
                             <EditText
-                                android:id="@+id/edittext_add_milk_age"
+                                android:id="@+id/edittext_edit_milk_age"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -233,14 +242,14 @@
                                 android:text="วันที่" />
 
                             <ImageView
-                                android:id="@+id/imageview_calendar_add_milk"
+                                android:id="@+id/imageview_calendar_edit_milk"
                                 android:layout_width="40dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dp"
                                 android:src="@mipmap/ic_calender" />
 
                             <TextView
-                                android:id="@+id/textview_add_milk_birthday"
+                                android:id="@+id/textview_edit_milk_birthday"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -289,7 +298,7 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btn_add_milk"
+                        android:id="@+id/btn_edit_milk"
                         android:layout_width="120dp"
                         android:layout_height="50dp"
                         android:background="@drawable/buttonadddata"

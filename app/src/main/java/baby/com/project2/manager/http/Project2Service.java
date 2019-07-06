@@ -9,6 +9,8 @@ import baby.com.project2.dto.child.UpdateChildDto;
 import baby.com.project2.dto.growup.DeleteGrowUpDto;
 import baby.com.project2.dto.growup.InsertGrowUpDto;
 import baby.com.project2.dto.growup.SelectGrowUpDto;
+import baby.com.project2.dto.intro.SelectAgeIntroDto;
+import baby.com.project2.dto.intro.SelectDataintroDto;
 import baby.com.project2.dto.milk.DeleteMilkDto;
 import baby.com.project2.dto.milk.InsertMilkDto;
 import baby.com.project2.dto.milk.SelectMilkDto;
@@ -75,4 +77,10 @@ public interface Project2Service {
 
     @POST("manage_milk/delete")
     Call<DeleteMilkDto> loadAPIdeleteMilk(@Body RequestBody requestBody);
+
+    @POST("listageintro")
+    Call<SelectAgeIntroDto> loadAPIAgeIntroDtoCall();
+
+    @POST("intro/select")
+    Call<SelectDataintroDto> loadAPIDataintroDtoCall(@Body RequestBody requestBody);
 }
