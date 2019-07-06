@@ -2,6 +2,7 @@ package baby.com.project2.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -22,6 +23,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
+import baby.com.project2.activity.DataIntroActivity;
+import baby.com.project2.activity.EditGrowActivity;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.intro.SelectAgeIntroDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
@@ -47,10 +50,6 @@ public class IntroListAdapter extends RecyclerView.Adapter<IntroListAdapter.Cust
 
     private Context context;
     private ArrayList<IntroModelClass> items;
-    private int statuss = 0;
-    private String V_id;
-    private String datetoday;
-    private String place;
 
 
     public IntroListAdapter(Context context, ArrayList<IntroModelClass> item){
@@ -74,6 +73,14 @@ public class IntroListAdapter extends RecyclerView.Adapter<IntroListAdapter.Cust
                @Override
                public void onClick(View v) {
                    customViewIntro.Mycontent.toggle();
+               }
+           });
+           customViewIntro.TextViewNameIntro.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   Intent intent = new Intent(context, DataIntroActivity.class);
+                   intent.putExtra("id",items.get(i).getId_ageintro());
+                   context.startActivity(intent);
                }
            });
     }
