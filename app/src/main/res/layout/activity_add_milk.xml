@@ -48,7 +48,7 @@
             android:padding="20dp">
 
             <ImageButton
-                android:id="@+id/imagebtn_addprofile_addchild"
+                android:id="@+id/imagebtn_addprofile_addmilk"
                 android:layout_width="@dimen/imagebtn_add_child_width"
                 android:layout_height="@dimen/imagebtn_add_child_height"
                 android:layout_centerInParent="true"
@@ -59,11 +59,11 @@
             </ImageButton>
 
             <ImageView
-                android:id="@+id/close_imgbtn_addchild"
+                android:id="@+id/close_imgbtn_addmilk"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_alignRight="@id/imagebtn_addprofile_addchild"
+                android:layout_alignRight="@id/imagebtn_addprofile_addmilk"
                 android:src="@mipmap/ic_close" />
 
         </RelativeLayout>
@@ -107,6 +107,7 @@
                                 android:text="ประเภทอาหาร" />
 
                             <android.support.v7.widget.AppCompatSpinner
+                                android:id="@+id/spinner_food"
                                 android:layout_width="0dp"
                                 android:layout_height="30dp"
                                 android:layout_weight="1"
@@ -130,7 +131,7 @@
                                 android:text="อาหาร" />
 
                             <EditText
-                                android:id="@+id/edittext_add_child_name"
+                                android:id="@+id/edittext_add_milk_namefood"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -140,7 +141,7 @@
                                 android:singleLine="true" />
 
                             <ImageView
-                                android:id="@+id/image_alert_name_addchild"
+                                android:id="@+id/image_alert_name_addmilk"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_gravity="center"
@@ -162,12 +163,14 @@
                                 android:text="อายุ" />
 
                             <EditText
+                                android:id="@+id/edittext_add_milk_age"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp"
+                                android:inputType="number"
                                 android:layout_weight="1"
                                 android:singleLine="true" />
 
@@ -195,16 +198,19 @@
                                 android:text="ปริมาตรอาหาร(ถ้าทราบ)" />
 
                             <EditText
+                                android:id="@+id/edittext_volume"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
+                                android:inputType="number"
                                 android:layout_weight="1"
                                 android:singleLine="true" />
 
                             <android.support.v7.widget.AppCompatSpinner
+                                android:id="@+id/spinner_volume"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1.5">
@@ -227,14 +233,14 @@
                                 android:text="วันที่" />
 
                             <ImageView
-                                android:id="@+id/imageview_calendar_add_child"
+                                android:id="@+id/imageview_calendar_add_milk"
                                 android:layout_width="40dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dp"
                                 android:src="@mipmap/ic_calender" />
 
                             <TextView
-                                android:id="@+id/textview_add_child_birthday"
+                                android:id="@+id/textview_add_milk_birthday"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -261,13 +267,14 @@
                                 android:text="เวลา" />
 
                             <ImageView
-
+                                android:id="@+id/imageview_clock"
                                 android:layout_width="40dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="10dp"
                                 android:src="@mipmap/ic_clock" />
 
                             <TextView
+                                android:id="@+id/textview_clock"
                                 style="@style/textstyle_add_child"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -281,7 +288,7 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btn_add_child"
+                        android:id="@+id/btn_add_milk"
                         android:layout_width="120dp"
                         android:layout_height="50dp"
                         android:background="@drawable/buttonadddata"

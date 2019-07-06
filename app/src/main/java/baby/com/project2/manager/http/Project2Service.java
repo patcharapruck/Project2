@@ -9,6 +9,10 @@ import baby.com.project2.dto.child.UpdateChildDto;
 import baby.com.project2.dto.growup.DeleteGrowUpDto;
 import baby.com.project2.dto.growup.InsertGrowUpDto;
 import baby.com.project2.dto.growup.SelectGrowUpDto;
+import baby.com.project2.dto.milk.DeleteMilkDto;
+import baby.com.project2.dto.milk.InsertMilkDto;
+import baby.com.project2.dto.milk.SelectMilkDto;
+import baby.com.project2.dto.milk.UpdateMilkDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
@@ -61,14 +65,14 @@ public interface Project2Service {
     Call<DeleteGrowUpDto> loadAPIDeleteGrow(@Body RequestBody requestBody);
 
     @POST("manage_milk/insert")
-    Call<InsertChildDto> loadAPIInsertMilk(@Body RequestBody requestBody);
+    Call<InsertMilkDto> loadAPIInsertMilk(@Body RequestBody requestBody);
 
     @POST("manage_milk/select")
-    Call<SelectChildDto> loadAPISelectMilk(@Body RequestBody requestBody);
+    Call<SelectMilkDto> loadAPISelectMilk(@Body RequestBody requestBody);
 
     @POST("manage_milk/update")
-    Call<UpdateChildDto> loadAPIupdateMilk(@Body RequestBody requestBody);
+    Call<UpdateMilkDto> loadAPIupdateMilk(@Body RequestBody requestBody);
 
     @POST("manage_milk/delete")
-    Call<DeleteChildDto> loadAPIdeleteMilk(@Body RequestBody requestBody);
+    Call<DeleteMilkDto> loadAPIdeleteMilk(@Body RequestBody requestBody);
 }
