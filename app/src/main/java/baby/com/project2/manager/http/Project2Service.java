@@ -59,4 +59,16 @@ public interface Project2Service {
 
     @POST("manage_growup/delete")
     Call<DeleteGrowUpDto> loadAPIDeleteGrow(@Body RequestBody requestBody);
+
+    @POST("manage_milk/insert")
+    Call<InsertChildDto> loadAPIInsertMilk(@Body RequestBody requestBody);
+
+    @POST("manage_milk/select")
+    Call<SelectChildDto> loadAPISelectMilk(@Body RequestBody requestBody);
+
+    @POST("manage_milk/update")
+    Call<UpdateChildDto> loadAPIupdateMilk(@Body RequestBody requestBody);
+
+    @POST("manage_milk/delete")
+    Call<DeleteChildDto> loadAPIdeleteMilk(@Body RequestBody requestBody);
 }
