@@ -4,13 +4,13 @@ import java.util.List;
 
 public class SelectTypeDevDto {
 
-    private List<SelectTpyeDevItemsDto> dev;
+    private List<SelectTpyeDevItemsDto> type_dev;
 
-    public List<SelectTpyeDevItemsDto> getDev() {
-        return dev;
+    public List<SelectTpyeDevItemsDto> getTypeDev() {
+        return type_dev;
     }
 
-    public void setDev(List<SelectTpyeDevItemsDto> dev) {
-        this.dev = dev;
+    public void setTypeDev(List<SelectTpyeDevItemsDto> dev) {
+        this.type_dev = dev;
     }
 }

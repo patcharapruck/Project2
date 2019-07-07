@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -19,16 +18,14 @@ import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
-import baby.com.project2.manager.singleton.TypeDevManager;
 import baby.com.project2.view.DevelopMentModelClass;
-import baby.com.project2.view.KidModelClass;
 
-public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMentListItemsAdapter.CustomViewDevelopMentList>{
+public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentItemsAdapter.CustomViewDevelopMentList>{
 
     private Context context;
     private ArrayList<DevelopMentModelClass> items;
 
-    public DevelopMentListItemsAdapter(Context context, ArrayList<DevelopMentModelClass> item){
+    public DevelopMentItemsAdapter(Context context, ArrayList<DevelopMentModelClass> item){
         this.context = context;
         this.items = item;
     }
@@ -41,7 +38,6 @@ public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMen
 
     @Override
     public void onBindViewHolder(@NonNull final CustomViewDevelopMentList customViewDevelopMentList, int i) {
-        customViewDevelopMentList.TextViewType.setText(items.get(i).getData());
         customViewDevelopMentList.Mycontent.collapse();
         customViewDevelopMentList.CardViewDevelopment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,22 +49,34 @@ public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMen
 
     @Override
     public int getItemCount() {
-        return TypeDevManager.getInstance().getItemsDto().getTypeDev().size();
+        return 8;
     }
 
     public class CustomViewDevelopMentList extends RecyclerView.ViewHolder {
 
-        TextView TextViewType;
+        TextView Topics,Side,TextViewDateDev;
         CardView CardViewDevelopment;
+        CircularRevealCardView StatusDev;
         ExpandableRelativeLayout Mycontent;
+        ImageButton ImageViewDev;
+        RadioGroup CheckDev;
+        RadioButton YesDev,NoDev;
 
 
         public CustomViewDevelopMentList(@NonNull View itemView) {
             super(itemView);
 
-            TextViewType              = (TextView)itemView.findViewById(R.id.textview_type);
+            Topics              = (TextView)itemView.findViewById(R.id.topics);
+            Side                = (TextView)itemView.findViewById(R.id.side);
+            TextViewDateDev     = (TextView)itemView.findViewById(R.id.textview_date_dev);
             CardViewDevelopment = (CardView)itemView.findViewById(R.id.cardview_development);
+            StatusDev           = (CircularRevealCardView)itemView.findViewById(R.id.status_dev);
+            ImageViewDev        = (ImageButton)itemView.findViewById(R.id.imageview_dev);
+            CheckDev            = (RadioGroup)itemView.findViewById(R.id.check_dev);
+            YesDev              = (RadioButton)itemView.findViewById(R.id.yes_dev);
+            NoDev               = (RadioButton)itemView.findViewById(R.id.no_dev);
             Mycontent           = (ExpandableRelativeLayout) itemView.findViewById(R.id.mycontent);
+
 
         }
     }
