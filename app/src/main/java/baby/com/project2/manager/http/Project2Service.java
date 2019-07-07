@@ -6,6 +6,9 @@ import baby.com.project2.dto.child.DeleteChildDto;
 import baby.com.project2.dto.child.InsertChildDto;
 import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.dto.child.UpdateChildDto;
+import baby.com.project2.dto.devlopment.SelectAgeDevDto;
+import baby.com.project2.dto.devlopment.SelectDevDto;
+import baby.com.project2.dto.devlopment.SelectTypeDevDto;
 import baby.com.project2.dto.growup.DeleteGrowUpDto;
 import baby.com.project2.dto.growup.InsertGrowUpDto;
 import baby.com.project2.dto.growup.SelectGrowUpDto;
@@ -83,4 +86,13 @@ public interface Project2Service {
 
     @POST("intro/select")
     Call<SelectDataintroDto> loadAPIDataintroDtoCall(@Body RequestBody requestBody);
+
+    @POST("listagedev")
+    Call<SelectAgeDevDto> loadAPIAgeDevDtoCall();
+
+    @POST("listtypedev")
+    Call<SelectTypeDevDto> loadAPITypeDevDtoCall();
+
+    @POST("develorment/select")
+    Call<SelectDevDto> loadAPIDevDtoCall(@Body RequestBody requestBody);
 }
