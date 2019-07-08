@@ -3,48 +3,22 @@ package baby.com.project2.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.DataIntroActivity;
-import baby.com.project2.activity.EditGrowActivity;
-import baby.com.project2.dto.DateDto;
-import baby.com.project2.dto.intro.SelectAgeIntroDto;
-import baby.com.project2.dto.vaccine.InsertVaccineDto;
-import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
-import baby.com.project2.dto.vaccine.SelectVaccineDto;
-import baby.com.project2.manager.Contextor;
-import baby.com.project2.manager.http.HttpManager;
-import baby.com.project2.manager.singleton.AgeIntroManager;
-import baby.com.project2.manager.singleton.DataVaccineManager;
-import baby.com.project2.manager.singleton.DateManager;
-import baby.com.project2.manager.singleton.InsertVaccineManager;
-import baby.com.project2.manager.singleton.VaccineManager;
-import baby.com.project2.util.SharedPrefUser;
+import baby.com.project2.manager.singleton.intro.AgeIntroManager;
 import baby.com.project2.view.IntroModelClass;
-import baby.com.project2.view.VaccineModelClass;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class IntroListAdapter extends RecyclerView.Adapter<IntroListAdapter.CustomViewIntro>{
 

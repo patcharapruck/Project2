@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.circularreveal.cardview.CircularRevealCardView;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,12 @@ import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
+import baby.com.project2.dto.SizeDevDto;
+import baby.com.project2.dto.devlopment.SelectDevDto;
+import baby.com.project2.manager.singleton.DevelopmentManager;
+import baby.com.project2.manager.singleton.SizeDevManager;
 import baby.com.project2.manager.singleton.TypeDevManager;
+import baby.com.project2.view.DevelopMentDataModelClass;
 import baby.com.project2.view.DevelopMentModelClass;
 import baby.com.project2.view.KidModelClass;
 
@@ -41,6 +47,10 @@ public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMen
 
     @Override
     public void onBindViewHolder(@NonNull final CustomViewDevelopMentList customViewDevelopMentList, int i) {
+
+        customViewDevelopMentList.Devitems.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        customViewDevelopMentList.Devitems.setAdapter(customViewDevelopMentList.adapter);
+
         customViewDevelopMentList.TextViewType.setText(items.get(i).getData());
         customViewDevelopMentList.Mycontent.collapse();
         customViewDevelopMentList.CardViewDevelopment.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +59,36 @@ public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMen
                 customViewDevelopMentList.Mycontent.toggle();
             }
         });
+
+        SelectDevDto devDto = DevelopmentManager.getInstance().getItemsDto();
+
+        int size = 0,sizedev=0;
+
+        if(devDto.getDev()==null)
+            size = 0;
+        else
+            size = devDto.getDev().size();
+
+        for(int j=0;j<size;j++){
+            if(devDto.getDev().get(j).getId_type().equals(items.get(i).getId())){
+                sizedev++;
+                try {
+                    customViewDevelopMentList.items.add(new DevelopMentDataModelClass(devDto.getDev().get(j).getBD_id()
+                            ,devDto.getDev().get(j).getBD_data()
+                            ,devDto.getDev().get(j).getBD_image()
+                            ,devDto.getDev().get(j).getId_agedev()
+                            ,devDto.getDev().get(j).getId_type()));
+                }catch (ArrayIndexOutOfBoundsException e){
+                    break;
+                }
+               customViewDevelopMentList.adapter.notifyDataSetChanged();
+
+            }
+        }
+
+        SizeDevDto sizeDevDto = new SizeDevDto();
+        sizeDevDto.setSize_dev(sizedev);
+        SizeDevManager.getInstance().setItemsDto(sizeDevDto);
     }
 
     @Override
@@ -61,6 +101,9 @@ public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMen
         TextView TextViewType;
         CardView CardViewDevelopment;
         ExpandableRelativeLayout Mycontent;
+        RecyclerView Devitems;
+        ArrayList<DevelopMentDataModelClass> items;
+        DevelopMentItemsAdapter adapter;
 
 
         public CustomViewDevelopMentList(@NonNull View itemView) {
@@ -69,6 +112,9 @@ public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMen
             TextViewType              = (TextView)itemView.findViewById(R.id.textview_type);
             CardViewDevelopment = (CardView)itemView.findViewById(R.id.cardview_development);
             Mycontent           = (ExpandableRelativeLayout) itemView.findViewById(R.id.mycontent);
+            Devitems            = (RecyclerView)itemView.findViewById(R.id.devitems);
+            items= new ArrayList<>();
+            adapter = new DevelopMentItemsAdapter(context, items);
 
         }
     }

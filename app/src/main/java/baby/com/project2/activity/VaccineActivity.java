@@ -11,15 +11,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import baby.com.project2.R;
 import baby.com.project2.adapter.VaccineListItemsAdapter;
-import baby.com.project2.dto.child.InsertChildDto;
-import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
 import baby.com.project2.dto.vaccine.SelectVaccineDto;
@@ -27,8 +24,6 @@ import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.AgeVaccineManager;
 import baby.com.project2.manager.singleton.DataVaccineManager;
-import baby.com.project2.manager.singleton.InsertChildManager;
-import baby.com.project2.manager.singleton.SelectChildManager;
 import baby.com.project2.manager.singleton.VaccineManager;
 import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.VaccineModelClass;

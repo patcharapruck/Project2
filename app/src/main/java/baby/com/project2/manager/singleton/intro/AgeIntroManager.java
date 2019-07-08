@@ -1,9 +1,8 @@
-package baby.com.project2.manager.singleton;
+package baby.com.project2.manager.singleton.intro;
 
 import android.content.Context;
 
 import baby.com.project2.dto.intro.SelectAgeIntroDto;
-import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
 import baby.com.project2.manager.Contextor;
 
 public class AgeIntroManager {

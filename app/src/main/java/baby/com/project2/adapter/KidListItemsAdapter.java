@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.EditChildActivity;
-import baby.com.project2.manager.singleton.SelectChildManager;
+import baby.com.project2.manager.singleton.child.SelectChildManager;
 import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.KidModelClass;
 

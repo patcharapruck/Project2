@@ -1,10 +1,8 @@
-package baby.com.project2.manager.singleton;
+package baby.com.project2.manager.singleton.intro;
 
 import android.content.Context;
 
-import baby.com.project2.dto.intro.SelectDataIntroItemsDto;
 import baby.com.project2.dto.intro.SelectDataintroDto;
-import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
 import baby.com.project2.manager.Contextor;
 
 public class DataIntroManager {

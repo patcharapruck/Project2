@@ -13,15 +13,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
-import baby.com.project2.adapter.IntroListAdapter;
 import baby.com.project2.adapter.IntroListItemsAdapter;
-import baby.com.project2.dto.growup.DeleteGrowUpDto;
 import baby.com.project2.dto.intro.SelectDataintroDto;
 import baby.com.project2.manager.http.HttpManager;
-import baby.com.project2.manager.singleton.DataIntroManager;
-import baby.com.project2.manager.singleton.DeleteGrowManager;
+import baby.com.project2.manager.singleton.intro.DataIntroManager;
 import baby.com.project2.view.IntroDataModelClass;
-import baby.com.project2.view.IntroModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;

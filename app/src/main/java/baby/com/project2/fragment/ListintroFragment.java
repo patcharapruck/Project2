@@ -14,16 +14,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
-import baby.com.project2.activity.VaccineActivity;
 import baby.com.project2.adapter.IntroListAdapter;
-import baby.com.project2.adapter.ReportMilkListItemsAdapter;
 import baby.com.project2.dto.intro.SelectAgeIntroDto;
-import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
 import baby.com.project2.manager.http.HttpManager;
-import baby.com.project2.manager.singleton.AgeIntroManager;
-import baby.com.project2.manager.singleton.AgeVaccineManager;
+import baby.com.project2.manager.singleton.intro.AgeIntroManager;
 import baby.com.project2.view.IntroModelClass;
-import baby.com.project2.view.ReportMilkModelClass;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

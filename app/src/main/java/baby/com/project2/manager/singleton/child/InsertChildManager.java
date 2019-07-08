@@ -1,4 +1,4 @@
-package baby.com.project2.manager.singleton;
+package baby.com.project2.manager.singleton.child;
 
 import android.content.Context;
 import baby.com.project2.dto.child.InsertChildDto;

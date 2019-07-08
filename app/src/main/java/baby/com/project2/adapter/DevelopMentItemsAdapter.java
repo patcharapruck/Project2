@@ -18,65 +18,47 @@ import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
+import baby.com.project2.manager.singleton.SizeDevManager;
+import baby.com.project2.view.DevelopMentDataModelClass;
 import baby.com.project2.view.DevelopMentModelClass;
 
-public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentItemsAdapter.CustomViewDevelopMentList>{
+public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentItemsAdapter.CustomViewDevelopMent>{
 
     private Context context;
-    private ArrayList<DevelopMentModelClass> items;
+    private ArrayList<DevelopMentDataModelClass> items;
 
-    public DevelopMentItemsAdapter(Context context, ArrayList<DevelopMentModelClass> item){
+    public DevelopMentItemsAdapter(Context context, ArrayList<DevelopMentDataModelClass> item){
         this.context = context;
         this.items = item;
     }
 
     @NonNull
     @Override
-    public CustomViewDevelopMentList onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new CustomViewDevelopMentList(LayoutInflater.from(context).inflate(R.layout.customview_list_development, viewGroup, false));
+    public CustomViewDevelopMent onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new CustomViewDevelopMent(LayoutInflater.from(context).inflate(R.layout.customview_list_development_items, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CustomViewDevelopMentList customViewDevelopMentList, int i) {
-        customViewDevelopMentList.Mycontent.collapse();
-        customViewDevelopMentList.CardViewDevelopment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customViewDevelopMentList.Mycontent.toggle();
-            }
-        });
+    public void onBindViewHolder(@NonNull final CustomViewDevelopMent customViewDevelopMentList, int i) {
+        customViewDevelopMentList.TextViewDataDevShow.setText(items.get(i).getBD_data());
     }
 
     @Override
     public int getItemCount() {
-        return 8;
+        return SizeDevManager.getInstance().getItemsDto().getSize_dev();
     }
 
-    public class CustomViewDevelopMentList extends RecyclerView.ViewHolder {
+    public class CustomViewDevelopMent extends RecyclerView.ViewHolder {
 
-        TextView Topics,Side,TextViewDateDev;
-        CardView CardViewDevelopment;
-        CircularRevealCardView StatusDev;
-        ExpandableRelativeLayout Mycontent;
-        ImageButton ImageViewDev;
-        RadioGroup CheckDev;
-        RadioButton YesDev,NoDev;
+        TextView TextViewDataDevShow;
+        CardView CardViewDataDev,StatusDev;
 
-
-        public CustomViewDevelopMentList(@NonNull View itemView) {
+        public CustomViewDevelopMent(@NonNull View itemView) {
             super(itemView);
 
-            Topics              = (TextView)itemView.findViewById(R.id.topics);
-            Side                = (TextView)itemView.findViewById(R.id.side);
-            TextViewDateDev     = (TextView)itemView.findViewById(R.id.textview_date_dev);
-            CardViewDevelopment = (CardView)itemView.findViewById(R.id.cardview_development);
-            StatusDev           = (CircularRevealCardView)itemView.findViewById(R.id.status_dev);
-            ImageViewDev        = (ImageButton)itemView.findViewById(R.id.imageview_dev);
-            CheckDev            = (RadioGroup)itemView.findViewById(R.id.check_dev);
-            YesDev              = (RadioButton)itemView.findViewById(R.id.yes_dev);
-            NoDev               = (RadioButton)itemView.findViewById(R.id.no_dev);
-            Mycontent           = (ExpandableRelativeLayout) itemView.findViewById(R.id.mycontent);
-
+            TextViewDataDevShow     = (TextView)itemView.findViewById(R.id.textview_data_dev_show);
+            CardViewDataDev = (CardView)itemView.findViewById(R.id.cardview_data_dev);
+            StatusDev           = (CardView) itemView.findViewById(R.id.status_dev);
 
         }
     }

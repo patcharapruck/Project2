@@ -13,10 +13,7 @@ import android.widget.Toast;
 
 import baby.com.project2.R;
 import baby.com.project2.dto.RegisterDto;
-import baby.com.project2.dto.child.InsertChildDto;
-import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
-import baby.com.project2.manager.singleton.InsertChildManager;
 import baby.com.project2.manager.singleton.RegisterManager;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

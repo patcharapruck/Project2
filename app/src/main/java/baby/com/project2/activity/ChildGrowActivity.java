@@ -2,8 +2,6 @@ package baby.com.project2.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.renderscript.Sampler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,12 +17,10 @@ import android.widget.Toast;
 
 import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
-import baby.com.project2.dto.child.InsertChildDto;
 import baby.com.project2.dto.growup.InsertGrowUpDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
-import baby.com.project2.manager.singleton.InsertChildManager;
 import baby.com.project2.manager.singleton.InsertGrowupManager;
 import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;

@@ -8,18 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import baby.com.project2.R;
-import baby.com.project2.activity.EditChildActivity;
 import baby.com.project2.activity.EditGrowActivity;
-import baby.com.project2.dto.growup.SelectGrowUpDto;
-import baby.com.project2.manager.singleton.SelectChildManager;
 import baby.com.project2.manager.singleton.SelectGrowManager;
-import baby.com.project2.view.KidModelClass;
 import baby.com.project2.view.ReportGrowModelClass;
 
 public class ReportGrowListItemsAdapter extends RecyclerView.Adapter<ReportGrowListItemsAdapter.CustomViewReportGrowList>{
