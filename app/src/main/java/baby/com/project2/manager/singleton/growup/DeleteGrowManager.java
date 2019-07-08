@@ -1,8 +1,7 @@
-package baby.com.project2.manager.singleton;
+package baby.com.project2.manager.singleton.growup;
 
 import android.content.Context;
 
-import baby.com.project2.dto.child.DeleteChildDto;
 import baby.com.project2.dto.growup.DeleteGrowUpDto;
 import baby.com.project2.manager.Contextor;
 

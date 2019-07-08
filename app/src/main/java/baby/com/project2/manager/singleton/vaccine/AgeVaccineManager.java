@@ -1,10 +1,8 @@
-package baby.com.project2.manager.singleton;
+package baby.com.project2.manager.singleton.vaccine;
 
 import android.content.Context;
 
-import baby.com.project2.dto.child.UpdateChildDto;
 import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
-import baby.com.project2.dto.vaccine.SelectVaccineDto;
 import baby.com.project2.manager.Contextor;
 
 public class AgeVaccineManager {

@@ -1,8 +1,7 @@
-package baby.com.project2.manager.singleton;
+package baby.com.project2.manager.singleton.milk;
 
 import android.content.Context;
 
-import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.dto.milk.SelectMilkDto;
 import baby.com.project2.manager.Contextor;
 

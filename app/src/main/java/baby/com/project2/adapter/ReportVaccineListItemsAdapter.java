@@ -1,9 +1,7 @@
 package baby.com.project2.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
-import baby.com.project2.activity.EditGrowActivity;
-import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
-import baby.com.project2.manager.singleton.DataVaccineManager;
-import baby.com.project2.manager.singleton.SelectGrowManager;
-import baby.com.project2.view.ReportGrowModelClass;
+import baby.com.project2.manager.singleton.vaccine.DataVaccineManager;
 import baby.com.project2.view.ReportVaccineModelClass;
 
 public class ReportVaccineListItemsAdapter extends RecyclerView.Adapter<ReportVaccineListItemsAdapter.CustomViewReportVaccineList>{

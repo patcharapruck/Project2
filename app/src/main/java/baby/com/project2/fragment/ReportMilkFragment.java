@@ -14,16 +14,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
-import baby.com.project2.adapter.ReportGrowListItemsAdapter;
 import baby.com.project2.adapter.ReportMilkListItemsAdapter;
-import baby.com.project2.dto.growup.SelectGrowUpDto;
 import baby.com.project2.dto.milk.SelectMilkDto;
-import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
-import baby.com.project2.manager.singleton.SelectGrowManager;
-import baby.com.project2.manager.singleton.SelectMilkManager;
+import baby.com.project2.manager.singleton.milk.SelectMilkManager;
 import baby.com.project2.util.SharedPrefUser;
-import baby.com.project2.view.ReportGrowModelClass;
 import baby.com.project2.view.ReportMilkModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

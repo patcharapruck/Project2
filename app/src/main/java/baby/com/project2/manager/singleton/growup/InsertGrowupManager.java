@@ -1,9 +1,8 @@
-package baby.com.project2.manager.singleton;
+package baby.com.project2.manager.singleton.growup;
 
 import android.content.Context;
 
 import baby.com.project2.dto.growup.InsertGrowUpDto;
-import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.manager.Contextor;
 
 public class InsertGrowupManager {

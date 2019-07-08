@@ -14,11 +14,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
-import baby.com.project2.activity.EditGrowActivity;
 import baby.com.project2.activity.EditMilkActivity;
-import baby.com.project2.manager.singleton.SelectGrowManager;
-import baby.com.project2.manager.singleton.SelectMilkManager;
-import baby.com.project2.view.ReportGrowModelClass;
+import baby.com.project2.manager.singleton.milk.SelectMilkManager;
 import baby.com.project2.view.ReportMilkModelClass;
 
 public class ReportMilkListItemsAdapter extends RecyclerView.Adapter<ReportMilkListItemsAdapter.CustomViewReportMilkList>{

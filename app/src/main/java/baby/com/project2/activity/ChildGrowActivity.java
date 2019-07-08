@@ -21,7 +21,7 @@ import baby.com.project2.dto.growup.InsertGrowUpDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
-import baby.com.project2.manager.singleton.InsertGrowupManager;
+import baby.com.project2.manager.singleton.growup.InsertGrowupManager;
 import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

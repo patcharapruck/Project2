@@ -35,7 +35,7 @@ import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.milk.InsertMilkDto;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
-import baby.com.project2.manager.singleton.InsertMilkManager;
+import baby.com.project2.manager.singleton.milk.InsertMilkManager;
 import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

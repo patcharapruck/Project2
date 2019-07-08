@@ -2,17 +2,12 @@ package baby.com.project2.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.design.circularreveal.cardview.CircularRevealCardView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
@@ -22,12 +17,11 @@ import java.util.ArrayList;
 import baby.com.project2.R;
 import baby.com.project2.dto.SizeDevDto;
 import baby.com.project2.dto.devlopment.SelectDevDto;
-import baby.com.project2.manager.singleton.DevelopmentManager;
-import baby.com.project2.manager.singleton.SizeDevManager;
-import baby.com.project2.manager.singleton.TypeDevManager;
+import baby.com.project2.manager.singleton.develorment.DevelopmentManager;
+import baby.com.project2.manager.singleton.develorment.SizeDevManager;
+import baby.com.project2.manager.singleton.develorment.TypeDevManager;
 import baby.com.project2.view.DevelopMentDataModelClass;
 import baby.com.project2.view.DevelopMentModelClass;
-import baby.com.project2.view.KidModelClass;
 
 public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMentListItemsAdapter.CustomViewDevelopMentList>{
 

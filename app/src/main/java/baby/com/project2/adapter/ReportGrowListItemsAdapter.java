@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.EditGrowActivity;
-import baby.com.project2.manager.singleton.SelectGrowManager;
+import baby.com.project2.manager.singleton.growup.SelectGrowManager;
 import baby.com.project2.view.ReportGrowModelClass;
 
 public class ReportGrowListItemsAdapter extends RecyclerView.Adapter<ReportGrowListItemsAdapter.CustomViewReportGrowList>{

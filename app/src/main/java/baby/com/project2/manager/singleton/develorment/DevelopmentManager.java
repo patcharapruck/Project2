@@ -1,9 +1,8 @@
-package baby.com.project2.manager.singleton;
+package baby.com.project2.manager.singleton.develorment;
 
 import android.content.Context;
 
 import baby.com.project2.dto.devlopment.SelectDevDto;
-import baby.com.project2.dto.vaccine.SelectVaccineDto;
 import baby.com.project2.manager.Contextor;
 
 public class DevelopmentManager {
