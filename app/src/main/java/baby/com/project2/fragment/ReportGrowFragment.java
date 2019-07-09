@@ -51,7 +51,7 @@ public class ReportGrowFragment extends Fragment {
 
     private void initInstances(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_report_grow);
-        reqListGrow(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
+        reqListGrow(SharedPrefUser.getInstance(getContext()).getKeyChild());
 
     }
 

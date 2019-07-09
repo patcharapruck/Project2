@@ -10,7 +10,8 @@
         android:layout_width="@dimen/width_card_kids_items"
         android:layout_height="@dimen/height_card_kids_items"
         android:layout_margin="5dp"
-        app:cardCornerRadius="7dp">
+        app:cardCornerRadius="7dp"
+        app:cardBackgroundColor="@color/background">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,7 +36,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:scaleType="centerCrop" />
 
                 <TextView

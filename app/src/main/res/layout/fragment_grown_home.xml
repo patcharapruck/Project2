@@ -96,7 +96,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@color/colorAccent" />
+                        android:src="@mipmap/ic_height" />
 
                     <TextView
                         android:id="@+id/textview_height"
@@ -126,7 +126,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="2"
-                    app:cardBackgroundColor="@color/very_low"
+                    app:cardBackgroundColor="@color/noting"
                     app:cardCornerRadius="9dp">
 
                     <TextView
@@ -135,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/prompt_regular"
-                        android:text="เตี้ย"
+                        android:text="ไม่มีข้อมูล"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize_grown"
                         android:textStyle="bold" />
@@ -168,7 +168,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@color/colorMain" />
+                        android:src="@mipmap/ic_weight" />
 
                     <TextView
                         android:id="@+id/textview_width"
@@ -198,7 +198,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="2"
-                    app:cardBackgroundColor="@color/medium"
+                    app:cardBackgroundColor="@color/noting"
                     app:cardCornerRadius="9dp">
 
                     <TextView
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/prompt_regular"
-                        android:text="ค่อนข้างมาก"
+                        android:text="ไม่มีข้อมูล"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize_grown"
                         android:textStyle="bold" />
@@ -240,7 +240,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@color/black" />
+                        android:src="@mipmap/ic_baby_body" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -260,7 +260,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="2"
-                    app:cardBackgroundColor="@color/good"
+                    app:cardBackgroundColor="@color/noting"
                     app:cardCornerRadius="9dp">
 
                     <TextView
@@ -269,7 +269,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/prompt_regular"
-                        android:text="สมส่วน"
+                        android:text="ไม่มีข้อมูล"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textsize_grown"
                         android:textStyle="bold" />
