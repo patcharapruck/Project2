@@ -1,6 +1,8 @@
 package baby.com.project2.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
+import baby.com.project2.activity.EditGrowActivity;
+import baby.com.project2.activity.InsertDevActivity;
+import baby.com.project2.dto.devlopment.SelectDataDevDto;
+import baby.com.project2.manager.singleton.DateManager;
+import baby.com.project2.manager.singleton.develorment.DataDevManager;
 import baby.com.project2.manager.singleton.develorment.SizeDevManager;
 import baby.com.project2.view.DevelopMentDataModelClass;
 
@@ -32,8 +39,49 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CustomViewDevelopMent customViewDevelopMentList, int i) {
+    public void onBindViewHolder(@NonNull final CustomViewDevelopMent customViewDevelopMentList, final int i) {
         customViewDevelopMentList.TextViewDataDevShow.setText(items.get(i).getBD_data());
+        customViewDevelopMentList.StatusDev.setVisibility(View.INVISIBLE);
+        SelectDataDevDto selectDataDevDto = DataDevManager.getInstance().getItemsDto();
+
+        String date = DateManager.getInstance().getDateDto().getDateString();
+        int size=0;
+
+        try {
+            size = selectDataDevDto.getDatadev().size();
+        }catch (Exception e){
+            size = 0;
+        }
+
+        if(size!=0){
+            for(int j=0;j<size;j++){
+                if(selectDataDevDto.getDatadev().get(j).getBD_id().equals(items.get(i).getBD_id())){
+                    customViewDevelopMentList.StatusDev.setVisibility(View.VISIBLE);
+                    date = selectDataDevDto.getDatadev().get(j).getFKcd_date();
+
+                    if(selectDataDevDto.getDatadev().get(j).getFKcd_status()==1){
+                        customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.parseColor("#1CC50B"));
+                    }else {
+                        customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.parseColor("#FF8C00"));
+                    }
+
+                }
+            }
+
+        }
+
+        final String finalDate = date;
+        customViewDevelopMentList.CardViewDataDev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, InsertDevActivity.class);
+                intent.putExtra("id",items.get(i).getBD_id());
+                intent.putExtra("type",items.get(i).getId_type());
+                intent.putExtra("data",items.get(i).getBD_data());
+                intent.putExtra("date", finalDate);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

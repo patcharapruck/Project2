@@ -18,12 +18,16 @@ import java.util.ArrayList;
 import baby.com.project2.R;
 import baby.com.project2.adapter.DevelopMentListItemsAdapter;
 import baby.com.project2.dto.devlopment.SelectAgeDevDto;
+import baby.com.project2.dto.devlopment.SelectDataDevDto;
 import baby.com.project2.dto.devlopment.SelectDevDto;
 import baby.com.project2.dto.devlopment.SelectTypeDevDto;
+import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.develorment.AgeDevManager;
+import baby.com.project2.manager.singleton.develorment.DataDevManager;
 import baby.com.project2.manager.singleton.develorment.DevelopmentManager;
 import baby.com.project2.manager.singleton.develorment.TypeDevManager;
+import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.DevelopMentModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -62,7 +66,7 @@ public class DevelopMentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview_dev);
-        reqAgeDev();
+        reqDataDevelorment(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
     }
 
     @Override
@@ -192,6 +196,32 @@ public class DevelopMentActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<SelectDevDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void reqDataDevelorment(String cid) {
+
+        final Context mcontext = DevelopMentActivity.this;
+        String reqBody = "{\"C_id\":\""+cid+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<SelectDataDevDto> call = HttpManager.getInstance().getService().loadAPIDataDevDtoCall(requestBody);
+        call.enqueue(new Callback<SelectDataDevDto>() {
+
+            @Override
+            public void onResponse(Call<SelectDataDevDto> call, Response<SelectDataDevDto> response) {
+                if(response.isSuccessful()){
+                    SelectDataDevDto dtodev = response.body();
+                    DataDevManager.getInstance().setItemsDto(dtodev);
+                    reqAgeDev();
+
+                }else {
+                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<SelectDataDevDto> call, Throwable t) {
                 Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
             }
         });

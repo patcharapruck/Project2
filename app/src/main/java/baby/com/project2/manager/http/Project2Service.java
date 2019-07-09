@@ -6,7 +6,10 @@ import baby.com.project2.dto.child.DeleteChildDto;
 import baby.com.project2.dto.child.InsertChildDto;
 import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.dto.child.UpdateChildDto;
+import baby.com.project2.dto.devlopment.DeleteDevelorMentDto;
+import baby.com.project2.dto.devlopment.InsertDevelorMentDto;
 import baby.com.project2.dto.devlopment.SelectAgeDevDto;
+import baby.com.project2.dto.devlopment.SelectDataDevDto;
 import baby.com.project2.dto.devlopment.SelectDevDto;
 import baby.com.project2.dto.devlopment.SelectTypeDevDto;
 import baby.com.project2.dto.growup.DeleteGrowUpDto;
@@ -18,6 +21,7 @@ import baby.com.project2.dto.milk.DeleteMilkDto;
 import baby.com.project2.dto.milk.InsertMilkDto;
 import baby.com.project2.dto.milk.SelectMilkDto;
 import baby.com.project2.dto.milk.UpdateMilkDto;
+import baby.com.project2.dto.vaccine.DeleteVaccineDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
@@ -95,4 +99,17 @@ public interface Project2Service {
 
     @POST("develorment/select")
     Call<SelectDevDto> loadAPIDevDtoCall(@Body RequestBody requestBody);
+
+    @POST("manage_develorment")
+    Call<InsertDevelorMentDto> loadAPInsertDevelorMentDtoCall(@Body RequestBody requestBody);
+
+    @POST("manage_develorment/selete")
+    Call<SelectDataDevDto> loadAPIDataDevDtoCall(@Body RequestBody requestBody);
+
+    @POST("manage_develorment/delete")
+    Call<DeleteDevelorMentDto> loadAPIDeleteDevelorMentDtoCall(@Body RequestBody requestBody);
+
+    @POST("manage_vaccine/delete")
+    Call<DeleteVaccineDto> loadAPIDeleteVaccineDtoCall(@Body RequestBody requestBody);
+
 }

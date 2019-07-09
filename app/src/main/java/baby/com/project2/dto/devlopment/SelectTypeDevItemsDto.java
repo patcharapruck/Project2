@@ -1,6 +1,6 @@
 package baby.com.project2.dto.devlopment;
 
-public class SelectTpyeDevItemsDto {
+public class SelectTypeDevItemsDto {
 
     private String id_type;
     private String type_dev;

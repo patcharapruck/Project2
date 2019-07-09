@@ -71,7 +71,7 @@ public class DevelopMentListItemsAdapter extends RecyclerView.Adapter<DevelopMen
                             ,devDto.getDev().get(j).getBD_data()
                             ,devDto.getDev().get(j).getBD_image()
                             ,devDto.getDev().get(j).getId_agedev()
-                            ,devDto.getDev().get(j).getId_type()));
+                            ,items.get(i).getData()));
                 }catch (ArrayIndexOutOfBoundsException e){
                     break;
                 }
