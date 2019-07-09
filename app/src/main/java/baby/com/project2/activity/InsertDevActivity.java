@@ -78,6 +78,7 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        getDateTime();
         TextViewDevBirthday.setOnClickListener(this);
         CardViewTrue.setOnClickListener(this);
         CardViewFail.setOnClickListener(this);
@@ -237,5 +238,31 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void getDateTime() {
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        String formatDateTime = dateFormat.format(calendar.getTime());
+        formatDateTimeToday = dateFormat2.format(calendar.getTime());
+
+        Day = calendar.get(Calendar.DAY_OF_MONTH);
+        Month = calendar.get(Calendar.MONTH)+1;
+        Year = calendar.get(Calendar.YEAR);
+
+        DateDto dateDto = new DateDto();
+        dateDto.setCalendar(calendar);
+        dateDto.setDateToday(date);
+        dateDto.setDateString(formatDateTime);
+        dateDto.setDay(Day);
+        dateDto.setMonth(Month);
+        dateDto.setYear(Year);
+        DateManager.getInstance().setDateDto(dateDto);
     }
 }

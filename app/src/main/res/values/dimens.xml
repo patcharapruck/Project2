@@ -10,7 +10,7 @@
     <dimen name="textsize_btn">20sp</dimen>
     <dimen name="textsize_tv">15sp</dimen>
     <dimen name="marginTopBtn_login">10dp</dimen>
-    <dimen name="Textheight_login">50dp</dimen>
+    <dimen name="Textheight_login">60dp</dimen>
 
 
     <dimen name="textsize_grown_head">15sp</dimen>

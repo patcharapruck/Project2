@@ -9,11 +9,15 @@ public class SharedPrefUser {
     private static Context mCtx;
 
     private static final String SHARED_LOGIN = "myaccount";
-    private static final String SHARED_TOKEN = "myaccount";
+    private static final String SHARED_TOKEN = "myaccount2";
     private static final String KEY_USER = "user";
-    private static final String KEY_PASS= "pass";
+    private static final String KEY_PASS = "pass";
+    private static final String KEY_ID = "id";
     private static final String KEY_CHILD = "child";
+    private static final String KEY_GENDER = "child";
     private static final String KEY_REMEMBER = "remember";
+    private static final String KEY_USER2 = "user2";
+    private static final String KEY_PASS2= "pass2";
 
     SharedPrefUser(Context context){
         mCtx = context;
@@ -26,34 +30,39 @@ public class SharedPrefUser {
         return mInstance;
     }
 
-    public boolean saveLogin(String user,String pass,Boolean remember){
+    public boolean saveLogin(String user,String pass,Boolean remember,String id){
 
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_LOGIN, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        SharedPreferences sharedPreferences2 = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sharedPreferences2.edit();
 
         editor.putString(KEY_USER,user);
         editor.putString(KEY_PASS,pass);
         editor.putBoolean(KEY_REMEMBER,remember);
         editor.apply();
 
+        editor2.putString(KEY_ID,id);
+        editor2.putString(KEY_USER2,user);
+        editor2.putString(KEY_PASS2,pass);
+        editor2.apply();
+
         return true;
     }
 
-    public boolean saveChidId(String id){
+    public boolean saveChidId(String id,int gender){
 
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(KEY_CHILD,id);
+        editor.putInt(KEY_GENDER,gender);
         editor.apply();
         return true;
     }
 
     public boolean logout(){
-        SharedPreferences sharedPreferencestoken = mCtx.getSharedPreferences(SHARED_LOGIN, Context.MODE_PRIVATE);
-        SharedPreferences.Editor usertoken = sharedPreferencestoken.edit();
-        usertoken.clear();
-        usertoken.apply();
 
         SharedPreferences sharedPreferences= mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
         SharedPreferences.Editor c = sharedPreferences.edit();
@@ -79,6 +88,16 @@ public class SharedPrefUser {
     public Boolean getRemember(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_LOGIN, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(KEY_REMEMBER,false);
+    }
+
+    public String getUid(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_ID,"");
+    }
+
+    public int getGender(){
+        SharedPreferences sharedPreferences2 = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
+        return sharedPreferences2.getInt(KEY_GENDER,0);
     }
 
 }

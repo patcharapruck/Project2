@@ -11,7 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.EditGrowActivity;
@@ -44,7 +49,12 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
         customViewDevelopMentList.StatusDev.setVisibility(View.INVISIBLE);
         SelectDataDevDto selectDataDevDto = DataDevManager.getInstance().getItemsDto();
 
-        String date = DateManager.getInstance().getDateDto().getDateString();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        String formatDateTime = dateFormat.format(calendar.getTime());
+
         int size=0;
 
         try {
@@ -57,10 +67,10 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
             for(int j=0;j<size;j++){
                 if(selectDataDevDto.getDatadev().get(j).getBD_id().equals(items.get(i).getBD_id())){
                     customViewDevelopMentList.StatusDev.setVisibility(View.VISIBLE);
-                    date = selectDataDevDto.getDatadev().get(j).getFKcd_date();
+                    formatDateTime = selectDataDevDto.getDatadev().get(j).getFKcd_date();
 
                     if(selectDataDevDto.getDatadev().get(j).getFKcd_status()==1){
-                        customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.parseColor("#1CC50B"));
+
                     }else {
                         customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.parseColor("#FF8C00"));
                     }
@@ -70,7 +80,7 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
 
         }
 
-        final String finalDate = date;
+        final String finalDate = formatDateTime;
         customViewDevelopMentList.CardViewDataDev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,4 +113,5 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
 
         }
     }
+
 }

@@ -16,6 +16,7 @@ import baby.com.project2.dto.LoginItemsDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpLoginManager;
 import baby.com.project2.manager.singleton.LoginManager;
+import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -28,6 +29,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextInputEditText UserId,PassId;
     CheckBox CbRemember;
     TextView CreateAccount;
+
+    Context context = LoginActivity.this;
 
     String user="",pass="";
 
@@ -49,6 +52,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         CreateAccount = (TextView) findViewById(R.id.create_account);
 
         CreateAccount.setOnClickListener(this);
+
+        if(SharedPrefUser.getInstance(context).getRemember()){
+            CbRemember.setChecked(SharedPrefUser.getInstance(context).getRemember());
+            UserId.setText(SharedPrefUser.getInstance(context).getUsername());
+            PassId.setText(SharedPrefUser.getInstance(context).getPassword());
+        }
+
+//        if(SharedPrefUser.getInstance(context).getUid().length()>0){
+//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//            finish();
+//            startActivity(intent);
+//        }
     }
 
     @Override
@@ -65,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(v == BtnLogin){
-            reqLogin(UserId.getText().toString(),PassId.getText().toString());
+            reqLogin(UserId.getText().toString(),PassId.getText().toString(),CbRemember.isChecked());
 //            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
 //            finish();
 //            startActivity(intent);
@@ -77,9 +92,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void reqLogin(final String user, final String pass) {
+    public void reqLogin(final String user, final String pass,final boolean b) {
 
-        final Context mcontext = Contextor.getInstance().getmContext();
+        final Context mcontext = LoginActivity.this;
         String reqBody = "{\"email\":\""+user+"\",\"password\":\""+pass+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<LoginItemsDto> call = HttpLoginManager.getInstance().getService().loadAPILogin(requestBody);
@@ -92,6 +107,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     LoginItemsDto dto = response.body();
                     LoginManager.getInstance().setItemsDto(dto);
+
+                    SharedPrefUser.getInstance(mcontext).saveLogin(user,pass,b,dto.getId());
 
                     if(response.body().isConnect()){
                             if(dto.isChildchecked()){

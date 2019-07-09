@@ -30,8 +30,8 @@
 
                 <ImageView
                     android:id="@+id/image_view_kids"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/prompt_medium"
                     android:gravity="center"
-                    android:text="25 พฤษภาคม 2562"
+                    android:text=""
                     android:textSize="@dimen/text_brithday_kids_items" />
 
             </LinearLayout>
