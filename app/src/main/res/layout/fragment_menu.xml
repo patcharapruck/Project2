@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="20dp">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardview_grow"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:layout_marginTop="5dp"
             android:padding="10dp">
 
@@ -26,9 +27,9 @@
 
 
                 <ImageView
-                    android:layout_width="100dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:src="@color/black" />
+                    android:src="@mipmap/ic_grow" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -37,7 +38,7 @@
                     android:gravity="center"
                     android:text="การเจริญเติบโต"
                     android:textColor="@color/black"
-                    android:textSize="25sp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -45,8 +46,9 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardview_dev"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:layout_marginTop="5dp"
             android:padding="10dp">
 
@@ -57,28 +59,28 @@
 
 
                 <ImageView
-                    android:layout_width="100dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:src="@color/colorMain" />
+                    android:src="@mipmap/ic_dev" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="การเจริญเติบโต"
+                    android:text="พัฒนาการ"
                     android:textColor="@color/black"
-                    android:textSize="25sp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
-
         <android.support.v7.widget.CardView
+            android:id="@+id/cardview_vac"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:layout_marginTop="5dp"
             android:padding="10dp">
 
@@ -89,18 +91,50 @@
 
 
                 <ImageView
-                    android:layout_width="100dp"
+                    android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:src="@color/medium" />
+                    android:src="@mipmap/ic_vac" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    android:text="การเจริญเติบโต"
+                    android:text="วัคซีน"
                     android:textColor="@color/black"
-                    android:textSize="25sp"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview_milk"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_milk" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:text="โภชนาการ"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
             </LinearLayout>

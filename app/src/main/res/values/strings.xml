@@ -5,6 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">หน้าหลัก</string>
     <string name="grade_low">ต่ำกว่าเกณฑ์</string>
-    <string name="grade_good">มากกว่าเกณฑ์</string>
-    <string name="grade_heigth">ตามเกณฑ์</string>
+    <string name="grade_good">ตามเกณฑ์</string>
+    <string name="grade_heigth">มากกว่าเกณฑ์</string>
 </resources>

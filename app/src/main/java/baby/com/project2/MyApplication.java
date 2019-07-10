@@ -10,7 +10,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Contextor.getInstance().getmContext();
+        Contextor.getInstance().init(getApplicationContext());
     }
 
     @Override

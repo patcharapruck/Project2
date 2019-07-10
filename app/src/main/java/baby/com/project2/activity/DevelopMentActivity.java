@@ -66,7 +66,7 @@ public class DevelopMentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview_dev);
-        reqDataDevelorment(SharedPrefUser.getInstance(DevelopMentActivity.this).getKeyChild());
+        reqDataDevelorment(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
     }
 
     @Override

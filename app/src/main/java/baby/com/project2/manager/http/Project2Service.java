@@ -9,6 +9,7 @@ import baby.com.project2.dto.child.UpdateChildDto;
 import baby.com.project2.dto.devlopment.DeleteDevelorMentDto;
 import baby.com.project2.dto.devlopment.InsertDevelorMentDto;
 import baby.com.project2.dto.devlopment.SelectAgeDevDto;
+import baby.com.project2.dto.devlopment.SelectBDDto;
 import baby.com.project2.dto.devlopment.SelectDataDevDto;
 import baby.com.project2.dto.devlopment.SelectDevDto;
 import baby.com.project2.dto.devlopment.SelectTypeDevDto;
@@ -111,5 +112,8 @@ public interface Project2Service {
 
     @POST("manage_vaccine/delete")
     Call<DeleteVaccineDto> loadAPIDeleteVaccineDtoCall(@Body RequestBody requestBody);
+
+    @POST("manage_develorment/selete/BD")
+    Call<SelectBDDto> loadAPIBdDtoCall();
 
 }

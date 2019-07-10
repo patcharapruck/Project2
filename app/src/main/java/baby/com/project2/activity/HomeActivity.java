@@ -93,17 +93,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         getDateTime();
+        setShowDataChild();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setShowDataChild();
     }
 
     private void initInstances() {
@@ -121,7 +122,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void setShowDataChild() {
         DecimalFormat formatter = new DecimalFormat("00");
         String uid = SharedPrefUser.getInstance(HomeActivity.this).getUid();
-
         reqselectchild(uid);
     }
 
@@ -216,8 +216,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     dto = response.body();
                     SelectChildManager.getInstance().setItemsDto(dto);
 
-                    SharedPrefUser.getInstance(mcontext)
-                            .saveChidId(dto.getResult().get(0).getC_id(),dto.getResult().get(0).getC_gender());
+                    SharedPrefUser.getInstance(Contextor.getInstance().getmContext())
+                            .saveChidId(dto.getResult().get(0).getC_id(),dto.getResult().get(0).getC_gender(),dto.getResult().get(0).getC_birthday());
 
                     setNavigation();
                     setRecyclerView();

@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     CheckBox CbRemember;
     TextView CreateAccount;
 
-    Context context = LoginActivity.this;
+    Context context = Contextor.getInstance().getmContext();
 
     String user="",pass="";
 

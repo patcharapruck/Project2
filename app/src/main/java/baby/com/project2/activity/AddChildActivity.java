@@ -78,6 +78,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         super.onPostCreate(savedInstanceState);
         getDateTime();
         ImageViewCalendarAddChild.setOnClickListener(this);
+        TextViewAddChildBirthday.setOnClickListener(this);
     }
 
     @Override
@@ -328,7 +329,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v == ImageViewCalendarAddChild){
+        if(v == ImageViewCalendarAddChild|| v == TextViewAddChildBirthday){
             setDateDialog();
         }
         if(v == BtnAddChild){

@@ -14,7 +14,8 @@ public class SharedPrefUser {
     private static final String KEY_PASS = "pass";
     private static final String KEY_ID = "id";
     private static final String KEY_CHILD = "child";
-    private static final String KEY_GENDER = "child";
+    private static final String KEY_BRITH= "b";
+    private static final String KEY_GENDER = "child1";
     private static final String KEY_REMEMBER = "remember";
     private static final String KEY_USER2 = "user2";
     private static final String KEY_PASS2= "pass2";
@@ -51,13 +52,14 @@ public class SharedPrefUser {
         return true;
     }
 
-    public boolean saveChidId(String id,int gender){
+    public boolean saveChidId(String id,int gender,String b){
 
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(KEY_CHILD,id);
         editor.putInt(KEY_GENDER,gender);
+        editor.putString(KEY_BRITH,b);
         editor.apply();
         return true;
     }
@@ -98,6 +100,11 @@ public class SharedPrefUser {
     public int getGender(){
         SharedPreferences sharedPreferences2 = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
         return sharedPreferences2.getInt(KEY_GENDER,0);
+    }
+
+    public String getKeyBrith(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_BRITH,"");
     }
 
 }

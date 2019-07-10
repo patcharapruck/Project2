@@ -70,9 +70,9 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
                     formatDateTime = selectDataDevDto.getDatadev().get(j).getFKcd_date();
 
                     if(selectDataDevDto.getDatadev().get(j).getFKcd_status()==1){
-
+                        customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.GREEN);
                     }else {
-                        customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.parseColor("#FF8C00"));
+                        customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.YELLOW);
                     }
 
                 }

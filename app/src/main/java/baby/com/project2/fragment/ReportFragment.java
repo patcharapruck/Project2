@@ -56,7 +56,7 @@ public class ReportFragment extends Fragment {
                 case 0:
                     return new ReportGrowFragment();
                 case 1:
-                    return new ReportGrowFragment();
+                    return new ReportDevFragment();
                 case 2:
                     return new ReportVaccineFragment();
                 default:
