@@ -23,6 +23,7 @@ import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.vaccine.AgeVaccineManager;
 import baby.com.project2.manager.singleton.vaccine.DataVaccineManager;
+import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.ReportVaccineModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -149,7 +150,7 @@ public class ReportVaccineFragment extends Fragment {
                 if(response.isSuccessful()){
                     dtoage = response.body();
                     AgeVaccineManager.getInstance().setItemsDto(dtoage);
-                    reqListGrow("01");
+                    reqListGrow(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
 
                 }else {
                     Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();

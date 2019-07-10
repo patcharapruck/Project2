@@ -2,8 +2,10 @@ package baby.com.project2.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import baby.com.project2.R;
+import baby.com.project2.activity.EditMilkActivity;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
@@ -199,10 +202,10 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
                         InsertVaccineManager.getInstance().setItemsDto(dto);
                         if(response.body().getSuccess()){
 
-//                            ShowAlertDialog(response.body().getSuccess());
+                            ShowAlertDialog(response.body().getSuccess());
                         }
                         else{
-//                            ShowAlertDialog(response.body().getSuccess());
+                            ShowAlertDialog(response.body().getSuccess());
                         //Toast.makeText(mcontext,dto.getSuccess(),Toast.LENGTH_LONG).show();
                         }
                     }else {
@@ -214,6 +217,37 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
                     Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
                 }
             });
+        }
+
+        private void ShowAlertDialog(boolean success) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Contextor.getInstance().getmContext());
+
+            if(success){
+                builder.setTitle("เพิ่มข้อมูลวัคซีน");
+                builder.setMessage("เพิ่มข้อมูลวัคซีนเรียบร้อย");
+                builder.setIcon(R.mipmap.ic_success);
+                builder.setCancelable(true);
+                builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+            }else {
+                builder.setTitle("ล้มเหลว");
+                builder.setMessage("เกิดข้อผิดพลาด เพิ่มข้อมูลไม่สำเร็จ");
+                builder.setIcon(R.mipmap.ic_failed);
+                builder.setCancelable(true);
+                builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+            }
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
     }
 }

@@ -45,6 +45,13 @@ public class HttpLoginManager {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://10.33.1.98:1337/api/project2/")
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .build();
+
+
+
         service = retrofit.create(Project2Service.class);
 
     }

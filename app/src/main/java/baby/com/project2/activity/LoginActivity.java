@@ -59,11 +59,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             PassId.setText(SharedPrefUser.getInstance(context).getPassword());
         }
 
-//        if(SharedPrefUser.getInstance(context).getUid().length()>0){
-//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//            finish();
-//            startActivity(intent);
-//        }
+        if(SharedPrefUser.getInstance(context).getUid().length()>0){
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            finish();
+            startActivity(intent);
+        }
     }
 
     @Override

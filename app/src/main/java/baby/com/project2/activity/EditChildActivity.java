@@ -39,6 +39,7 @@ import baby.com.project2.dto.LoginItemsDto;
 import baby.com.project2.dto.child.DeleteChildDto;
 import baby.com.project2.dto.child.SelectChildItemsDto;
 import baby.com.project2.dto.child.UpdateChildDto;
+import baby.com.project2.dto.growup.InsertGrowUpDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
@@ -46,6 +47,7 @@ import baby.com.project2.manager.singleton.child.DeleteChildManager;
 import baby.com.project2.manager.singleton.LoginManager;
 import baby.com.project2.manager.singleton.child.SelectChildManager;
 import baby.com.project2.manager.singleton.child.UpdateChildManager;
+import baby.com.project2.manager.singleton.growup.InsertGrowupManager;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -342,7 +344,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         alertDialog.show();
     }
 
-    public void requpdate(String cid,String name,int gender,float weight,float height,String birthday,String blood) {
+    public void requpdate(final String cid, String name, int gender, final float weight, final float height, final String birthday, String blood) {
 
         final Context mcontext = EditChildActivity.this;
         String reqBody = "{\"id\" :\""+cid+"\",\"name\": \""+name+"\",\"gender\":"+gender+",\"weight\" :"+weight+"," +
@@ -357,7 +359,8 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
                     UpdateChildDto dto = response.body();
                     if(response.body().isSuccess()){
                         UpdateChildManager.getInstance().setItemsDto(dto);
-                        ShowAlertDialog(response.body().isSuccess());
+
+                        reqinsert(birthday,weight,height,cid);
                     }
                     else{
                         ShowAlertDialog(response.body().isSuccess());
@@ -369,6 +372,38 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
             }
             @Override
             public void onFailure(Call<UpdateChildDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void reqinsert(String date,float weight,float height,String Cid) {
+
+        final Context mcontext = Contextor.getInstance().getmContext();
+        String reqBody = "{\"G_height\":"+height+",\"G_weight\" :"+weight+",\"G_date\":\""+date+"\","+
+                "\"C_id\":\""+Cid+"\" }";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<InsertGrowUpDto> call = HttpManager.getInstance().getService().loadAPIGrowup(requestBody);
+        call.enqueue(new Callback<InsertGrowUpDto>() {
+
+            @Override
+            public void onResponse(Call<InsertGrowUpDto> call, Response<InsertGrowUpDto> response) {
+                if(response.isSuccessful()){
+                    InsertGrowUpDto dto = response.body();
+                    InsertGrowupManager.getInstance().setItemsDto(dto);
+                    if(response.body().getSuccess()){
+                        ShowAlertDialog(response.body().getSuccess());
+                    }
+                    else{
+                        ShowAlertDialog(response.body().getSuccess());
+//                        Toast.makeText(mcontext,dto.getSuccess(),Toast.LENGTH_LONG).show();
+                    }
+                }else {
+                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<InsertGrowUpDto> call, Throwable t) {
                 Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
             }
         });

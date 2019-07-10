@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -70,9 +71,9 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
                     formatDateTime = selectDataDevDto.getDatadev().get(j).getFKcd_date();
 
                     if(selectDataDevDto.getDatadev().get(j).getFKcd_status()==1){
-                        customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.GREEN);
+                        customViewDevelopMentList.StatusDev.setImageResource(R.mipmap.ic_success);
                     }else {
-                        customViewDevelopMentList.StatusDev.setCardBackgroundColor(Color.YELLOW);
+                        customViewDevelopMentList.StatusDev.setImageResource(R.mipmap.ic_failed);
                     }
 
                 }
@@ -102,14 +103,15 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
     public class CustomViewDevelopMent extends RecyclerView.ViewHolder {
 
         TextView TextViewDataDevShow;
-        CardView CardViewDataDev,StatusDev;
+        ImageView StatusDev;
+        CardView CardViewDataDev;
 
         public CustomViewDevelopMent(@NonNull View itemView) {
             super(itemView);
 
-            TextViewDataDevShow     = (TextView)itemView.findViewById(R.id.textview_data_dev_show);
+            TextViewDataDevShow   = (TextView)itemView.findViewById(R.id.textview_data_dev_show);
             CardViewDataDev = (CardView)itemView.findViewById(R.id.cardview_data_dev);
-            StatusDev           = (CardView) itemView.findViewById(R.id.status_dev);
+            StatusDev       = (ImageView) itemView.findViewById(R.id.status_dev);
 
         }
     }

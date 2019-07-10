@@ -119,6 +119,7 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
     private void setData() {
         int index = dto.getGrowup().size() - 1;
 
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Format formatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("th", "TH"));
         Date d = null;

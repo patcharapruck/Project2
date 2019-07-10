@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         getDateTime();
-        setShowDataChild();
+
     }
 
     @Override
@@ -105,6 +105,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        setShowDataChild();
     }
 
     private void initInstances() {

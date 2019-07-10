@@ -36,10 +36,14 @@ import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.LoginItemsDto;
 import baby.com.project2.dto.child.InsertChildDto;
+import baby.com.project2.dto.growup.InsertGrowUpDto;
+import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.child.InsertChildManager;
 import baby.com.project2.manager.singleton.LoginManager;
+import baby.com.project2.manager.singleton.growup.InsertGrowupManager;
+import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -65,7 +69,12 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
     private int Year;
 
     private String formatDateTimeToday;
+    private String formatDateTime;
     private String BloodType = "A";
+
+    String name,brithday,blood,uid;
+    int gender=1;
+    float height=0f,weigth=0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,10 +160,10 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    public void reqinsert(String name,int gender,float weight,float height,String birthday,String blood,String uid) {
+    public void reqinsert(String name,int gender,float weight,float heightt,String birthday,String blood,String uid) {
 
         final Context mcontext = AddChildActivity.this;
-        String reqBody = "{\"c_name\": \""+name+"\",\"c_gender\":"+gender+",\"c_weight\" :"+weight+",\"c_height\":"+height+","+
+        String reqBody = "{\"c_name\": \""+name+"\",\"c_gender\":"+gender+",\"c_weight\" :"+weight+",\"c_height\":"+heightt+","+
                 "\"c_birthday\":\""+birthday+"\",\"c_blood\":\""+blood+"\",\"u_id\":\""+uid+"\" }";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<InsertChildDto> call = HttpManager.getInstance().getService().loadAPIInsertChild(requestBody);
@@ -166,7 +175,9 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
                     InsertChildDto dto = response.body();
                     if(response.body().getSuccess().equals("Acount created")){
                         InsertChildManager.getInstance().setItemsDto(dto);
-                        ShowAlertDialog(response.body().getSuccess());
+                        DecimalFormat formatter = new DecimalFormat("00");
+                        reqinsertgrow(formatDateTime,weigth,height,formatter.format(dto.getId()));
+
                     }
                     else{
                         ShowAlertDialog(response.body().getSuccess());
@@ -256,7 +267,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
-        String formatDateTime = dateFormat.format(calendar.getTime());
+        formatDateTime = dateFormat.format(calendar.getTime());
         formatDateTimeToday = dateFormat2.format(calendar.getTime());
 
         TextViewAddChildBirthday.setText(formatDateTime);
@@ -290,9 +301,6 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         DecimalFormat formatter = new DecimalFormat("00");
         LoginItemsDto loginItemsDto = LoginManager.getInstance().getItemsDto();
 
-        String name,brithday,blood,uid;
-        int gender=1;
-        float height=0f,weigth=0f;
 
         uid = formatter.format(Integer.valueOf(loginItemsDto.getId()));
         name = EditTextAddChildName.getText().toString();
@@ -335,6 +343,38 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         if(v == BtnAddChild){
             DataAddChild();
         }
+    }
+
+    public void reqinsertgrow(String date,float weight,float heightt,String Cid) {
+
+        final Context mcontext = AddChildActivity.this;
+        String reqBody = "{\"G_height\":"+heightt+",\"G_weight\" :"+weight+",\"G_date\":\""+date+"\","+
+                "\"C_id\":\""+Cid+"\" }";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<InsertGrowUpDto> call = HttpManager.getInstance().getService().loadAPIGrowup(requestBody);
+        call.enqueue(new Callback<InsertGrowUpDto>() {
+
+            @Override
+            public void onResponse(Call<InsertGrowUpDto> call, Response<InsertGrowUpDto> response) {
+                if(response.isSuccessful()){
+                    InsertGrowUpDto dto = response.body();
+                    InsertGrowupManager.getInstance().setItemsDto(dto);
+                    if(response.body().getSuccess()){
+                        ShowAlertDialog("Acount created");
+                    }
+                    else{
+                        ShowAlertDialog("Failed");
+//                        Toast.makeText(mcontext,dto.getSuccess(),Toast.LENGTH_LONG).show();
+                    }
+                }else {
+                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<InsertGrowUpDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 }
