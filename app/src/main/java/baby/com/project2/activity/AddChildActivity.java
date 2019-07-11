@@ -245,15 +245,9 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
             }
         },Year,Month-1,Day);
 
-        Date date = null;
-        String NewDateString = formatDateTimeToday;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-        try {
-            date = sdf.parse(NewDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         dialog.show();
         dialog.getDatePicker().setMaxDate(date.getTime());
     }

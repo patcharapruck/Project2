@@ -193,20 +193,10 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
             }
         },Year,Month-1,Day);
 
-        Date date = null;
-        Date d = null;
-        String oldDateString = "2019/01/06";
-        String NewDateString = formatDateTimeToday;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-        try {
-            d = sdf.parse(oldDateString);
-            date = sdf.parse(NewDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         dialog.show();
-        dialog.getDatePicker().setMinDate(d.getTime());
         dialog.getDatePicker().setMaxDate(date.getTime());
     }
 

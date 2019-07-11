@@ -178,7 +178,7 @@ public class ReportDevFragment extends Fragment {
     private void setRecyclerView() {
 
         items = new ArrayList<>();
-        adapter = new ReportDevListItemsAdapter(Contextor.getInstance().getmContext(),items);
+        adapter = new ReportDevListItemsAdapter(getContext(),items);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(Contextor.getInstance().getmContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
@@ -208,6 +208,7 @@ public class ReportDevFragment extends Fragment {
 
             try {
                 items.add(new ReportDevModelClass(dtodev.getDatadev().get(i).getFKcd_id()
+                        ,dtodev.getDatadev().get(i).getBD_id()
                         ,dtodev.getDatadev().get(i).getFKcd_date()
                         ,type,age,name,dtodev.getDatadev().get(i).getFKcd_status()));
             }catch (ArrayIndexOutOfBoundsException e){

@@ -106,13 +106,15 @@ public class ReportVaccineFragment extends Fragment {
         String Name="";
 
         String V = "";
+        String type ="";
 
         for (int i = 0; i < size; i++) {
 
             for(int j=0;j<dtov.getVaccine().size();j++){
-                if(dtov.getVaccine().get(i).getV_id().equals(formatter.format(dto.getDatavaccine().get(i).getV_id()))){
-                    Name = dtov.getVaccine().get(i).getV_name();
-                    V = dtov.getVaccine().get(i).getId_agevac();
+                if(dtov.getVaccine().get(j).getV_id().equals(formatter.format(dto.getDatavaccine().get(i).getV_id()))){
+                    Name = dtov.getVaccine().get(j).getV_name();
+                    V = dtov.getVaccine().get(j).getId_agevac();
+                    type = dtov.getVaccine().get(j).getV_type();
                 }
             }
 
@@ -130,7 +132,9 @@ public class ReportVaccineFragment extends Fragment {
 
             try {
                 items.add(new ReportVaccineModelClass(dto.getDatavaccine().get(i).getFKcv_id()
-                        ,Name,Age,dto.getDatavaccine().get(i).getFKcv_date(),Status));
+                        ,dto.getDatavaccine().get(i).getV_id()
+                        ,Name,Age,dto.getDatavaccine().get(i).getFKcv_date(),Status
+                        ,dto.getDatavaccine().get(i).getFKcv_plase(),type));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;
             }

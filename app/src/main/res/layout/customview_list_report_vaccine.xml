@@ -7,21 +7,22 @@
     android:padding="10dp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardview_vac"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         app:cardBackgroundColor="@color/white">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:weightSum="2">-->
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -35,7 +36,7 @@
                         android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:background="@mipmap/ic_calender" />
+                        android:background="@mipmap/ic_vac" />
 
                     <TextView
                         android:id="@+id/textview_name_vaccine"
@@ -49,30 +50,30 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="left"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <TextView
-                        style="@style/textstyle_add_child"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="ช่วงอายุ"
-                        android:textColor="@color/black"/>
+                    <!--<TextView-->
+                        <!--style="@style/textstyle_add_child"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:text="ช่วงอายุ"-->
+                        <!--android:textColor="@color/black"/>-->
 
 
-                    <TextView
-                        android:id="@+id/age_vaccine"
-                        style="@style/textstyle_add_child"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="แรกเกิด" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/age_vaccine"-->
+                        <!--style="@style/textstyle_add_child"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:text="แรกเกิด" />-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -99,83 +100,75 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+            <!--<LinearLayout-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="vertical">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:orientation="horizontal">-->
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:layout_weight="1">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:gravity="right"
-                            android:orientation="horizontal">
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginRight="10dp"-->
+                            <!--android:gravity="right"-->
+                            <!--android:orientation="horizontal">-->
 
-                            <TextView
-                                android:id="@+id/textview_date"
-                                style="@style/textstyle_add_child"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="10dp"
-                                android:text="11 ธันวาคม 2561" />
-
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:gravity="right"
-                            android:orientation="horizontal">
+                            <!--<TextView-->
+                                <!--android:id="@+id/textview_date"-->
+                                <!--style="@style/textstyle_add_child"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_gravity="center"-->
+                                <!--android:layout_marginLeft="10dp"-->
+                                <!--android:text="11 ธันวาคม 2561" />-->
 
 
-                            <TextView
-                                style="@style/textstyle_add_child"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="อายุ" />
+
+                        <!--</LinearLayout>-->
+
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginRight="10dp"-->
+                            <!--android:gravity="right"-->
+                            <!--android:orientation="horizontal">-->
 
 
-                            <TextView
-                                style="@style/textstyle_add_child"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="กิโลกรับ" />
+                            <!--<TextView-->
+                                <!--style="@style/textstyle_add_child"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginLeft="10dp"-->
+                                <!--android:text="อายุ" />-->
 
-                        </LinearLayout>
 
-                    </LinearLayout>
+                            <!--<TextView-->
+                                <!--style="@style/textstyle_add_child"-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginLeft="10dp"-->
+                                <!--android:text="กิโลกรับ" />-->
 
-                    <ImageView
-                        android:id="@+id/delete_vaccine"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="10dp"
-                        android:src="@mipmap/ic_delete" />
+                        <!--</LinearLayout>-->
 
-                </LinearLayout>
+                    <!--</LinearLayout>-->
 
-            </LinearLayout>
+                <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
 
         </LinearLayout>
 

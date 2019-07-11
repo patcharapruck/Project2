@@ -65,7 +65,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
     private int Day;
     private int Month;
     private int Year;
-    private String formatDateTimeToday;
+    private String formatDate;
 
     private String Volume="",NameType="";
 
@@ -125,6 +125,8 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
     private void setDataupdate() {
         DecimalFormat formatter = new DecimalFormat("00");
         SelectMilkItemsDto milkDto = SelectMilkManager.getInstance().getItemsDto().getMilk().get(index);
+
+        formatDate = milkDto.getM_date();
 
         mid = formatter.format(milkDto.getM_id());
         EditTextEditMilkNamefood.setText(milkDto.getM_foodname());
@@ -231,55 +233,36 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
             }
         },Year,Month-1,Day);
 
-        Date date = null;
-        Date d = null;
-        String oldDateString = "2019/01/06";
-        String NewDateString = formatDateTimeToday;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-        try {
-            d = sdf.parse(oldDateString);
-            date = sdf.parse(NewDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         dialog.show();
-        dialog.getDatePicker().setMinDate(d.getTime());
         dialog.getDatePicker().setMaxDate(date.getTime());
     }
 
     private void getDateTime() {
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+        Date date = null;
+        String NewDateString = formatDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try {
+            date = sdf.parse(NewDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-
-        String formatDateTime = dateFormat.format(calendar.getTime());
-        formatDateTimeToday = dateFormat2.format(calendar.getTime());
-
-        TextViewEditMilkBirthday.setText(formatDateTime);
 
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH)+1;
         Year = calendar.get(Calendar.YEAR);
-
-        DateDto dateDto = new DateDto();
-        dateDto.setCalendar(calendar);
-        dateDto.setDateToday(date);
-        dateDto.setDateString(formatDateTime);
-        dateDto.setDay(Day);
-        dateDto.setMonth(Month);
-        dateDto.setYear(Year);
-        DateManager.getInstance().setDateDto(dateDto);
     }
 
     public void requpdate(String mid,String nameType,String name,int age,int amount,String volume,String birthday,String time) {
 
         final Context mcontext = EditMilkActivity.this;
-        String reqBody = "{\"M_id\":\""+mid+"\",\"M_foodname\": \""+nameType+"\",\"M_Milk\":\""+name+"\",\"M_age\" :"+age+",\"M_amount\":"+amount+","+
+        String reqBody = "{\"M_id\":\""+mid+"\",\"M_foodname\": \""+name+"\",\"M_Milk\":\""+nameType+"\",\"M_age\" :"+age+",\"M_amount\":"+amount+","+
                 "\"M_unit\":\""+volume+"\",\"M_date\":\""+birthday+"\",\"M_time\":\""+time+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<UpdateMilkDto> call = HttpManager.getInstance().getService().loadAPIupdateMilk(requestBody);

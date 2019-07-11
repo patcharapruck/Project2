@@ -2,13 +2,14 @@ package baby.com.project2.view;
 
 public class ReportDevModelClass {
 
-    private String Id;
+    private String Id,BD_id;
     private String Date;
     private String Type ,Age,Name;
     private int Status;
 
-    public ReportDevModelClass(String id ,String date,String type ,String age, String name,int status){
+    public ReportDevModelClass(String id,String bd_id ,String date,String type ,String age, String name,int status){
         this.Id = id;
+        this.BD_id = bd_id;
         this.Date = date;
         this.Type = type;
         this.Age = age;
@@ -38,5 +39,9 @@ public class ReportDevModelClass {
 
     public int getStatus() {
         return Status;
+    }
+
+    public String getBD_id() {
+        return BD_id;
     }
 }

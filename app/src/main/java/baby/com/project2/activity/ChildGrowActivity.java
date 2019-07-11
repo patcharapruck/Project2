@@ -1,7 +1,9 @@
 package baby.com.project2.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +11,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
@@ -41,11 +51,22 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
     private String dateStr;
     private float Weight,Height;
 
+    private int Day;
+    private int Month;
+    private int Year;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_grow);
         initInstances();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        getDateTime();
+        TextViewAddChildBirthday.setOnClickListener(this);
     }
 
     private void initInstances(){
@@ -69,10 +90,6 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
         ImageDeletePhoto.setVisibility(View.INVISIBLE);
         ImageAlertWidth.setVisibility(View.INVISIBLE);
         ImageAlertHeight.setVisibility(View.INVISIBLE);
-
-        DateDto dateDto = DateManager.getInstance().getDateDto();
-        dateStr = dateDto.getDateString();
-        TextViewAddChildBirthday.setText(dateStr);
 
         ButtonSave.setOnClickListener(this);
     }
@@ -107,6 +124,9 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
 
         if(v == ButtonSave){
             setDate();
+        }
+        if(v == TextViewAddChildBirthday){
+            setDateDialog();
         }
     }
     public void reqinsert(String date,float weight,float height,String Cid) {
@@ -170,5 +190,59 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void getDateTime() {
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        dateStr = dateFormat.format(calendar.getTime());
+
+        TextViewAddChildBirthday.setText(dateStr);
+
+        Day = calendar.get(Calendar.DAY_OF_MONTH);
+        Month = calendar.get(Calendar.MONTH)+1;
+        Year = calendar.get(Calendar.YEAR);
+
+        DateDto dateDto = new DateDto();
+        dateDto.setCalendar(calendar);
+        dateDto.setDateToday(date);
+        dateDto.setDateString(dateStr);
+        dateDto.setDay(Day);
+        dateDto.setMonth(Month);
+        dateDto.setYear(Year);
+        DateManager.getInstance().setDateDto(dateDto);
+    }
+
+    private void setDateDialog() {
+
+        final DatePickerDialog dialog = new DatePickerDialog(ChildGrowActivity.this,new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+                DecimalFormat formatter = new DecimalFormat("00");
+                String mm = formatter.format(month+1);
+                String dd = formatter.format(dayOfMonth);;
+
+                String fulldate = year+ "-" + mm + "-" +dd;
+
+                Day = dayOfMonth;
+                Month = month+1;
+                Year = year;
+                TextViewAddChildBirthday.setText(fulldate);
+
+            }
+        },Year,Month-1,Day);
+
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        dialog.show();
+        dialog.getDatePicker().setMaxDate(date.getTime());
     }
 }

@@ -29,11 +29,14 @@ import java.util.Locale;
 import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.devlopment.DeleteDevelorMentDto;
+import baby.com.project2.dto.vaccine.DeleteVaccineDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
+import baby.com.project2.manager.singleton.develorment.DeleteDevManager;
 import baby.com.project2.manager.singleton.vaccine.DataVaccineManager;
+import baby.com.project2.manager.singleton.vaccine.DeleteVacManager;
 import baby.com.project2.manager.singleton.vaccine.InsertVaccineManager;
 import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
@@ -124,6 +127,7 @@ public class InsertVacActivity extends AppCompatActivity implements View.OnClick
 
         if(update == 1){
             DeleteVac.setVisibility(View.VISIBLE);
+            DeleteVac.setOnClickListener(this);
         }
 
     }
@@ -138,6 +142,9 @@ public class InsertVacActivity extends AppCompatActivity implements View.OnClick
         }
         if(v == CardViewFail){
             insertdata(0);
+        }
+        if(v == DeleteVac){
+            ShowAlertDialogConfirm();
         }
     }
 
@@ -233,15 +240,9 @@ public class InsertVacActivity extends AppCompatActivity implements View.OnClick
             }
         },Year,Month-1,Day);
 
-        Date date = null;
-        String NewDateString = dateStr;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        try {
-            date = sdf.parse(NewDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         dialog.show();
         dialog.getDatePicker().setMaxDate(date.getTime());
     }
@@ -265,5 +266,88 @@ public class InsertVacActivity extends AppCompatActivity implements View.OnClick
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH)+1;
         Year = calendar.get(Calendar.YEAR);
+    }
+
+    private void ShowAlertDialogConfirm() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(InsertVacActivity.this);
+        builder.setTitle("ลบข้อมูล");
+        builder.setMessage("คุณต้องการลบข้อมูลเด็กคนนี้ใช่หรือไม่");
+        builder.setIcon(R.mipmap.ic_confirm_dialog);
+        builder.setCancelable(true);
+        builder.setPositiveButton("ไม่", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("ใช่", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                reqdelete(Fkcv_id);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public void reqdelete(String id) {
+
+        final Context mcontext = InsertVacActivity.this;
+        String reqBody = "{\"id\":\""+id+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<DeleteVaccineDto> call = HttpManager.getInstance().getService().loadAPIDeleteVaccineDtoCall(requestBody);
+        call.enqueue(new Callback<DeleteVaccineDto>() {
+
+            @Override
+            public void onResponse(Call<DeleteVaccineDto> call, Response<DeleteVaccineDto> response) {
+                if(response.isSuccessful()){
+                    DeleteVaccineDto dto = response.body();
+                    DeleteVacManager.getInstance().setItemsDto(dto);
+
+                    ShowAlertDialogDelete(response.body().isSuccess());
+
+                }else {
+                    ShowAlertDialogDelete(response.body().isSuccess());
+//                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<DeleteVaccineDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void ShowAlertDialogDelete(boolean success) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(InsertVacActivity.this);
+
+        if(success){
+            builder.setTitle("ลบข้อมูล");
+            builder.setMessage("ลบข้อมูลสำเร็จ");
+            builder.setIcon(R.mipmap.ic_success);
+            builder.setCancelable(true);
+            builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    finish();
+                }
+            });
+        }else if (!success) {
+            builder.setTitle("ลบข้อมูล");
+            builder.setMessage("เกิดข้อผิดพลาด ลบข้อมูลล้มเหลว");
+            builder.setIcon(R.mipmap.ic_failed);
+            builder.setCancelable(true);
+            builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

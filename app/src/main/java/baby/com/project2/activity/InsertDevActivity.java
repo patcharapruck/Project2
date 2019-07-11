@@ -27,15 +27,19 @@ import java.util.Locale;
 
 import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
+import baby.com.project2.dto.devlopment.DeleteDevelorMentDto;
 import baby.com.project2.dto.devlopment.InsertDevelorMentDto;
 import baby.com.project2.dto.devlopment.SelectDataDevDto;
 import baby.com.project2.dto.devlopment.SelectDataDevItemsDto;
+import baby.com.project2.dto.growup.DeleteGrowUpDto;
 import baby.com.project2.dto.growup.InsertGrowUpDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.develorment.DataDevManager;
+import baby.com.project2.manager.singleton.develorment.DeleteDevManager;
 import baby.com.project2.manager.singleton.develorment.InsertDevelorMentManager;
+import baby.com.project2.manager.singleton.growup.DeleteGrowManager;
 import baby.com.project2.manager.singleton.growup.InsertGrowupManager;
 import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
@@ -113,6 +117,7 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
 
         if(update == 1){
             DeleteDev.setVisibility(View.VISIBLE);
+            DeleteDev.setOnClickListener(this);
         }
 
     }
@@ -138,6 +143,9 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         }
         if(v == CardViewFail){
             insertdata(0);
+        }
+        if(v == DeleteDev){
+            ShowAlertDialogConfirm();
         }
 
     }
@@ -255,5 +263,88 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH)+1;
         Year = calendar.get(Calendar.YEAR);
+    }
+
+    private void ShowAlertDialogConfirm() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(InsertDevActivity.this);
+        builder.setTitle("ลบข้อมูล");
+        builder.setMessage("คุณต้องการลบข้อมูลเด็กคนนี้ใช่หรือไม่");
+        builder.setIcon(R.mipmap.ic_confirm_dialog);
+        builder.setCancelable(true);
+        builder.setPositiveButton("ไม่", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("ใช่", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                reqdelete(FKcd_id);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public void reqdelete(String id) {
+
+        final Context mcontext = InsertDevActivity.this;
+        String reqBody = "{\"id\":\""+id+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<DeleteDevelorMentDto> call = HttpManager.getInstance().getService().loadAPIDeleteDevelorMentDtoCall(requestBody);
+        call.enqueue(new Callback<DeleteDevelorMentDto>() {
+
+            @Override
+            public void onResponse(Call<DeleteDevelorMentDto> call, Response<DeleteDevelorMentDto> response) {
+                if(response.isSuccessful()){
+                    DeleteDevelorMentDto dto = response.body();
+                    DeleteDevManager.getInstance().setItemsDto(dto);
+
+                    ShowAlertDialogDelete(response.body().isSuccess());
+
+                }else {
+                    ShowAlertDialogDelete(response.body().isSuccess());
+//                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<DeleteDevelorMentDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void ShowAlertDialogDelete(boolean success) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(InsertDevActivity.this);
+
+        if(success){
+            builder.setTitle("ลบข้อมูล");
+            builder.setMessage("ลบข้อมูลสำเร็จ");
+            builder.setIcon(R.mipmap.ic_success);
+            builder.setCancelable(true);
+            builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    finish();
+                }
+            });
+        }else if (!success) {
+            builder.setTitle("ลบข้อมูล");
+            builder.setMessage("เกิดข้อผิดพลาด ลบข้อมูลล้มเหลว");
+            builder.setIcon(R.mipmap.ic_failed);
+            builder.setCancelable(true);
+            builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

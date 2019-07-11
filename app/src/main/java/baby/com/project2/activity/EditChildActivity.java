@@ -73,7 +73,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
     private int Month;
     private int Year;
 
-    private String formatDateTimeToday;
+    private String formatDate;
     private String BloodType = "A";
     private int CId;
     private String cid;
@@ -131,6 +131,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         SelectChildItemsDto childItemsDto = SelectChildManager.getInstance().getItemsDto().getResult().get(CId);
 
         cid = childItemsDto.getC_id();
+        formatDate = childItemsDto.getC_birthday();
         EditTextEditChildName.setText(childItemsDto.getC_name());
 
         switch (childItemsDto.getC_gender()){
@@ -142,7 +143,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
                 break;
         }
 
-        TextViewEditChildBirthday.setText(childItemsDto.getC_birthday());
+        TextViewEditChildBirthday.setText(formatDate);
         try {
             EditTextEditChildWeight.setText(childItemsDto.getC_weight()+"");
         }catch (Exception e){
@@ -214,45 +215,30 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
             }
         },Year,Month-1,Day);
 
-        Date date = null;
-        String NewDateString = formatDateTimeToday;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-        try {
-            date = sdf.parse(NewDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         dialog.show();
         dialog.getDatePicker().setMaxDate(date.getTime());
     }
 
     private void getDateTime() {
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+        Date date = null;
+        String NewDateString = formatDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try {
+            date = sdf.parse(NewDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-
-        String formatDateTime = dateFormat.format(calendar.getTime());
-        formatDateTimeToday = dateFormat2.format(calendar.getTime());
-
-        TextViewEditChildBirthday.setText(formatDateTime);
 
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH)+1;
         Year = calendar.get(Calendar.YEAR);
-
-        DateDto dateDto = new DateDto();
-        dateDto.setCalendar(calendar);
-        dateDto.setDateToday(date);
-        dateDto.setDateString(formatDateTime);
-        dateDto.setDay(Day);
-        dateDto.setMonth(Month);
-        dateDto.setYear(Year);
-        DateManager.getInstance().setDateDto(dateDto);
     }
 
     private void createTypeSearchData() {
@@ -360,7 +346,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
                     if(response.body().isSuccess()){
                         UpdateChildManager.getInstance().setItemsDto(dto);
 
-                        reqinsert(birthday,weight,height,cid);
+                        ShowAlertDialog(response.body().isSuccess());
                     }
                     else{
                         ShowAlertDialog(response.body().isSuccess());
@@ -377,37 +363,6 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
-    public void reqinsert(String date,float weight,float height,String Cid) {
-
-        final Context mcontext = Contextor.getInstance().getmContext();
-        String reqBody = "{\"G_height\":"+height+",\"G_weight\" :"+weight+",\"G_date\":\""+date+"\","+
-                "\"C_id\":\""+Cid+"\" }";
-        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
-        Call<InsertGrowUpDto> call = HttpManager.getInstance().getService().loadAPIGrowup(requestBody);
-        call.enqueue(new Callback<InsertGrowUpDto>() {
-
-            @Override
-            public void onResponse(Call<InsertGrowUpDto> call, Response<InsertGrowUpDto> response) {
-                if(response.isSuccessful()){
-                    InsertGrowUpDto dto = response.body();
-                    InsertGrowupManager.getInstance().setItemsDto(dto);
-                    if(response.body().getSuccess()){
-                        ShowAlertDialog(response.body().getSuccess());
-                    }
-                    else{
-                        ShowAlertDialog(response.body().getSuccess());
-//                        Toast.makeText(mcontext,dto.getSuccess(),Toast.LENGTH_LONG).show();
-                    }
-                }else {
-                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<InsertGrowUpDto> call, Throwable t) {
-                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 
     private void ShowAlertDialog(boolean success) {
         AlertDialog.Builder builder = new AlertDialog.Builder(EditChildActivity.this);

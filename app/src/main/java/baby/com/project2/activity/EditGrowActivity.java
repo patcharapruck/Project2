@@ -275,43 +275,30 @@ public class EditGrowActivity extends AppCompatActivity implements View.OnClickL
             }
         },Year,Month-1,Day);
 
-        Date date = null;
-        String NewDateString = formatDateTimeToday;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-        try {
-            date = sdf.parse(NewDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         dialog.show();
         dialog.getDatePicker().setMaxDate(date.getTime());
     }
 
     private void getDateTime() {
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+        Date date = null;
+        String NewDateString = dateStr;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try {
+            date = sdf.parse(NewDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-
-        String formatDateTime = dateFormat.format(calendar.getTime());
-        formatDateTimeToday = dateFormat2.format(calendar.getTime());
 
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH)+1;
         Year = calendar.get(Calendar.YEAR);
-
-        DateDto dateDto = new DateDto();
-        dateDto.setCalendar(calendar);
-        dateDto.setDateToday(date);
-        dateDto.setDateString(formatDateTime);
-        dateDto.setDay(Day);
-        dateDto.setMonth(Month);
-        dateDto.setYear(Year);
-        DateManager.getInstance().setDateDto(dateDto);
     }
 
     public void reqdeletechild(String gid) {
