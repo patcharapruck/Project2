@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.InsertDevActivity"></activity>
+        <activity android:name=".activity.InsertVacActivity"></activity>
+        <activity android:name=".activity.InsertDevActivity" />
         <activity android:name=".activity.DataIntroActivity" />
         <activity android:name=".activity.EditMilkActivity" />
         <activity android:name=".activity.AddMilkActivity" />

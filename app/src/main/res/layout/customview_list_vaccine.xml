@@ -56,136 +56,22 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-                    <android.support.v7.widget.CardView
+                    <ImageView
                         android:id="@+id/status_vac"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="10dp"
-                        app:cardBackgroundColor="@color/colorMain"
-                        app:cardCornerRadius="1000dp">
+                        android:layout_centerInParent="true"
+                        android:layout_margin="10dp">
 
-                    </android.support.v7.widget.CardView>
+                    </ImageView>
 
                 </RelativeLayout>
 
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-
-        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-            android:id="@+id/mycontent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            app:ael_duration="500"
-            app:ael_expanded="false"
-            app:ael_interpolator="fastOutSlowIn"
-            app:ael_orientation="vertical"
-            >
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:elevation="2dp"
-                app:cardCornerRadius="3dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:id="@+id/linear_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_marginTop="10dp"
-                            android:id="@+id/textview_date_vac"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:fontFamily="@font/prompt_medium"
-                            android:gravity="center"
-                            android:text="วันที่"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <RadioGroup
-                            android:id="@+id/check_vac"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <RadioButton
-                                android:id="@+id/yes_vac"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/prompt_medium"
-                                android:text="ฉีดแล้ว"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <RadioButton
-                                android:id="@+id/no_vac"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/prompt_medium"
-                                android:text="ยังไม่ฉีด"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                        </RadioGroup>
-
-                        <TextView
-                            android:id="@+id/text_birthday"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/prompt_medium"
-                            android:gravity="left"
-                            android:text="สถานที่เกิด"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="10dp"/>
-
-                        <EditText
-                            android:id="@+id/edittext_place"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp" />
-
-                    </LinearLayout>
-
-
-                    <Button
-                        android:id="@+id/btn_savevaccine"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_below="@+id/linear_1"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/buttonadddata"
-                        android:fontFamily="@font/prompt_medium"
-                        android:text="บันทึก"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
-
-        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
-
 
     </RelativeLayout>
 

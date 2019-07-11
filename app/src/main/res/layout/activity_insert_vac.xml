@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.InsertVacActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorMain"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:fontFamily="@font/prompt_medium"
+                android:gravity="center"
+                android:text="ข้อมูลวัคซีน"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/delete_vac"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_delete"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorMain"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="10dp">
+
+
+                            <TextView
+                                style="@style/textstyle_add_child_header"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:layout_marginTop="20dp"
+                                android:text="ชื่อวัคซีน" />
+
+                            <TextView
+                                android:id="@+id/textview_name_vac"
+                                style="@style/textstyle_add_child"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:textStyle="bold" />
+
+
+                            <TextView
+                                style="@style/textstyle_add_child_header"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="left"
+                                android:text="ชนิดวัคซีน" />
+
+                            <TextView
+                                android:id="@+id/textview_type_vac"
+                                style="@style/textstyle_add_child"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:text="เด็กสามารถ" />
+
+
+                            <TextView
+                                style="@style/textstyle_add_child_header"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="left"
+                                android:text="วันที่" />
+
+                            <TextView
+                                android:id="@+id/textview_vac_birthday"
+                                style="@style/textstyle_add_child"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:singleLine="true"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                style="@style/textstyle_add_child_header"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:gravity="left"
+                                android:text="สถานที่ฉีดวัคซีน" />
+
+                            <EditText
+                                android:id="@+id/edit_vac_location"
+                                style="@style/textstyle_add_child"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:singleLine="true"
+                                android:textStyle="bold" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <android.support.v7.widget.CardView
+                                    android:id="@+id/cardview_true"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_width="120dp"
+                                    android:layout_height="50dp"
+                                    app:cardBackgroundColor="@color/good"
+                                    app:cardCornerRadius="20dp">
+
+                                    <TextView
+                                        style="@style/textstyle_add_child_header"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:text="ฉีดแล้ว"
+                                        android:gravity="center"/>
+
+                                </android.support.v7.widget.CardView>
+
+                                <android.support.v7.widget.CardView
+                                    android:id="@+id/cardview_fail"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_width="120dp"
+                                    android:layout_height="50dp"
+                                    app:cardBackgroundColor="@color/medium"
+                                    android:layout_alignParentRight="true"
+                                    app:cardCornerRadius="20dp">
+
+                                    <TextView
+                                        style="@style/textstyle_add_child_header"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:text="ยังไม่ฉีด"
+                                        android:gravity="center"/>
+
+                                </android.support.v7.widget.CardView>
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

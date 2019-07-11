@@ -161,19 +161,15 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         },Year,Month-1,Day);
 
         Date date = null;
-        Date d = null;
-        String oldDateString = "2019/01/06";
         String NewDateString = formatDateTimeToday;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
         try {
-            d = sdf.parse(oldDateString);
             date = sdf.parse(NewDateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         dialog.show();
-        dialog.getDatePicker().setMinDate(d.getTime());
         dialog.getDatePicker().setMaxDate(date.getTime());
     }
 

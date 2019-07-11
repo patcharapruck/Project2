@@ -3,6 +3,7 @@ package baby.com.project2.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -20,11 +22,18 @@ import android.widget.Toast;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.EditMilkActivity;
+import baby.com.project2.activity.InsertDevActivity;
+import baby.com.project2.activity.InsertVacActivity;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
@@ -47,10 +56,6 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
 
     private Context context;
     private ArrayList<VaccineModelClass> items;
-    private int statuss = 0;
-    private String V_id;
-    private String datetoday;
-    private String place;
 
 
     public VaccineListItemsAdapter(Context context, ArrayList<VaccineModelClass> item){
@@ -68,14 +73,23 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
     @Override
     public void onBindViewHolder(@NonNull final CustomViewVaccineList customViewVaccineList, final int i) {
 
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        final SelectDataVaccineDto dataVaccineDto = DataVaccineManager.getInstance().getItemsDto();
+        final String V_id;
+        String datetoday = dateFormat.format(calendar.getTime());;
+        String place = "";
+        String fkcv_id="";
+        int update = 0;
         int size = 0;
-        datetoday = customViewVaccineList.dateDto.getDateString();
         DecimalFormat formatter = new DecimalFormat("00");
         V_id = items.get(i).getV_id();
 
-
         try {
-            size = customViewVaccineList.dataVaccineDto.getDatavaccine().size();
+            size = dataVaccineDto.getDatavaccine().size();
         }catch (Exception e){
             size = 0;
         }
@@ -83,67 +97,41 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
         customViewVaccineList.StatusVac.setVisibility(View.INVISIBLE);
         customViewVaccineList.Vaccine.setText(items.get(i).getVaccine());
         customViewVaccineList.Type.setText(items.get(i).getType());
-        customViewVaccineList.TextViewDateVac.setText(datetoday);
 
 
         for(int j=0;j<size;j++){
 
-            String id = formatter.format(customViewVaccineList.dataVaccineDto.getDatavaccine().get(j).getV_id());
-            int ck = customViewVaccineList.dataVaccineDto.getDatavaccine().get(j).getFKcv_status();
-
-            place = "";
-
-            try {
-                place = customViewVaccineList.dataVaccineDto.getDatavaccine().get(j).getFKcv_plase();
-            }catch (Exception e){
-                place = "";
-            }
-
-            String date = customViewVaccineList.dataVaccineDto.getDatavaccine().get(j).getFKcv_date();
+            String id = formatter.format(dataVaccineDto.getDatavaccine().get(j).getV_id());
 
             if(id.equals(V_id)){
+                place = dataVaccineDto.getDatavaccine().get(j).getFKcv_plase();
+                datetoday = dataVaccineDto.getDatavaccine().get(j).getFKcv_date();
+                fkcv_id = formatter.format(dataVaccineDto.getDatavaccine().get(j).getFKcv_id());
+                customViewVaccineList.StatusVac.setVisibility(View.VISIBLE);
 
-                customViewVaccineList.TextViewDateVac.setText(date);
-
-                switch (ck){
-                    case 0:
-                        customViewVaccineList.StatusVac.setVisibility(View.VISIBLE);
-                        customViewVaccineList.StatusVac.setCardBackgroundColor(Color.parseColor("#FF0000"));
-                        customViewVaccineList.NoVac.setChecked(true);
-                        break;
-                    case 1:
-                        customViewVaccineList.StatusVac.setVisibility(View.VISIBLE);
-                        customViewVaccineList.StatusVac.setCardBackgroundColor(Color.parseColor("#1CC50B"));
-                        customViewVaccineList.YesVac.setChecked(true);
-                        break;
+                if(dataVaccineDto.getDatavaccine().get(j).getFKcv_status()==1){
+                    customViewVaccineList.StatusVac.setImageResource(R.mipmap.ic_success);
+                }else {
+                    customViewVaccineList.StatusVac.setImageResource(R.mipmap.ic_failed);
                 }
-
-                customViewVaccineList.EditTextPlace.setText(place);
             }
         }
-
-        customViewVaccineList.Mycontent.collapse();
+        final String finalFkcv_id = fkcv_id;
+        final String finalDatetoday = datetoday;
+        final String finalPlace = place;
+        final int finalUpdate = update;
         customViewVaccineList.CardViewVaccine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customViewVaccineList.Mycontent.toggle();
-            }
-        });
-
-        customViewVaccineList.BtnSaveVaccine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                V_id = items.get(i).getV_id();
-                switch (customViewVaccineList.CheckVac.getCheckedRadioButtonId()){
-                    case R.id.no_vac:
-                        statuss = 0;
-                        break;
-                    case R.id.yes_vac:
-                        statuss = 1;
-                        break;
-                }
-                customViewVaccineList.reqinsert(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild(),V_id,datetoday,statuss,place);
+                Intent intent = new Intent(context, InsertVacActivity.class);
+                intent.putExtra("id",finalFkcv_id);
+                intent.putExtra("vid",items.get(i).getV_id());
+                intent.putExtra("type",items.get(i).getType());
+                intent.putExtra("name",items.get(i).getVaccine());
+                intent.putExtra("date",finalDatetoday);
+                intent.putExtra("place",finalPlace);
+                intent.putExtra("update",finalUpdate);
+                context.startActivity(intent);
             }
         });
     }
@@ -156,98 +144,20 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
 
     public class CustomViewVaccineList extends RecyclerView.ViewHolder {
 
-        TextView Vaccine,Type,TextViewDateVac;
-        CardView CardViewVaccine,StatusVac;
-        ExpandableRelativeLayout Mycontent;
-        RadioGroup CheckVac;
-        RadioButton YesVac,NoVac;
-        EditText EditTextPlace;
-        Button BtnSaveVaccine;
-
-        SelectDataVaccineDto dataVaccineDto;
-        DateDto dateDto;
+        TextView Vaccine, Type;
+        CardView CardViewVaccine;
+        ImageView StatusVac;
+        ;
 
         public CustomViewVaccineList(@NonNull View itemView) {
             super(itemView);
 
-            Vaccine             = (TextView)itemView.findViewById(R.id.vaccine);
-            Type                = (TextView)itemView.findViewById(R.id.type);
-            TextViewDateVac     = (TextView)itemView.findViewById(R.id.textview_date_vac);
-            CardViewVaccine     = (CardView)itemView.findViewById(R.id.cardview_vaccine);
-            StatusVac           = (CardView) itemView.findViewById(R.id.status_vac);
-            CheckVac            = (RadioGroup)itemView.findViewById(R.id.check_vac);
-            YesVac              = (RadioButton)itemView.findViewById(R.id.yes_vac);
-            NoVac               = (RadioButton)itemView.findViewById(R.id.no_vac);
-            Mycontent           = (ExpandableRelativeLayout) itemView.findViewById(R.id.mycontent);
-            EditTextPlace       = (EditText) itemView.findViewById(R.id.edittext_place);
-            BtnSaveVaccine      = (Button) itemView.findViewById(R.id.btn_savevaccine);
+            Vaccine = (TextView) itemView.findViewById(R.id.vaccine);
+            Type = (TextView) itemView.findViewById(R.id.type);
+            CardViewVaccine = (CardView) itemView.findViewById(R.id.cardview_vaccine);
+            StatusVac = (ImageView) itemView.findViewById(R.id.status_vac);
 
-            dateDto = DateManager.getInstance().getDateDto();
-            dataVaccineDto = DataVaccineManager.getInstance().getItemsDto();
         }
 
-        public void reqinsert(String cid,String vid,String date,int status,String place) {
-
-            final Context mcontext = Contextor.getInstance().getmContext();
-            String reqBody = "{\"C_id\": \""+cid+"\",\"V_id\":\""+vid+"\",\"FKcv_date\":\""+date+"\",\"FKcv_status\":"+status+","+
-                    "\"FKcv_plase\":\""+place+"\"}";
-            final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
-            Call<InsertVaccineDto> call = HttpManager.getInstance().getService().loadAPIVaccineinsert(requestBody);
-            call.enqueue(new Callback<InsertVaccineDto>() {
-
-                @Override
-                public void onResponse(Call<InsertVaccineDto> call, Response<InsertVaccineDto> response) {
-                    if(response.isSuccessful()){
-                        InsertVaccineDto dto = response.body();
-                        InsertVaccineManager.getInstance().setItemsDto(dto);
-                        if(response.body().getSuccess()){
-
-                            ShowAlertDialog(response.body().getSuccess());
-                        }
-                        else{
-                            ShowAlertDialog(response.body().getSuccess());
-                        //Toast.makeText(mcontext,dto.getSuccess(),Toast.LENGTH_LONG).show();
-                        }
-                    }else {
-                        Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<InsertVaccineDto> call, Throwable t) {
-                    Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-        private void ShowAlertDialog(boolean success) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Contextor.getInstance().getmContext());
-
-            if(success){
-                builder.setTitle("เพิ่มข้อมูลวัคซีน");
-                builder.setMessage("เพิ่มข้อมูลวัคซีนเรียบร้อย");
-                builder.setIcon(R.mipmap.ic_success);
-                builder.setCancelable(true);
-                builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-            }else {
-                builder.setTitle("ล้มเหลว");
-                builder.setMessage("เกิดข้อผิดพลาด เพิ่มข้อมูลไม่สำเร็จ");
-                builder.setIcon(R.mipmap.ic_failed);
-                builder.setCancelable(true);
-                builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-            }
-
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
     }
 }
