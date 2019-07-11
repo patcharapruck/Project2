@@ -60,7 +60,6 @@ public class EditGrowActivity extends AppCompatActivity implements View.OnClickL
     private int Day;
     private int Month;
     private int Year;
-    private String formatDateTimeToday;
 
     private String dateStr;
     private float Weight,Height;
