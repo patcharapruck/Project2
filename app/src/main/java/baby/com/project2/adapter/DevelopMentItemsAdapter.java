@@ -56,6 +56,8 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
         calendar.setTime(date);
         String formatDateTime = dateFormat.format(calendar.getTime());
 
+        String fkcd_id="";
+        final int update=0;
         int size=0;
 
         try {
@@ -69,6 +71,7 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
                 if(selectDataDevDto.getDatadev().get(j).getBD_id().equals(items.get(i).getBD_id())){
                     customViewDevelopMentList.StatusDev.setVisibility(View.VISIBLE);
                     formatDateTime = selectDataDevDto.getDatadev().get(j).getFKcd_date();
+                    fkcd_id = selectDataDevDto.getDatadev().get(j).getFKcd_id();
 
                     if(selectDataDevDto.getDatadev().get(j).getFKcd_status()==1){
                         customViewDevelopMentList.StatusDev.setImageResource(R.mipmap.ic_success);
@@ -82,14 +85,17 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
         }
 
         final String finalDate = formatDateTime;
+        final String finalFkcd_id = fkcd_id;
         customViewDevelopMentList.CardViewDataDev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, InsertDevActivity.class);
+                intent.putExtra("fkcd_id", finalFkcd_id);
                 intent.putExtra("id",items.get(i).getBD_id());
                 intent.putExtra("type",items.get(i).getId_type());
                 intent.putExtra("data",items.get(i).getBD_data());
                 intent.putExtra("date", finalDate);
+                intent.putExtra("update", update);
                 context.startActivity(intent);
             }
         });

@@ -47,14 +47,13 @@ import retrofit2.Response;
 public class InsertDevActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
-    private ImageView ImageViewShowDev;
+    private ImageView ImageViewShowDev,DeleteDev;
     private TextView TextViewTypeDev, TextViewDataDev, TextViewDevBirthday;
-
     private CardView CardViewTrue, CardViewFail;
 
     private String FKcd_id,C_id,BD_id;
     private String dateStr,typeStr,DataStr;
-    private int status;
+    private int update;
 
     private int Day;
     private int Month;
@@ -67,10 +66,12 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_insert_dev);
 
         Intent id = getIntent();
+        FKcd_id = id.getStringExtra("fkcd_id");
         BD_id = id.getStringExtra("id");
         typeStr = id.getStringExtra("type");
         DataStr = id.getStringExtra("data");
         dateStr = id.getStringExtra("date");
+        update = id.getIntExtra("update",0);
 
         initInstances();
     }
@@ -97,6 +98,9 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         TextViewDevBirthday = (TextView)findViewById(R.id.textview_dev_birthday);
         CardViewTrue = (CardView)findViewById(R.id.cardview_true);
         CardViewFail = (CardView)findViewById(R.id.cardview_fail);
+        DeleteDev = (ImageView)findViewById(R.id.delete_dev);
+
+        DeleteDev.setVisibility(View.INVISIBLE);
 
         setDataupdate();
     }
@@ -106,6 +110,10 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         TextViewTypeDev.setText(typeStr);
         TextViewDataDev.setText(DataStr);
         TextViewDevBirthday.setText(dateStr);
+
+        if(update == 1){
+            DeleteDev.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -160,15 +168,9 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
             }
         },Year,Month-1,Day);
 
-        Date date = null;
-        String NewDateString = formatDateTimeToday;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-        try {
-            date = sdf.parse(NewDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         dialog.show();
         dialog.getDatePicker().setMaxDate(date.getTime());
     }
@@ -238,27 +240,20 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
 
     private void getDateTime() {
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+        Date date = null;
+        String NewDateString = dateStr;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try {
+            date = sdf.parse(NewDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-
-        String formatDateTime = dateFormat.format(calendar.getTime());
-        formatDateTimeToday = dateFormat2.format(calendar.getTime());
 
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH)+1;
         Year = calendar.get(Calendar.YEAR);
-
-        DateDto dateDto = new DateDto();
-        dateDto.setCalendar(calendar);
-        dateDto.setDateToday(date);
-        dateDto.setDateString(formatDateTime);
-        dateDto.setDay(Day);
-        dateDto.setMonth(Month);
-        dateDto.setYear(Year);
-        DateManager.getInstance().setDateDto(dateDto);
     }
 }

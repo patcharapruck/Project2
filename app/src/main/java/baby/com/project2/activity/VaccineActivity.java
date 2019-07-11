@@ -13,7 +13,7 @@ import baby.com.project2.fragment.ListVaccineFragment;
 public class VaccineActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    FragmentTransaction ListVac;
+    private FragmentTransaction ListVac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
