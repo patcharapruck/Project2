@@ -32,6 +32,7 @@ import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.LoginItemsDto;
 import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.fragment.HomeFragment;
+import baby.com.project2.fragment.HomeMainFragment;
 import baby.com.project2.fragment.ListintroFragment;
 import baby.com.project2.fragment.MenuFragment;
 import baby.com.project2.fragment.ReportFragment;
@@ -48,18 +49,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
-    private ImageView ImageViewKidsAdd;
-
-    ArrayList<KidModelClass> items;
-    KidListItemsAdapter adapter;
-    private RecyclerView recyclerView;
-
-    String DateAge;
     SelectChildDto dto;
+    Fragment fragment = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,37 +82,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initInstances();
+        setShowDataChild();
     }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         getDateTime();
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        loadFragment(fragment);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setShowDataChild();
-    }
 
-    private void initInstances() {
-
-        toolbar              = (Toolbar)findViewById(R.id.toolbar);
-        ImageViewKidsAdd     = (ImageView)findViewById(R.id.image_view_kids_add);
-        recyclerView         = (RecyclerView)findViewById(R.id.recycler_view_kids);
-        bottomNavigationView = findViewById(R.id.bottom_nav_view);
-
-        ImageViewKidsAdd.setOnClickListener(this);
-
-        setToolBar();
     }
 
     private void setShowDataChild() {
@@ -125,6 +109,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         String uid = SharedPrefUser.getInstance(HomeActivity.this).getUid();
         reqselectchild(uid);
     }
+
+    private void initInstances() {
+
+        toolbar              = (Toolbar)findViewById(R.id.toolbar);
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        setToolBar();
+    }
+
 
     private void setToolBar() {
         setSupportActionBar(toolbar);
@@ -135,10 +127,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment = null;
                 switch (menuItem.getItemId()) {
                     case R.id.item_home:
-                        fragment = new HomeFragment();
+                        fragment = new HomeMainFragment();
                         break;
                     case R.id.item_menu:
                         fragment = new MenuFragment();
@@ -170,42 +161,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    private void setRecyclerView() {
-        items = new ArrayList<>();
-        adapter = new KidListItemsAdapter(HomeActivity.this, items);
-        recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(adapter);
-
-        int size = dto.getResult().size();
-
-
-        for (int i = 0; i < size; i++) {
-
-            String name = dto.getResult().get(i).getC_name();
-            String birthday = dto.getResult().get(i).getC_birthday();
-            setDate(birthday);
-
-            try {
-                items.add(new KidModelClass(dto.getResult().get(i).getC_id(),"kkk",name,DateAge,dto.getResult().get(i).getC_gender()));
-            }catch (ArrayIndexOutOfBoundsException e){
-                break;
-            }
-
-            adapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v == ImageViewKidsAdd){
-            Intent intent = new Intent(HomeActivity.this, AddChildActivity.class);
-            startActivity(intent);
-        }
-    }
-
     public void reqselectchild(String uid) {
 
-        final Context mcontext = HomeActivity.this;
+        final Context mcontext = Contextor.getInstance().getmContext();
         String reqBody = "{\"id\":\""+uid+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<SelectChildDto> call = HttpManager.getInstance().getService().loadAPISelect(requestBody);
@@ -221,7 +179,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                             .saveChidId(dto.getResult().get(0).getC_id(),dto.getResult().get(0).getC_gender(),dto.getResult().get(0).getC_birthday());
 
                     setNavigation();
-                    setRecyclerView();
 
                 }else {
                     Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
@@ -233,6 +190,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
 
     private void getDateTime() {
 
@@ -255,65 +213,5 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         dateDto.setMonth(month);
         dateDto.setYear(year);
         DateManager.getInstance().setDateDto(dateDto);
-    }
-
-    private void setDate(String dateAge) {
-
-        int DayBrith,MonthBrith,YearBrith,DayTo,MonthTo,YearTo,Day,Month,Year,Sum;
-
-        Date datetoday = new Date();
-        Calendar calendartoday = Calendar.getInstance();
-        calendartoday.setTime(datetoday);
-
-        DayTo = calendartoday.get(Calendar.DAY_OF_MONTH);
-        MonthTo = calendartoday.get(Calendar.MONTH)+1;
-        YearTo = calendartoday.get(Calendar.YEAR);
-
-        Date date = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        try {
-            date = sdf.parse(dateAge);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        DayBrith = calendar.get(Calendar.DAY_OF_MONTH);
-        MonthBrith = calendar.get(Calendar.MONTH)+1;
-        YearBrith = calendar.get(Calendar.YEAR);
-
-        if(DayTo>=DayBrith){
-            Day = DayTo-DayBrith;
-            if(MonthTo>=MonthBrith){
-                Month = MonthTo-MonthBrith;
-                Year = YearTo-YearBrith;
-                Sum = Month+Year*12;
-            }else {
-                Month = (MonthTo+12)-MonthBrith;
-                Year = ((YearTo-1)-YearBrith);
-                Sum = Month+Year*12;
-            }
-        }else {
-            Day = (DayTo+30)-DayBrith;
-            Month = MonthTo-1;
-            if(Month>=MonthBrith){
-                Month = Month-MonthBrith;
-                Year = (YearTo-YearBrith);
-                Sum = Month+Year*12;
-            }else {
-                Month = (Month+12)-MonthBrith;
-                Year = ((YearTo-1)-YearBrith);
-                Sum = Month+Year*12;
-            }
-        }
-
-        if(Sum>24){
-            Sum = 24;
-        }
-
-        DateAge = Sum+" เดือน "+Day+" วัน";
-
     }
 }

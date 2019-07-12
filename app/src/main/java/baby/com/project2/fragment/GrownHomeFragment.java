@@ -46,6 +46,8 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
 
     SelectGrowUpDto dto;
 
+    private String Height_c,Weigth_c;
+
     public GrownHomeFragment() {
         // Required empty public constructor
     }
@@ -194,12 +196,63 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
         criterion(Day, Sum, SharedPrefUser.getInstance(getContext()).getGender()
                 , dto.getGrowup().get(index).getG_height(), dto.getGrowup().get(index).getG_weight());
 
+        if(Weigth_c.equals(getString(R.string.grade_low).toString())&& Height_c.equals(getString(R.string.grade_good).toString())){
+            setlow();
+        }else if(Weigth_c.equals(getString(R.string.grade_low).toString())&& Height_c.equals(getString(R.string.grade_heigth).toString())){
+            setlow();
+        }else if(Weigth_c.equals(getString(R.string.grade_good).toString())&& Height_c.equals(getString(R.string.grade_good).toString())){
+            selgood();
+        }else if(Weigth_c.equals(getString(R.string.grade_good).toString())&& Height_c.equals(getString(R.string.grade_heigth).toString())){
+            setlow();
+        }else if(Weigth_c.equals(getString(R.string.grade_heigth).toString())&& Height_c.equals(getString(R.string.grade_good).toString())){
+            setfat();
+        }else if(Weigth_c.equals(getString(R.string.grade_heigth).toString())&& Height_c.equals(getString(R.string.grade_heigth).toString())){
+            setfat();
+        }else {
+            TextViewStatusBody.setText("ไม่สามารถคำนวณได้");
+            CardViewStatusBody.setCardBackgroundColor(getResources().getColor(R.color.noting));
+        }
+
+    }
+
+    private void setfat() {
+        TextViewStatusBody.setText("อ้สน");
+        CardViewStatusBody.setCardBackgroundColor(getResources().getColor(R.color.very_low));
+    }
+
+    private void selgood() {
+        TextViewStatusBody.setText("สมส่วน");
+        CardViewStatusBody.setCardBackgroundColor(getResources().getColor(R.color.good));
+    }
+
+    private void setlow() {
+        TextViewStatusBody.setText(getString(R.string.bodylow).toString());
+        CardViewStatusBody.setCardBackgroundColor(getResources().getColor(R.color.very_low));
     }
 
     private void criterion(int day, int sum, int gender, float h, float w) {
 
         if (gender == 1) {
-            if (sum == 1 || sum == 0) {
+
+            if(sum == 0){
+
+                if (w < 2.8) {
+                    lowWidth();
+                } else if (w > 3.9) {
+                    heigthWidth();
+                } else {
+                    goodWidth();
+                }
+
+                if (h < 47.6) {
+                    lowHeigth();
+                } else if (h > 53.1) {
+                    heigthHeigth();
+                } else {
+                    goodHeight();
+                }
+
+            } else if (sum == 1) {
                 if (w < 3.5) {
                     lowWidth();
                 } else if (w > 5) {
@@ -593,12 +646,28 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
                     goodHeight();
                 }
             } else {
-
+                notting();
             }
 
         } else if (gender == 2) {
+            if(sum == 0){
+                if (w < 2.7) {
+                    lowWidth();
+                } else if (w > 3.7) {
+                    heigthWidth();
+                } else {
+                    goodWidth();
+                }
 
-            if (sum == 1 || sum == 0) {
+                if (h < 46.8) {
+                    lowHeigth();
+                } else if (h > 52.9) {
+                    heigthHeigth();
+                } else {
+                    goodHeight();
+                }
+
+            } else if (sum == 1) {
                 if (w < 3) {
                     lowWidth();
                 } else if (w > 4.5) {
@@ -992,39 +1061,54 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
                     goodHeight();
                 }
             } else {
-
+                notting();
             }
 
         }
 
     }
 
+    private void notting() {
+        TextViewStatusBody.setText("ไม่สามารถคำนวณได้");
+        CardViewStatusBody.setCardBackgroundColor(getResources().getColor(R.color.noting));
+        TextViewStatusWidth.setText("ไม่สามารถคำนวณได้");
+        CardViewWidth.setCardBackgroundColor(getResources().getColor(R.color.noting));
+        TextViewStatusHeight.setText("ไม่สามารถคำนวณได้");
+        CardViewHeight.setCardBackgroundColor(getResources().getColor(R.color.noting));
+    }
+
     private void goodWidth() {
+        Weigth_c = getString(R.string.grade_good).toString();
         TextViewStatusWidth.setText(getString(R.string.grade_good).toString());
         CardViewWidth.setCardBackgroundColor(getResources().getColor(R.color.good));
     }
 
     private void heigthWidth() {
+        Weigth_c = getString(R.string.grade_heigth).toString();
         TextViewStatusWidth.setText(getString(R.string.grade_heigth).toString());
         CardViewWidth.setCardBackgroundColor(getResources().getColor(R.color.very_low));
     }
 
     private void lowHeigth() {
+        Height_c = getString(R.string.grade_low).toString();
         TextViewStatusHeight.setText(getString(R.string.grade_low).toString());
         CardViewHeight.setCardBackgroundColor(getResources().getColor(R.color.very_low));
     }
 
     private void goodHeight() {
+        Height_c = getString(R.string.grade_good).toString();
         TextViewStatusHeight.setText(getString(R.string.grade_good).toString());
         CardViewHeight.setCardBackgroundColor(getResources().getColor(R.color.good));
     }
 
     private void heigthHeigth() {
+        Height_c = getString(R.string.grade_heigth).toString();
         TextViewStatusHeight.setText(getString(R.string.grade_heigth).toString());
         CardViewHeight.setCardBackgroundColor(getResources().getColor(R.color.very_low));
     }
 
     private void lowWidth() {
+        Weigth_c = getString(R.string.grade_low).toString();
         TextViewStatusWidth.setText(getString(R.string.grade_low).toString());
         CardViewWidth.setCardBackgroundColor(getResources().getColor(R.color.very_low));
     }

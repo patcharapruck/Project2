@@ -261,7 +261,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         float height=0f,weigth=0f;
 
         id = formatter.format(Integer.valueOf(cid));
-        uid = formatter.format(Integer.valueOf(loginItemsDto.getId()));
+      //  uid = formatter.format(Integer.valueOf(loginItemsDto.getId()));
         name = EditTextEditChildName.getText().toString();
         brithday = TextViewEditChildBirthday.getText().toString();
         blood = BloodType;
@@ -345,7 +345,6 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
                     UpdateChildDto dto = response.body();
                     if(response.body().isSuccess()){
                         UpdateChildManager.getInstance().setItemsDto(dto);
-
                         ShowAlertDialog(response.body().isSuccess());
                     }
                     else{

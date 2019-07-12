@@ -52,7 +52,7 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
             @Override
             public void onClick(View v) {
                 SharedPrefUser.getInstance(context)
-                        .saveChidId(items.get(i).getId(),items.get(i).getGender(),items.get(i).getBirthDay());
+                        .saveChidId(items.get(i).getId(),items.get(i).getGender(),items.get(i).getDateBirth());
             }
         });
     }

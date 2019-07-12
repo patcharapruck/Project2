@@ -2,15 +2,20 @@ package baby.com.project2.view;
 
 public class KidModelClass {
 
-    private String Id ,Image ,NickName , BirthDay;
+    private String Id ,Image ,NickName , BirthDay,DateBirth;
     private int Gender;
 
-    public KidModelClass(String id,String img ,String nickname ,String birthday,int gender){
+    public KidModelClass(String id,String img ,String nickname ,String birthday,int gender,String dateBirth){
         this.Id = id;
         this.Image = img;
         this.NickName = nickname;
         this.BirthDay = birthday;
         this.Gender = gender;
+        this.DateBirth = dateBirth;
+    }
+
+    public String getDateBirth() {
+        return DateBirth;
     }
 
     public String getId() {
