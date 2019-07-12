@@ -22,6 +22,8 @@ import baby.com.project2.dto.milk.DeleteMilkDto;
 import baby.com.project2.dto.milk.InsertMilkDto;
 import baby.com.project2.dto.milk.SelectMilkDto;
 import baby.com.project2.dto.milk.UpdateMilkDto;
+import baby.com.project2.dto.user.SelectUserDto;
+import baby.com.project2.dto.user.UpdateUserDto;
 import baby.com.project2.dto.vaccine.DeleteVaccineDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectAgeVaccineDto;
@@ -115,5 +117,11 @@ public interface Project2Service {
 
     @POST("testpro/selectDev.php")
     Call<SelectBDDto> loadAPIBdDtoCall();
+
+    @POST("testpro/selectUser.php")
+    Call<SelectUserDto> loadAPISelectUserDtoCall(@Body RequestBody requestBody);
+
+    @POST("testpro/updateUser.php")
+    Call<UpdateUserDto> loadAPIUpdateUserDtoCall(@Body RequestBody requestBody);
 
 }
