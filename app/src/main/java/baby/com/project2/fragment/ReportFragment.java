@@ -10,9 +10,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.VaccineActivity;
+import baby.com.project2.manager.Contextor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +43,11 @@ public class ReportFragment extends Fragment {
     private void initInstances(View rootView) {
         viewPager = (ViewPager) rootView.findViewById(R.id.pager_revanus);
         tabLayout = (TabLayout) rootView.findViewById(R.id.tablayout_report);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         setPager();
     }
 

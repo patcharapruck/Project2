@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/prompt_medium"
                 android:gravity="center"
-                android:text="@string/app_name"
+                android:text="@string/add_milk"
                 android:textColor="#FFFFFF"
                 android:textSize="18dp" />
 

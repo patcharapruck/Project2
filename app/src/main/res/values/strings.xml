@@ -8,4 +8,16 @@
     <string name="grade_good">ตามเกณฑ์</string>
     <string name="grade_heigth">มากกว่าเกณฑ์</string>
     <string name="bodylow">ผอม</string>
+    <string name="add_group">เพิ่มข้อมูลการเจริญเติบโต</string>
+    <string name="development">ข้อมูลพัฒนาการ</string>
+    <string name="management_development">จัดการข้อมูลพัฒนาการ</string>
+    <string name="management_vaccine">จัดการข้อมูลวัคซีน</string>
+    <string name="vaccine">ข้อมูลวัคซีน</string>
+    <string name="update_milk">แก้ไขข้อมูลโภชนาการ</string>
+    <string name="update_group">แก้ไขข้อมูลการเจริญเติบโต</string>
+    <string name="update_child">แก้ไขข้อมูลเด็ก</string>
+    <string name="intro">คำแนะนำ</string>
+    <string name="register">สมัครสมาชิก</string>
+    <string name="add_milk">เพิ่มข้อมูลโภชนาการ</string>
+    <string name="add_child">เพิ่มข้อมูลเด็ก</string>
 </resources>
