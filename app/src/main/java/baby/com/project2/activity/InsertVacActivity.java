@@ -151,6 +151,7 @@ public class InsertVacActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void insertdata(int i) {
+        Place = TextViewVacLocation.getText().toString();
         reqinsert(C_id,V_id,dateStr,i,Place);
     }
 
