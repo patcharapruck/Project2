@@ -54,14 +54,14 @@ public class ReportMilkFragment extends Fragment {
 
     private void initInstances(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_report_milk);
-        reqListMilk(Integer.parseInt(SharedPrefUser.getInstance(getContext()).getKeyChild()));
+        reqListMilk(SharedPrefUser.getInstance(getContext()).getKeyChild());
 
     }
 
-    public void reqListMilk(int C_id) {
+    public void reqListMilk(String C_id) {
 
         final Context mcontext = getContext();
-        String reqBody = "{\"C_id\":"+C_id+"}";
+        String reqBody = "{\"C_id\":\""+C_id+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<SelectMilkDto> call = HttpManager.getInstance().getService().loadAPISelectMilk(requestBody);
         call.enqueue(new Callback<SelectMilkDto>() {

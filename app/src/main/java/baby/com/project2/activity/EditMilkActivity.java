@@ -114,6 +114,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         ImageAlertNameEditmilk.setVisibility(View.INVISIBLE);
 
         BtnEditMilk.setOnClickListener(this);
+        DeleteMilk.setOnClickListener(this);
 
         createTypeSearchData();
         createTypeData();

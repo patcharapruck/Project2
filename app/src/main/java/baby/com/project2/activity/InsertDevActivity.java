@@ -219,8 +219,13 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         AlertDialog.Builder builder = new AlertDialog.Builder(InsertDevActivity.this);
 
         if(success){
-            builder.setTitle("เพิ่มข้อมูลเด็ก");
-            builder.setMessage("เพิ่มข้อมูลสำเร็จ");
+            if(update == 1){
+                builder.setTitle("อัพเดทพัฒนาการ");
+                builder.setMessage("อัพเดทข้อมูลพัฒนาการเรียบร้อย");
+            }else {
+                builder.setTitle("เพิ่มพัฒนาการ");
+                builder.setMessage("เพิ่มข้อมูลพัฒนาการเรียบร้อย");
+            }
             builder.setIcon(R.mipmap.ic_success);
             builder.setCancelable(true);
             builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
@@ -230,8 +235,13 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
                 }
             });
         }else {
-            builder.setTitle("เพิ่มข้อมูลเด็ก");
-            builder.setMessage("เกิดข้อผิดพลาด เพิ่มข้อมูลล้มเหลว");
+            if(update == 1){
+                builder.setTitle("ล้มเหลว");
+                builder.setMessage("เกิดข้อผิดพลาด อัพเดทข้อมูลไม่สำเร็จ");
+            }else {
+                builder.setTitle("ล้มเหลว");
+                builder.setMessage("เกิดข้อผิดพลาด เพิ่มข้อมูลไม่สำเร็จ");
+            }
             builder.setIcon(R.mipmap.ic_failed);
             builder.setCancelable(true);
             builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {

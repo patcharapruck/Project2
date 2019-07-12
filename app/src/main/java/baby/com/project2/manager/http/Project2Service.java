@@ -35,85 +35,85 @@ import retrofit2.http.POST;
 
 public interface Project2Service {
 
-    @POST("login")
+    @POST("testpro/login.php")
     Call<LoginItemsDto> loadAPILogin(@Body RequestBody login);
 
-    @POST("register")
+    @POST("testpro/register.php")
     Call<RegisterDto> loadAPIRegister(@Body RequestBody Register);
 
-    @POST("manage_child/insert")
+    @POST("testpro/insertChild.php")
     Call<InsertChildDto> loadAPIInsertChild(@Body RequestBody insertchild);
 
-    @POST("manage_child/select")
+    @POST("testpro/selectChild.php")
     Call<SelectChildDto> loadAPISelect(@Body RequestBody selectchild);
 
-    @POST("manage_child/update")
+    @POST("testpro/updateChild.php")
     Call<UpdateChildDto> loadAPIupdate(@Body RequestBody updatechild);
 
-    @POST("manage_child/delete")
+    @POST("testpro/deleteChild.php")
     Call<DeleteChildDto> loadAPIdelete(@Body RequestBody deletechild);
 
-    @POST("listvaccine/selete/age")
+    @POST("testpro/select_agevaccine.php")
     Call<SelectAgeVaccineDto> loadAPIAgeVaccine();
 
-    @POST("listvaccine/selete")
+    @POST("testpro/listVaccine.php")
     Call<SelectVaccineDto> loadAPIvaccine(@Body RequestBody vaccine);
 
-    @POST("manage_vaccine")
+    @POST("testpro/insetVaccine.php")
     Call<InsertVaccineDto> loadAPIVaccineinsert(@Body RequestBody insertvaccine);
 
-    @POST("manage_vaccine/selete")
+    @POST("testpro/select_data_vaccine.php")
     Call<SelectDataVaccineDto> loadAPIVaccineData(@Body RequestBody datavaccine);
 
-    @POST("manage_growup")
+    @POST("testpro/insertGrow.php")
     Call<InsertGrowUpDto> loadAPIGrowup(@Body RequestBody requestBody);
 
-    @POST("manage_growup/select")
+    @POST("testpro/select_grow.php")
     Call<SelectGrowUpDto> loadAPIGrowUpSelect(@Body RequestBody requestBody);
 
-    @POST("manage_growup/delete")
+    @POST("testpro/deleteGrow.php")
     Call<DeleteGrowUpDto> loadAPIDeleteGrow(@Body RequestBody requestBody);
 
-    @POST("manage_milk/insert")
+    @POST("testpro/insertMilk.php")
     Call<InsertMilkDto> loadAPIInsertMilk(@Body RequestBody requestBody);
 
-    @POST("manage_milk/select")
+    @POST("testpro/selectMilk.php")
     Call<SelectMilkDto> loadAPISelectMilk(@Body RequestBody requestBody);
 
-    @POST("manage_milk/update")
+    @POST("testpro/updateMilk.php")
     Call<UpdateMilkDto> loadAPIupdateMilk(@Body RequestBody requestBody);
 
-    @POST("manage_milk/delete")
+    @POST("testpro/deleteMilk.php")
     Call<DeleteMilkDto> loadAPIdeleteMilk(@Body RequestBody requestBody);
 
-    @POST("listageintro")
+    @POST("testpro/selectListintroage.php")
     Call<SelectAgeIntroDto> loadAPIAgeIntroDtoCall();
 
-    @POST("intro/select")
+    @POST("testpro/selectintro.php")
     Call<SelectDataintroDto> loadAPIDataintroDtoCall(@Body RequestBody requestBody);
 
-    @POST("listagedev")
+    @POST("testpro/select_agedev.php")
     Call<SelectAgeDevDto> loadAPIAgeDevDtoCall();
 
-    @POST("listtypedev")
+    @POST("testpro/selecttypedev.php")
     Call<SelectTypeDevDto> loadAPITypeDevDtoCall();
 
-    @POST("develorment/select")
+    @POST("testpro/listDevelorment.php")
     Call<SelectDevDto> loadAPIDevDtoCall(@Body RequestBody requestBody);
 
-    @POST("manage_develorment")
+    @POST("testpro/InsertDevelorment.php")
     Call<InsertDevelorMentDto> loadAPInsertDevelorMentDtoCall(@Body RequestBody requestBody);
 
-    @POST("manage_develorment/selete")
+    @POST("testpro/select_data_develorment.php")
     Call<SelectDataDevDto> loadAPIDataDevDtoCall(@Body RequestBody requestBody);
 
-    @POST("manage_develorment/delete")
+    @POST("testpro/deletedevelorment.php")
     Call<DeleteDevelorMentDto> loadAPIDeleteDevelorMentDtoCall(@Body RequestBody requestBody);
 
-    @POST("manage_vaccine/delete")
+    @POST("testpro/deletevaccine.php")
     Call<DeleteVaccineDto> loadAPIDeleteVaccineDtoCall(@Body RequestBody requestBody);
 
-    @POST("manage_develorment/selete/BD")
+    @POST("testpro/selectDev.php")
     Call<SelectBDDto> loadAPIBdDtoCall();
 
 }

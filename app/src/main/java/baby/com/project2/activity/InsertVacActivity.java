@@ -189,8 +189,15 @@ public class InsertVacActivity extends AppCompatActivity implements View.OnClick
         AlertDialog.Builder builder = new AlertDialog.Builder(InsertVacActivity.this);
 
         if(success){
-            builder.setTitle("เพิ่มข้อมูลวัคซีน");
-            builder.setMessage("เพิ่มข้อมูลวัคซีนเรียบร้อย");
+
+            if(update == 1){
+                builder.setTitle("อัพเดทวัคซีน");
+                builder.setMessage("อัพเดทข้อมูลวัคซีนเรียบร้อย");
+            }else {
+                builder.setTitle("เพิ่มข้อมูลวัคซีน");
+                builder.setMessage("เพิ่มข้อมูลวัคซีนเรียบร้อย");
+            }
+
             builder.setIcon(R.mipmap.ic_success);
             builder.setCancelable(true);
             builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
@@ -201,8 +208,15 @@ public class InsertVacActivity extends AppCompatActivity implements View.OnClick
                 }
             });
         }else {
-            builder.setTitle("ล้มเหลว");
-            builder.setMessage("เกิดข้อผิดพลาด เพิ่มข้อมูลไม่สำเร็จ");
+
+            if(update == 1){
+                builder.setTitle("ล้มเหลว");
+                builder.setMessage("เกิดข้อผิดพลาด อัพเดทข้อมูลไม่สำเร็จ");
+            }else {
+                builder.setTitle("ล้มเหลว");
+                builder.setMessage("เกิดข้อผิดพลาด เพิ่มข้อมูลไม่สำเร็จ");
+            }
+
             builder.setIcon(R.mipmap.ic_failed);
             builder.setCancelable(true);
             builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
