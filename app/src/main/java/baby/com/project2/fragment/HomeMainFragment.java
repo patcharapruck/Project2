@@ -103,8 +103,8 @@ public class HomeMainFragment extends Fragment implements View.OnClickListener {
 
     private void setRecyclerView() {
         items = new ArrayList<>();
-        adapter = new KidListItemsAdapter(Contextor.getInstance().getmContext(), items);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Contextor.getInstance().getmContext(), LinearLayoutManager.HORIZONTAL, false));
+        adapter = new KidListItemsAdapter(getContext(), items);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
 
         int size = dto.getResult().size();

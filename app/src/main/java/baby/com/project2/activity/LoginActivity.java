@@ -53,6 +53,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         CreateAccount.setOnClickListener(this);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         if(SharedPrefUser.getInstance(context).getRemember()){
             CbRemember.setChecked(SharedPrefUser.getInstance(context).getRemember());
             UserId.setText(SharedPrefUser.getInstance(context).getUsername());
@@ -64,11 +69,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
             startActivity(intent);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     @Override

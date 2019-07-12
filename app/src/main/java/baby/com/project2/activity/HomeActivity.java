@@ -175,8 +175,13 @@ public class HomeActivity extends AppCompatActivity {
                     dto = response.body();
                     SelectChildManager.getInstance().setItemsDto(dto);
 
-                    SharedPrefUser.getInstance(Contextor.getInstance().getmContext())
-                            .saveChidId(dto.getResult().get(0).getC_id(),dto.getResult().get(0).getC_gender(),dto.getResult().get(0).getC_birthday());
+                 try {
+                     SharedPrefUser.getInstance(Contextor.getInstance().getmContext())
+                             .saveChidId(dto.getResult().get(0).getC_id(),dto.getResult().get(0).getC_gender(),dto.getResult().get(0).getC_birthday());
+                 }catch (Exception e){
+                     Intent intent = new Intent(HomeActivity.this, AddChildActivity.class);
+                     startActivity(intent);
+                 }
 
                     setNavigation();
 

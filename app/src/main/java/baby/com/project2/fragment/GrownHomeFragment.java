@@ -103,8 +103,20 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
             public void onResponse(Call<SelectGrowUpDto> call, Response<SelectGrowUpDto> response) {
                 if (response.isSuccessful()) {
                     dto = response.body();
-                    setDate();
-                    setData();
+
+                    try {
+                        setDate();
+                    }catch (Exception e){
+
+                    }
+
+                    try {
+                        setData();
+                    }catch (Exception e){
+
+                    }
+
+
 
                 } else {
                     Toast.makeText(mcontext, "เกิดข้อผิดพลาด", Toast.LENGTH_LONG).show();
@@ -193,8 +205,22 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
             }
         }
 
-        criterion(Day, Sum, SharedPrefUser.getInstance(getContext()).getGender()
-                , dto.getGrowup().get(index).getG_height(), dto.getGrowup().get(index).getG_weight());
+        try {
+            criterion(Day, Sum, SharedPrefUser.getInstance(getContext()).getGender()
+                    , dto.getGrowup().get(index).getG_height(), dto.getGrowup().get(index).getG_weight());
+        }catch (Exception e){
+
+        }
+
+        try {
+            setbody();
+        }catch (Exception e){
+
+        }
+
+    }
+
+    private void setbody() {
 
         if(Weigth_c.equals(getString(R.string.grade_low).toString())&& Height_c.equals(getString(R.string.grade_good).toString())){
             setlow();
@@ -212,7 +238,6 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
             TextViewStatusBody.setText("ไม่สามารถคำนวณได้");
             CardViewStatusBody.setCardBackgroundColor(getResources().getColor(R.color.noting));
         }
-
     }
 
     private void setfat() {
