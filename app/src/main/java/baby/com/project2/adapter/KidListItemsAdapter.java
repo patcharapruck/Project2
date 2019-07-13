@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.EditChildActivity;
+import baby.com.project2.activity.HomeActivity;
 import baby.com.project2.manager.singleton.child.SelectChildManager;
 import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.KidModelClass;
@@ -37,6 +38,15 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewKidsList customViewKidsList, final int i) {
+
+        if(items.get(i).getImage().length()<1){
+            if(items.get(i).getGender() == 1){
+                customViewKidsList.ImageViewKids.setImageResource(R.mipmap.ic_baby_boy);
+            }else {
+                customViewKidsList.ImageViewKids.setImageResource(R.mipmap.ic_baby_gril);
+            }
+        }
+
         customViewKidsList.TextViewNicknameKids.setText(items.get(i).getNickName());
         customViewKidsList.TextViewBirthday.setText(items.get(i).getBirthDay());
         customViewKidsList.ImageViewEditChild.setOnClickListener(new View.OnClickListener() {

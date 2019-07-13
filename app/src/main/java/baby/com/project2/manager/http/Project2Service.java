@@ -88,7 +88,7 @@ public interface Project2Service {
     @POST("testpro/deleteMilk.php")
     Call<DeleteMilkDto> loadAPIdeleteMilk(@Body RequestBody requestBody);
 
-    @POST("testpro/selectListintroage.php")
+    @POST("testpro/selectListIntroage.php")
     Call<SelectAgeIntroDto> loadAPIAgeIntroDtoCall();
 
     @POST("testpro/selectintro.php")

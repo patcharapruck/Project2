@@ -8,6 +8,7 @@ public class SelectChildItemsDto {
     private float C_height;
     private int C_gender;
     private String C_birthday;
+    private String C_image;
     private String C_blood;
 
     public String getC_id() {
@@ -32,6 +33,14 @@ public class SelectChildItemsDto {
 
     public void setC_weight(float c_weight) {
         C_weight = c_weight;
+    }
+
+    public String getC_image() {
+        return C_image;
+    }
+
+    public void setC_image(String c_image) {
+        C_image = c_image;
     }
 
     public float getC_height() {

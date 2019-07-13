@@ -258,7 +258,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         DecimalFormat formatter = new DecimalFormat("00");
         LoginItemsDto loginItemsDto = LoginManager.getInstance().getItemsDto();
 
-        String name,brithday,blood,uid,id;
+        String name,brithday,blood,uid,id,image="";
         int gender=1;
         float height=0f,weigth=0f;
 
@@ -291,7 +291,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
             ImageAlertNameEditChild.setVisibility(View.VISIBLE);
         }else {
             ImageAlertNameEditChild.setVisibility(View.INVISIBLE);
-            requpdate(id,name,gender,weigth,height,brithday,blood);
+            requpdate(id,name,gender,weigth,height,brithday,blood,image);
         }
 
     }
@@ -332,11 +332,11 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         alertDialog.show();
     }
 
-    public void requpdate(final String cid, String name, int gender, final float weight, final float height, final String birthday, String blood) {
+    public void requpdate(final String cid, String name, int gender, final float weight, final float height, final String birthday, String blood,String image) {
 
         final Context mcontext = EditChildActivity.this;
         String reqBody = "{\"id\" :\""+cid+"\",\"name\": \""+name+"\",\"gender\":"+gender+",\"weight\" :"+weight+"," +
-                "\"height\" :"+height+",\"birthday\":\""+birthday+"\",\"blood\" : \""+blood+"\" }";
+                "\"height\" :"+height+",\"birthday\":\""+birthday+"\",\"blood\" : \""+blood+"\",\"c_image\":\""+image+"\" }";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<UpdateChildDto> call = HttpManager.getInstance().getService().loadAPIupdate(requestBody);
         call.enqueue(new Callback<UpdateChildDto>() {

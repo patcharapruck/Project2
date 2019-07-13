@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import baby.com.project2.R;
 import baby.com.project2.adapter.IntroListAdapter;
 import baby.com.project2.dto.intro.SelectAgeIntroDto;
+import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.intro.AgeIntroManager;
 import baby.com.project2.view.IntroModelClass;
@@ -55,7 +56,7 @@ public class ListintroFragment extends Fragment {
 
     public void reqListIntro() {
 
-        final Context mcontext = getContext();
+        final Context mcontext = Contextor.getInstance().getmContext();
         Call<SelectAgeIntroDto> call = HttpManager.getInstance().getService().loadAPIAgeIntroDtoCall();
         call.enqueue(new Callback<SelectAgeIntroDto>() {
 

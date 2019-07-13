@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +48,12 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
 
     @Override
     public void onBindViewHolder(@NonNull final CustomViewDevelopMent customViewDevelopMentList, final int i) {
+
+        String url = "https://admitbaby.000webhostapp.com/";
+        Glide.with(context)
+                .load(url+items.get(i).getBD_image())
+                .into(customViewDevelopMentList.ImageView_Dev);
+
         customViewDevelopMentList.TextViewDataDevShow.setText(items.get(i).getBD_data());
         customViewDevelopMentList.StatusDev.setVisibility(View.INVISIBLE);
         SelectDataDevDto selectDataDevDto = DataDevManager.getInstance().getItemsDto();
@@ -109,7 +117,7 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
     public class CustomViewDevelopMent extends RecyclerView.ViewHolder {
 
         TextView TextViewDataDevShow;
-        ImageView StatusDev;
+        ImageView StatusDev,ImageView_Dev;
         CardView CardViewDataDev;
 
         public CustomViewDevelopMent(@NonNull View itemView) {
@@ -118,6 +126,7 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
             TextViewDataDevShow   = (TextView)itemView.findViewById(R.id.textview_data_dev_show);
             CardViewDataDev = (CardView)itemView.findViewById(R.id.cardview_data_dev);
             StatusDev       = (ImageView) itemView.findViewById(R.id.status_dev);
+            ImageView_Dev = (ImageView)itemView.findViewById(R.id.imageview_dev);
 
         }
     }

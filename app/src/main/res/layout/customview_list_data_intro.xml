@@ -27,7 +27,7 @@
                 android:background="#E2EDFC">
 
                 <ImageView
-                    android:id="@+id/imageview_food"
+                    android:id="@+id/imageview_intro"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@color/white"/>

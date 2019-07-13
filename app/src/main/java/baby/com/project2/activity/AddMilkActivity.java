@@ -233,7 +233,7 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
     public void reqinsert(String nameType,String name,int age,int amount,String volume,String birthday,String time,String cid) {
 
         final Context mcontext = AddMilkActivity.this;
-        String reqBody = "{\"M_foodname\": \""+nameType+"\",\"M_Milk\":\""+name+"\",\"M_age\" :"+age+",\"M_amount\":"+amount+","+
+        String reqBody = "{\"M_foodname\": \""+name+"\",\"M_Milk\":\""+nameType+"\",\"M_age\" :"+age+",\"M_amount\":"+amount+","+
                 "\"M_unit\":\""+volume+"\",\"M_date\":\""+birthday+"\",\"M_time\":\""+time+"\",\"C_id\":\""+cid+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<InsertMilkDto> call = HttpManager.getInstance().getService().loadAPIInsertMilk(requestBody);

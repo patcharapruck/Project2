@@ -41,7 +41,7 @@ public class HttpManager {
         Gson gson = builder.create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.145.2:81/")
+                .baseUrl("https://admitbaby.000webhostapp.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

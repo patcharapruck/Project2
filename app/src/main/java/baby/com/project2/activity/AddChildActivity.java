@@ -73,7 +73,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
     private String formatDateTime;
     private String BloodType = "A";
 
-    String name,brithday,blood,uid;
+    String name,brithday,blood,image,uid;
     int gender=1;
     float height=0f,weigth=0f;
 
@@ -158,15 +158,13 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    public void reqinsert(String name,int gender,float weight,float heightt,String birthday,String blood,String uid) {
-
-        final Context mcontext = AddChildActivity.this;
+    public void reqinsert(String name,int gender,float weight,float heightt,String birthday,String blood,String image,String uid) {
+        final Context mcontext = Contextor.getInstance().getmContext();
         String reqBody = "{\"c_name\": \""+name+"\",\"c_gender\":"+gender+",\"c_weight\" :"+weight+",\"c_height\":"+heightt+","+
-                "\"c_birthday\":\""+birthday+"\",\"c_blood\":\""+blood+"\",\"u_id\":\""+uid+"\" }";
+                "\"c_birthday\":\""+birthday+"\",\"c_blood\":\""+blood+"\",\"c_image\":\""+image+"\",\"u_id\":\""+uid+"\" }";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<InsertChildDto> call = HttpManager.getInstance().getService().loadAPIInsertChild(requestBody);
         call.enqueue(new Callback<InsertChildDto>() {
@@ -301,6 +299,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         uid = formatter.format(Integer.valueOf(loginItemsDto.getId()));
         name = EditTextAddChildName.getText().toString();
         brithday = TextViewAddChildBirthday.getText().toString();
+        image = "";
         blood = BloodType;
         try {
             height = Float.valueOf(EditTextAddChildHeight.getText().toString());
@@ -326,7 +325,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
             ImageAlertNameAddChild.setVisibility(View.VISIBLE);
         }else {
             ImageAlertNameAddChild.setVisibility(View.INVISIBLE);
-            reqinsert(name,gender,weigth,height,brithday,blood,uid);
+            reqinsert(name,gender,weigth,height,brithday,blood,image,uid);
         }
 
     }

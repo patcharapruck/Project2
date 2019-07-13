@@ -107,7 +107,7 @@ public class DataIntroActivity extends AppCompatActivity {
         for (int i = 0; i < size; i++) {
             try {
                 items.add(new IntroDataModelClass(dto.getDataintro().get(i).getI_id()
-                        ,dto.getDataintro().get(i).getI_data()));
+                        ,dto.getDataintro().get(i).getI_data(),dto.getDataintro().get(i).getI_image()));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;
             }
