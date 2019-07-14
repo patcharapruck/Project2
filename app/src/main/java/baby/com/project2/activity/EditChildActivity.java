@@ -75,7 +75,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
     private int Year;
 
     private String formatDate;
-    private String BloodType = "A";
+    private String BloodType ;
     private int CId;
     private String cid;
 
@@ -121,8 +121,8 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         CloseImgbtnEditChild.setVisibility(View.INVISIBLE);
         ImageAlertNameEditChild.setVisibility(View.INVISIBLE);
 
-        createTypeSearchData();
         setDataupdate();
+        createTypeSearchData();
         setToolBar();
         spinnerChoose();
         setaddData();
@@ -135,6 +135,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         cid = childItemsDto.getC_id();
         formatDate = childItemsDto.getC_birthday();
         EditTextEditChildName.setText(childItemsDto.getC_name());
+        BloodType = childItemsDto.getC_blood();
 
         switch (childItemsDto.getC_gender()){
             case 1:
@@ -246,6 +247,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
     private void createTypeSearchData() {
 
         if (mTypeSearch.isEmpty()){
+            mTypeSearch.add(BloodType);
             mTypeSearch.add("A");
             mTypeSearch.add("AB");
             mTypeSearch.add("B");

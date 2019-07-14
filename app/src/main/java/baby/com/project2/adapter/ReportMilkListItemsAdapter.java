@@ -39,7 +39,7 @@ public class ReportMilkListItemsAdapter extends RecyclerView.Adapter<ReportMilkL
 
         customViewReportMilkList.TextViewReportDateMilk.setText(items.get(i).getM_date());
         customViewReportMilkList.TextViewReportTimeMilk.setText(items.get(i).getM_time());
-        customViewReportMilkList.TextViewReportAgeMilk.setText(items.get(i).getM_age());
+        customViewReportMilkList.TextViewReportAgeMilk.setText(String.valueOf(items.get(i).getM_age()));
         customViewReportMilkList.TextViewReportTypeMilk.setText(items.get(i).getM_foodtype());
         customViewReportMilkList.TextViewReportNameMilk.setText(items.get(i).getM_namefood());
         customViewReportMilkList.TextViewReportAmountMilk.setText(String.valueOf(items.get(i).getM_amount()));
@@ -47,8 +47,16 @@ public class ReportMilkListItemsAdapter extends RecyclerView.Adapter<ReportMilkL
         customViewReportMilkList.CardViewReportMilk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(context, EditMilkActivity.class);
-                intent.putExtra("id",i);
+                intent.putExtra("id",items.get(i).getM_id());
+                intent.putExtra("name",items.get(i).getM_namefood());
+                intent.putExtra("type",items.get(i).getM_foodtype());
+                intent.putExtra("age",items.get(i).getM_age());
+                intent.putExtra("date",items.get(i).getM_date());
+                intent.putExtra("time",items.get(i).getM_time());
+                intent.putExtra("amount",items.get(i).getM_amount());
+                intent.putExtra("volum",items.get(i).getM_volume());
                 context.startActivity(intent);
             }
         });

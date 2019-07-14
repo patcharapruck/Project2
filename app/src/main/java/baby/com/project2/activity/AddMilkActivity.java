@@ -1,6 +1,7 @@
 package baby.com.project2.activity;
 
 import android.app.DatePickerDialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -21,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -44,7 +47,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddMilkActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddMilkActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime, View.OnClickListener {
 
 
     private TextView TextViewClock,TextViewAddMilkBirthday;
@@ -61,6 +64,7 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
     private int Day;
     private int Month;
     private int Year;
+    private String currentDateTimeString;
     private String formatDateTimeToday;
 
     private String Volume="",NameType="";
@@ -77,8 +81,21 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         getDateTime();
+        getTime();
         ImageViewCalendarAddMilk.setOnClickListener(this);
         TextViewAddMilkBirthday.setOnClickListener(this);
+        ImageViewClock.setOnClickListener(this);
+        TextViewClock.setOnClickListener(this);
+
+    }
+
+    private void getTime() {
+
+        Date d =new Date();
+        SimpleDateFormat sdf=new SimpleDateFormat("hh:mm");
+        currentDateTimeString = sdf.format(d);
+        TextViewClock.setText(currentDateTimeString);
+
     }
 
     private void initInstances() {
@@ -296,8 +313,6 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
 
     private void DataAddMilk() {
 
-        DecimalFormat formatter = new DecimalFormat("00");
-
         String name,brithday,volume,nametype,cid,time;
         int age,amount;
 
@@ -337,5 +352,32 @@ public class AddMilkActivity extends AppCompatActivity implements View.OnClickLi
         if(v== BtnAddMilk){
             DataAddMilk();
         }
+        if(v == ImageViewClock||v == TextViewClock){
+            setTimeDialog();
+        }
+    }
+
+    private void setTimeDialog() {
+
+        RangeTimePickerDialog dialog = new RangeTimePickerDialog();
+        dialog.newInstance();
+        dialog.setRadiusDialog(20); // Set radius of dialog (default is 50)
+        dialog.setIs24HourView(true); // Indicates if the format should be 24 hours
+        dialog.setValidateRange(false);
+        dialog.setColorBackgroundHeader(R.color.colorPrimary); // Set Color of Background header dialog
+        dialog.setColorTextButton(R.color.colorPrimaryDark); // Set Text color of button
+        dialog.setInitialOpenedTab(RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
+        dialog.setTextTabStart(currentDateTimeString);
+        FragmentManager fragmentManager = getFragmentManager();
+        dialog.show(fragmentManager, "");
+    }
+
+
+    @Override
+    public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
+
+        DecimalFormat formatter = new DecimalFormat("00");
+        currentDateTimeString = formatter.format(hourStart)+":"+formatter.format(minuteEnd);
+        TextViewClock.setText(currentDateTimeString);
     }
 }

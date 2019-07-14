@@ -21,4 +21,7 @@
     <string name="add_milk">เพิ่มข้อมูลโภชนาการ</string>
     <string name="add_child">เพิ่มข้อมูลเด็ก</string>
     <string name="setting_text">ตั้งค่า</string>
+
+    <string name="pick_profile_picture">Pick Profile Picture</string>
+    <string name="profile_photo_file_name">profile_child.png</string>
 </resources>

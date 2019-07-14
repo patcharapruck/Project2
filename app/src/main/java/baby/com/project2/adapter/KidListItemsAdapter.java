@@ -76,12 +76,10 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
 
         TextView TextViewBirthday,TextViewNicknameKids;
         ImageView ImageViewKids,ImageViewEditChild;
-
         CardView CardViewListChild;
 
         public CustomViewKidsList(@NonNull View itemView) {
             super(itemView);
-
             TextViewNicknameKids = (TextView) itemView.findViewById(R.id.textview_nickname_kids);
             TextViewBirthday = (TextView) itemView.findViewById(R.id.textview_birthday);
             ImageViewKids = (ImageView) itemView.findViewById(R.id.image_view_kids);

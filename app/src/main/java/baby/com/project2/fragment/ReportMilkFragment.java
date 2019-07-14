@@ -101,7 +101,7 @@ public class ReportMilkFragment extends Fragment {
                         ,dto.getMilk().get(i).getM_date()
                         ,dto.getMilk().get(i).getM_time()
                         ,dto.getMilk().get(i).getM_foodname()
-                        ,dto.getMilk().get(i).getM_age()+" เดือน"
+                        ,dto.getMilk().get(i).getM_age()
                         ,dto.getMilk().get(i).getM_Milk()
                         ,dto.getMilk().get(i).getM_unit()
                         ,dto.getMilk().get(i).getM_amount()));

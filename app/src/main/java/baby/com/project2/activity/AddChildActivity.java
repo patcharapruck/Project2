@@ -3,12 +3,19 @@ package baby.com.project2.activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +31,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -62,6 +73,8 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
     private RadioButton RdGenderBoy,RdGenderGirl;
     private Button BtnAddChild;
     private Toolbar toolbar;
+
+
 
     private ArrayList<String> mTypeSearch = new ArrayList<String>();
 
@@ -338,7 +351,12 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         if(v == BtnAddChild){
             DataAddChild();
         }
+        if(v == ImageBtnAddProfileAddChild){
+
+        }
     }
+
+
 
     public void reqinsertgrow(String date,float weight,float heightt,String Cid) {
 
@@ -370,6 +388,12 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
                 Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ImageBtnAddProfileAddChild.setOnClickListener(this);
     }
 
 }

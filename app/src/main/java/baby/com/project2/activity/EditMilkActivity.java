@@ -1,6 +1,7 @@
 package baby.com.project2.activity;
 
 import android.app.DatePickerDialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -37,6 +40,7 @@ import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.milk.DeleteMilkDto;
 import baby.com.project2.dto.milk.SelectMilkItemsDto;
 import baby.com.project2.dto.milk.UpdateMilkDto;
+import baby.com.project2.fragment.MenuFragment;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
@@ -49,7 +53,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditMilkActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditMilkActivity extends AppCompatActivity implements View.OnClickListener , RangeTimePickerDialog.ISelectedTime {
 
 
     private TextView TextViewClock, TextViewEditMilkBirthday;
@@ -70,8 +74,8 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
 
     private String Volume="",NameType="";
 
-    private int index;
-    private String mid;
+    private String Mid,mnamefood,mtypefood,volume,time;
+    private int mid,amount,age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +83,14 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_edit_milk);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Intent id = getIntent();
-        index = id.getIntExtra("id",0);
+        mid = id.getIntExtra("id",0);
+        mnamefood = id.getStringExtra("name");
+        mtypefood = id.getStringExtra("type");
+        formatDate = id.getStringExtra("date");
+        volume = id.getStringExtra("volum");
+        time = id.getStringExtra("time");
+        age = id.getIntExtra("age",0);
+        amount = id.getIntExtra("amount",0);
 
         initInstances();
     }
@@ -87,14 +98,26 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        getDateTime();
         ImageViewCalendarEditMilk.setOnClickListener(this);
         TextViewEditMilkBirthday.setOnClickListener(this);
+        ImageViewClock.setOnClickListener(this);
+        TextViewClock.setOnClickListener(this);
+        getDateTime();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        BtnEditMilk.setOnClickListener(this);
+        DeleteMilk.setOnClickListener(this);
     }
 
     private void initInstances() {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setToolBar();
+
+        DecimalFormat formatter = new DecimalFormat("00");
+        Mid = formatter.format(mid);
 
         TextViewEditMilkBirthday = (TextView)findViewById(R.id.textview_edit_milk_birthday);
         TextViewClock = (TextView)findViewById(R.id.textview_clock);
@@ -114,8 +137,6 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         CloseImgbtnEditmilk.setVisibility(View.INVISIBLE);
         ImageAlertNameEditmilk.setVisibility(View.INVISIBLE);
 
-        BtnEditMilk.setOnClickListener(this);
-        DeleteMilk.setOnClickListener(this);
 
         createTypeSearchData();
         createTypeData();
@@ -126,33 +147,19 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
 
     private void setDataupdate() {
         DecimalFormat formatter = new DecimalFormat("00");
-        SelectMilkItemsDto milkDto = SelectMilkManager.getInstance().getItemsDto().getMilk().get(index);
 
-        formatDate = milkDto.getM_date();
+        EditTextEditMilkNamefood.setText(mnamefood);
+        TextViewEditMilkBirthday.setText(formatDate);
+        EditTextEditMilkAge.setText(String.valueOf(age));
+        EditTextVolume.setText(String.valueOf(amount));
+        TextViewClock.setText(time);
 
-        mid = formatter.format(milkDto.getM_id());
-        EditTextEditMilkNamefood.setText(milkDto.getM_foodname());
-        TextViewEditMilkBirthday.setText(milkDto.getM_date());
-        EditTextEditMilkAge.setText(String.valueOf(milkDto.getM_age()));
-        EditTextVolume.setText(String.valueOf(milkDto.getM_amount()));
-        TextViewClock.setText(milkDto.getM_time());
-
-//        int size = milkDto.getMilk().size();
-//        for(int i=0;i<size;i++){
-//            if(index == milkDto.getMilk().get(i).getM_id()){
-//                mid = formatter.format(milkDto.getMilk().get(i).getM_id());
-//                EditTextEditMilkNamefood.setText(milkDto.getMilk().get(i).getM_foodname());
-//                TextViewEditMilkBirthday.setText(milkDto.getMilk().get(i).getM_date());
-//                EditTextEditMilkAge.setText(String.valueOf(milkDto.getMilk().get(i).getM_age()));
-//                EditTextVolume.setText(String.valueOf(milkDto.getMilk().get(i).getM_amount()));
-//                TextViewClock.setText(milkDto.getMilk().get(i).getM_time());
-//            }
-//        }
     }
 
     private void createTypeSearchData() {
 
         if (mTypeSearch.isEmpty()){
+            mTypeSearch.add(mtypefood);
             mTypeSearch.add("นม");
             mTypeSearch.add("อาหาร");
             mTypeSearch.add("อาหารเสริม");
@@ -162,6 +169,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
     private void createTypeData() {
 
         if (mType.isEmpty()){
+            mType.add(volume);
             mType.add("กรัม");
             mType.add("ออนซ์");
         }
@@ -328,22 +336,18 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
 
     private void DataAddMilk() {
 
-        DecimalFormat formatter = new DecimalFormat("00");
 
-        String name,brithday,volume,nametype,time;
-        int age,amount;
-
-        name = EditTextEditMilkNamefood.getText().toString();
-        brithday = TextViewEditMilkBirthday.getText().toString();
+        mnamefood = EditTextEditMilkNamefood.getText().toString();
+        formatDate = TextViewEditMilkBirthday.getText().toString();
         time = TextViewClock.getText().toString();
         volume = Volume;
-        nametype = NameType;
-
+        mtypefood = NameType;
         try {
             age = Integer.valueOf(EditTextEditMilkAge.getText().toString());
         }catch (Exception e){
             age = 0;
         }
+
         try {
             amount = Integer.valueOf(EditTextVolume.getText().toString());
         }catch (Exception e){
@@ -351,11 +355,11 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         }
 
 
-        if(name.length()<1){
+        if(mnamefood.length()<1){
             ImageAlertNameEditmilk.setVisibility(View.VISIBLE);
         }else {
             ImageAlertNameEditmilk.setVisibility(View.INVISIBLE);
-            requpdate(mid,nametype,name,age,amount,volume,brithday,time);
+            requpdate(Mid,mtypefood,mnamefood,age,amount,volume,formatDate,time);
         }
 
     }
@@ -376,7 +380,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                reqdelete(mid);
+                reqdelete(Mid);
             }
         });
         AlertDialog alertDialog = builder.create();
@@ -453,5 +457,31 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         if(v == DeleteMilk){
             ShowAlertDialogConfirm();
         }
+        if(v == ImageViewClock||v == TextViewClock){
+            setTimeDialog();
+        }
+    }
+
+    private void setTimeDialog() {
+
+        RangeTimePickerDialog dialog = new RangeTimePickerDialog();
+        dialog.newInstance();
+        dialog.setRadiusDialog(20); // Set radius of dialog (default is 50)
+        dialog.setIs24HourView(true); // Indicates if the format should be 24 hours
+        dialog.setValidateRange(false);
+        dialog.setColorBackgroundHeader(R.color.colorPrimary); // Set Color of Background header dialog
+        dialog.setColorTextButton(R.color.colorPrimaryDark); // Set Text color of button
+        dialog.setInitialOpenedTab(RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
+        dialog.setTextTabStart(formatDate);
+        FragmentManager fragmentManager = getFragmentManager();
+        dialog.show(fragmentManager, "");
+
+    }
+
+    @Override
+    public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
+        DecimalFormat formatter = new DecimalFormat("00");
+        formatDate = formatter.format(hourStart)+":"+formatter.format(minuteEnd);
+        TextViewClock.setText(formatDate);
     }
 }
