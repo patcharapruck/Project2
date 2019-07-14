@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -57,7 +59,7 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
     private CardView CardViewTrue, CardViewFail;
 
     private String FKcd_id,C_id,BD_id;
-    private String dateStr,typeStr,DataStr;
+    private String dateStr,typeStr,DataStr,url;
     private int update;
 
     private int Day;
@@ -78,6 +80,7 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         DataStr = id.getStringExtra("data");
         dateStr = id.getStringExtra("date");
         update = id.getIntExtra("update",0);
+        url = id.getStringExtra("imag");
 
         initInstances();
     }
@@ -105,6 +108,10 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         CardViewTrue = (CardView)findViewById(R.id.cardview_true);
         CardViewFail = (CardView)findViewById(R.id.cardview_fail);
         DeleteDev = (ImageView)findViewById(R.id.delete_dev);
+
+        Glide.with(InsertDevActivity.this)
+                .load(url)
+                .into(ImageViewShowDev);
 
         DeleteDev.setVisibility(View.INVISIBLE);
 

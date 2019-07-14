@@ -104,6 +104,7 @@ public class DevelopMentItemsAdapter extends RecyclerView.Adapter<DevelopMentIte
                 intent.putExtra("data",items.get(i).getBD_data());
                 intent.putExtra("date", finalDate);
                 intent.putExtra("update", update);
+                intent.putExtra("imag","https://admitbaby.000webhostapp.com/"+items.get(i).getBD_image());
                 context.startActivity(intent);
             }
         });

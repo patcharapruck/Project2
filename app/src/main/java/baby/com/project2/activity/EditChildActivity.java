@@ -281,10 +281,10 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         }
 
         switch (Gender.getCheckedRadioButtonId()){
-            case R.id.rd_gender_boy_addchild:
+            case R.id.rd_gender_boy_editchild:
                 gender = 1;
                 break;
-            case R.id.rd_gender_girl_addchild:
+            case R.id.rd_gender_girl_editchild:
                 gender = 2;
                 break;
         }

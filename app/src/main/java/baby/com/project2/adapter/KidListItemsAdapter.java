@@ -39,7 +39,7 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
     @Override
     public void onBindViewHolder(@NonNull CustomViewKidsList customViewKidsList, final int i) {
 
-        if(items.get(i).getImage().length()<1){
+        if(items.get(i).getImage().length()<1||items.get(i).getImage()==null){
             if(items.get(i).getGender() == 1){
                 customViewKidsList.ImageViewKids.setImageResource(R.mipmap.ic_baby_boy);
             }else {

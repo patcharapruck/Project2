@@ -53,7 +53,7 @@
                 android:layout_height="@dimen/imagebtn_add_child_height"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:background="@mipmap/ic_add_baby"
+                android:background="@mipmap/ic_baby_milk"
                 android:scaleType="centerInside">
 
             </ImageButton>

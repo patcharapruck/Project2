@@ -227,8 +227,8 @@ public class EditGrowActivity extends AppCompatActivity implements View.OnClickL
         AlertDialog.Builder builder = new AlertDialog.Builder(EditGrowActivity.this);
 
         if(success){
-            builder.setTitle("เพิ่มข้อมูลเด็ก");
-            builder.setMessage("เพิ่มข้อมูลสำเร็จ");
+            builder.setTitle("อัพเดทข้อมูลเจริญเติบโต");
+            builder.setMessage("อัพเดทข้อมูลเรียบร้อย");
             builder.setIcon(R.mipmap.ic_success);
             builder.setCancelable(true);
             builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
@@ -238,8 +238,8 @@ public class EditGrowActivity extends AppCompatActivity implements View.OnClickL
                 }
             });
         }else {
-            builder.setTitle("เพิ่มข้อมูลเด็ก");
-            builder.setMessage("เกิดข้อผิดพลาด เพิ่มข้อมูลล้มเหลว");
+            builder.setTitle("อัพเดทข้อมูลเจริญเติบโต");
+            builder.setMessage("เกิดข้อผิดพลาด อัพเดทข้อมูลล้วเหลว");
             builder.setIcon(R.mipmap.ic_failed);
             builder.setCancelable(true);
             builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
