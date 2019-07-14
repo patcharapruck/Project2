@@ -99,7 +99,7 @@ public class EditPassUserActivity extends AppCompatActivity implements View.OnCl
                     if(!edpass.equals(cfpass)){
                         Toast.makeText(EditPassUserActivity.this, "การยืนยันรหัสผ่านไม่ตรงกัน", Toast.LENGTH_LONG).show();
                     }else{
-                        U_password = pass;
+                        U_password = edpass;
                         requpdate(U_name,U_password,U_id);
                     }
                 }
