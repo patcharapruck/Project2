@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="พัฒนาการ"
+                    android:text="โภชนาการ"
                     style="@style/textstyle_vaccine_head" />
 
                 <Button
@@ -52,25 +52,139 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="ข้อมูลล่าสุดเมื่อ "
+                    style="@style/textstyle_grown"/>
 
                 <TextView
-                    android:id="@+id/textview_status_vaccine"
+                    android:id="@+id/textview_date_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="5dp"
-                    android:text="ยังมีวัคซีนที่ยังไม่ได้ฉีด 8 ชนิด"
-                    android:maxLines="2"
-                    android:textColor="@color/very_low"
-                    style="@style/textstyle_vaccine_head" />
+                    android:text="-"
+                    style="@style/textstyle_grown" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:text="เวลา"
+                    style="@style/textstyle_grown"/>
+
+                <TextView
+                    android:id="@+id/textview_time_update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:text="-"
+                    style="@style/textstyle_grown" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageview_food"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@mipmap/ic_baby_milk"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textstyle_add_child"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="อาหารประเภท"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"/>
+
+                        <TextView
+                            android:id="@+id/textview_report_type_milk"
+                            style="@style/textstyle_add_child"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:text="-" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textstyle_add_child"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ชื่ออาหาร"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"/>
+
+                        <TextView
+                            android:id="@+id/textview_report_name_milk"
+                            style="@style/textstyle_add_child"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:layout_marginLeft="10dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/textstyle_add_child"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ทานในปริมาตร"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"/>
+
+                        <TextView
+                            android:id="@+id/textview_report_amount_milk"
+                            style="@style/textstyle_add_child"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:layout_marginLeft="10dp"/>
+
+                        <TextView
+                            android:id="@+id/textview_report_volume_milk"
+                            style="@style/textstyle_add_child"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 

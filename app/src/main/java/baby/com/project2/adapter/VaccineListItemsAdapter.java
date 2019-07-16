@@ -98,7 +98,6 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
         customViewVaccineList.Vaccine.setText(items.get(i).getVaccine());
         customViewVaccineList.Type.setText(items.get(i).getType());
 
-
         for(int j=0;j<size;j++){
 
             String id = formatter.format(dataVaccineDto.getDatavaccine().get(j).getV_id());

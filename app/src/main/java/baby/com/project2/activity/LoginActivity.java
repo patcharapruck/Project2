@@ -83,9 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(v == BtnLogin){
             reqLogin(UserId.getText().toString(),PassId.getText().toString(),CbRemember.isChecked());
-//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//            finish();
-//            startActivity(intent);
+
         }
 
         if(v == CreateAccount){
@@ -95,43 +93,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void reqLogin(final String user, final String pass,final boolean b) {
-
         final Context mcontext = LoginActivity.this;
         String reqBody = "{\"email\":\""+user+"\",\"password\":\""+pass+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<LoginItemsDto> call = HttpLoginManager.getInstance().getService().loadAPILogin(requestBody);
         call.enqueue(new Callback<LoginItemsDto>() {
-
             @Override
             public void onResponse(Call<LoginItemsDto> call, Response<LoginItemsDto> response) {
-
                 if(response.isSuccessful()){
-
                     LoginItemsDto dto = response.body();
                     LoginManager.getInstance().setItemsDto(dto);
-
                     SharedPrefUser.getInstance(mcontext).saveLogin(user,pass,b,dto.getId());
-
                     if(response.body().isConnect()){
                             if(dto.isChildchecked()){
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 finish();
                                 startActivity(intent);
-                            }
-                            else{
+                            } else{
                                 Intent intent = new Intent(LoginActivity.this, AddChildActivity.class);
                                 startActivity(intent);
                             }
                     }
-
                     else if (!response.body().isConnect()){
-                        Toast.makeText(mcontext,dto.getComment(),Toast.LENGTH_LONG).show();
-                    }
-
-
+                        Toast.makeText(mcontext,dto.getComment(),Toast.LENGTH_LONG).show(); }
                 }else {
-                    Toast.makeText(LoginActivity.this,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
-                }
+                    Toast.makeText(LoginActivity.this,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show(); }
             }
             @Override
             public void onFailure(Call<LoginItemsDto> call, Throwable t) {

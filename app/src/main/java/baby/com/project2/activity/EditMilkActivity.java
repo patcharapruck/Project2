@@ -481,7 +481,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
         DecimalFormat formatter = new DecimalFormat("00");
-        formatDate = formatter.format(hourStart)+":"+formatter.format(minuteEnd);
+        formatDate = formatter.format(hourStart)+":"+formatter.format(minuteStart );
         TextViewClock.setText(formatDate);
     }
 }

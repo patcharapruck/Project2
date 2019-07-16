@@ -377,7 +377,7 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
     public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
 
         DecimalFormat formatter = new DecimalFormat("00");
-        currentDateTimeString = formatter.format(hourStart)+":"+formatter.format(minuteEnd);
+        currentDateTimeString = formatter.format(hourStart)+":"+formatter.format(minuteStart);
         TextViewClock.setText(currentDateTimeString);
     }
 }

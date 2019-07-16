@@ -1,6 +1,7 @@
 package baby.com.project2.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,10 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.ChildGrowActivity;
 import baby.com.project2.activity.DevelopMentActivity;
+import baby.com.project2.dto.devlopment.SelectDataDevDto;
+import baby.com.project2.manager.Contextor;
+import baby.com.project2.manager.http.HttpManager;
+import baby.com.project2.manager.singleton.develorment.DataDevManager;
+import baby.com.project2.util.SharedPrefUser;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,10 +33,7 @@ import baby.com.project2.activity.DevelopMentActivity;
 public class DevelorHomeFragment extends Fragment implements View.OnClickListener {
 
     private Button ButtonAddData;
-    private CardView CardViewStatusLanguage,CardViewStatusUseLanguage
-            ,CardViewStatusMuscle,CardViewStatusMovement,CardViewStatusJustmyself;
-    private TextView TextViewStatusLanguage,TextViewStatusUseLanguage
-            ,TextViewStatusMuscle,TextViewStatusMovement,TextViewStatusJustmyself;
+    private TextView TextViewStatusDev;
 
     public DevelorHomeFragment() {
         // Required empty public constructor
@@ -43,18 +52,10 @@ public class DevelorHomeFragment extends Fragment implements View.OnClickListene
     private void initInstances(View rootView) {
 
         ButtonAddData        = (Button)rootView.findViewById(R.id.button_add_data);
+        TextViewStatusDev      = (TextView)rootView.findViewById(R.id.textview_status_dev);
+        String cid = SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild();
 
-        TextViewStatusLanguage      = (TextView)rootView.findViewById(R.id.textview_status_language);
-        TextViewStatusUseLanguage   = (TextView)rootView.findViewById(R.id.textview_status_use_language);
-        TextViewStatusMuscle        = (TextView)rootView.findViewById(R.id.textview_status_muscle);
-        TextViewStatusMovement      = (TextView)rootView.findViewById(R.id.textview_status_movement);
-        TextViewStatusJustmyself    = (TextView)rootView.findViewById(R.id.textview_status_justmyself);
-
-        CardViewStatusLanguage      = (CardView)rootView.findViewById(R.id.cardview_status_language);
-        CardViewStatusUseLanguage   = (CardView)rootView.findViewById(R.id.cardview_status_use_language);
-        CardViewStatusMuscle        = (CardView)rootView.findViewById(R.id.cardview_status_muscle);
-        CardViewStatusMovement      = (CardView)rootView.findViewById(R.id.cardview_status_movement);
-        CardViewStatusJustmyself    = (CardView)rootView.findViewById(R.id.cardview_status_justmyself);
+        reqDataDevelorment(cid);
 
         ButtonAddData.setOnClickListener(this);
 
@@ -64,5 +65,33 @@ public class DevelorHomeFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         Intent intent = new Intent(getContext(), DevelopMentActivity.class);
         getContext().startActivity(intent);
+    }
+
+
+    public void reqDataDevelorment(String cid) {
+
+        final Context mcontext = getContext();
+        String reqBody = "{\"C_id\":\""+cid+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<SelectDataDevDto> call = HttpManager.getInstance().getService().loadAPIDataDevDtoCall(requestBody);
+        call.enqueue(new Callback<SelectDataDevDto>() {
+
+            @Override
+            public void onResponse(Call<SelectDataDevDto> call, Response<SelectDataDevDto> response) {
+                if(response.isSuccessful()){
+                    SelectDataDevDto dtodev = response.body();
+                    DataDevManager.getInstance().setItemsDto(dtodev);
+
+                    TextViewStatusDev.setText(String.valueOf(dtodev.getDatadev().size()));
+
+                }else {
+                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<SelectDataDevDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

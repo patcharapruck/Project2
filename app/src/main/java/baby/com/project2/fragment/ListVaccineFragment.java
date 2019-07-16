@@ -83,11 +83,11 @@ public class ListVaccineFragment extends Fragment {
 
         for (int i = 0; i < size; i++) {
             try {
-                items.add(new VaccineModelClass(dto.getVaccine().get(i).getV_id(),dto.getVaccine().get(i).getV_name(),dto.getVaccine().get(i).getV_type()));
+                items.add(new VaccineModelClass(dto.getVaccine().get(i).getV_id(),dto.getVaccine().get(i).getV_name()
+                        ,dto.getVaccine().get(i).getV_type()));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;
             }
-
             adapter.notifyDataSetChanged();
         }
     }

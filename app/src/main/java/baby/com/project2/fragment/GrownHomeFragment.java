@@ -109,14 +109,11 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
                     }catch (Exception e){
 
                     }
-
                     try {
                         setData();
                     }catch (Exception e){
 
                     }
-
-
 
                 } else {
                     Toast.makeText(mcontext, "เกิดข้อผิดพลาด", Toast.LENGTH_LONG).show();
@@ -241,7 +238,7 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
     }
 
     private void setfat() {
-        TextViewStatusBody.setText("อ้สน");
+        TextViewStatusBody.setText("อ้วน");
         CardViewStatusBody.setCardBackgroundColor(getResources().getColor(R.color.very_low));
     }
 

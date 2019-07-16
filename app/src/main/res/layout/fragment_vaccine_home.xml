@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="พัฒนาการ"
+                    android:text="วัคซีน"
                     style="@style/textstyle_vaccine_head" />
 
                 <Button
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
-                        android:text="ยังมีวัคซีนที่ยังไม่ได้ฉีด 8 ชนิด"
+                        android:text="@string/vaccinetext"
                         android:maxLines="2"
                         android:textColor="@color/very_low"
                         style="@style/textstyle_vaccine_head" />
