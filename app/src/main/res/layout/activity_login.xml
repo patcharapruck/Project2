@@ -153,25 +153,18 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/textsize_tv" />
 
-                <android.support.v7.widget.CardView
+                <com.facebook.login.widget.LoginButton
                     android:id="@+id/btnface"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/heighAllbox_login"
                     android:layout_marginTop="@dimen/marginTopBtn_login"
-                    app:cardBackgroundColor="#03A9F4"
-                    app:cardCornerRadius="10dp">
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/prompt_regular"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textsize_btn"
+                    android:background="#03A9F4">
 
-                    <TextView
-                        android:id="@+id/tvFace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="facebook"
-                        android:fontFamily="@font/prompt_regular"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/textsize_btn" />
-
-                </android.support.v7.widget.CardView>
+                </com.facebook.login.widget.LoginButton>
 
                 <!--<TextView-->
                     <!--android:layout_width="match_parent"-->

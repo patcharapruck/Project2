@@ -25,4 +25,8 @@
     <string name="pick_profile_picture">Pick Profile Picture</string>
     <string name="profile_photo_file_name">profile_child.png</string>
     <string name="vaccinetext">ยังมีวัคซีนที่ยังไม่ได้ฉีด</string>
+
+    <string name="facebook_app_id">507507046724891</string>
+    <string name="fb_login_protocol_scheme">fb507507046724891</string>
+
 </resources>
