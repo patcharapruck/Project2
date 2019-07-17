@@ -1,28 +1,19 @@
 package baby.com.project2.activity;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -38,25 +28,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Logger;
 
-import baby.com.project2.BuildConfig;
 import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.LoginItemsDto;
@@ -69,15 +50,12 @@ import baby.com.project2.manager.singleton.child.InsertChildManager;
 import baby.com.project2.manager.singleton.LoginManager;
 import baby.com.project2.manager.singleton.growup.InsertGrowupManager;
 import baby.com.project2.sentImage.ApiClient;
-import baby.com.project2.sentImage.ApiInterface;
 import baby.com.project2.sentImage.Img_Pojo;
-import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Url;
 
 public class AddChildActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -91,7 +69,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
     private Button BtnAddChild;
     private Toolbar toolbar;
 
-    Bitmap bitmap;
+    Bitmap bitmap,resize;
     private  static final int IMAGE = 100;
 
 //    private static final int REQUEST_TAKE_PHOTO = 0;
@@ -231,7 +209,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
                     if (response.body().getSuccess().equals("Acount created")) {
                         InsertChildManager.getInstance().setItemsDto(dto);
                         DecimalFormat formatter = new DecimalFormat("00");
-                     //   uploadImage(formatter.format(dto.getId()));
+                        uploadImage(formatter.format(dto.getId()));
                         reqinsertgrow(formatDateTime, weigth, height, formatter.format(dto.getId()));
 
 
@@ -476,7 +454,8 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
     private String convertToString()
     {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        resize = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.5), (int)(bitmap.getHeight()*0.5), true);
+        resize.compress(Bitmap.CompressFormat.JPEG,1,byteArrayOutputStream);
         byte[] imgByte = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgByte,Base64.DEFAULT);
     }
@@ -497,29 +476,48 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void uploadImage(String format){
 
-        String image = convertToString();
-        String imageName = "testUploed";
-        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        Call<Img_Pojo> call = apiInterface.uploadImage(imageName,image,format);
+    public void uploadImage(String format) {
 
+        ArrayList<String[]> ttt = new ArrayList<>();
+        final String image = convertToString();
+        image.replaceAll("\\\\n", "\n");
+        ttt.add(image.split("\\n"));
+        String zz="";
+        String[] a = ttt.get(0);
+        int size = a.length;
+
+        for(int i=0;i<size;i++){
+            zz = zz + a[i];
+        }
+
+
+        String imageName= "testUploed";
+        final Context mcontext = Contextor.getInstance().getmContext();
+        String reqBody = "{\"image\":\""+zz+"\",\"image_name\": \""+imageName+"\",\"cid\":\""+format+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<Img_Pojo> call = ApiClient.getInstance().getService().uploadImage(requestBody);
         call.enqueue(new Callback<Img_Pojo>() {
+
             @Override
             public void onResponse(Call<Img_Pojo> call, Response<Img_Pojo> response) {
-
-                Img_Pojo img_pojo = response.body();
-                Log.d("Server Response",""+img_pojo.getResponse());
-
+                if(response.isSuccessful()){
+                    Img_Pojo dto = response.body();
+                    if(response.body().isResponse()){
+                        Toast.makeText(mcontext,dto.getImage(),Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(mcontext,"ลงไม่ได้บักโง่",Toast.LENGTH_LONG).show();
+                    }
+                }else {
+                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
             }
-
             @Override
             public void onFailure(Call<Img_Pojo> call, Throwable t) {
-                Log.d("Server Response",""+t.toString());
-
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
 

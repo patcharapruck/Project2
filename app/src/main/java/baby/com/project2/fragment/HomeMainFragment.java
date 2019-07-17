@@ -113,10 +113,16 @@ public class HomeMainFragment extends Fragment implements View.OnClickListener {
 
             String name = dto.getResult().get(i).getC_name();
             String birthday = dto.getResult().get(i).getC_birthday();
+            String ima=dto.getResult().get(i).getC_image();
+
+            if(ima == null){
+                ima = "";
+            }
+
             setDate(birthday);
 
             try {
-                items.add(new KidModelClass(dto.getResult().get(i).getC_id(),"",name,DateAge,dto.getResult().get(i).getC_gender()
+                items.add(new KidModelClass(dto.getResult().get(i).getC_id(),ima,name,DateAge,dto.getResult().get(i).getC_gender()
                         ,dto.getResult().get(i).getC_birthday()));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;

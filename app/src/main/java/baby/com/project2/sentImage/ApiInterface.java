@@ -1,13 +1,18 @@
 package baby.com.project2.sentImage;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface ApiInterface {
+//
+//    @POST("testpro/upload.php")
+//    Call<Img_Pojo> uploadImage(@Field("image") String image,@Field("image_name") String title,@Field("cid") String cid);
 
-    @FormUrlEncoded
+
     @POST("testpro/upload.php")
-    Call<Img_Pojo> uploadImage(@Field("image_name") String title, @Field("image") String image,@Field("cid") String cid);
+    Call<Img_Pojo> uploadImage(@Body RequestBody requestBody);
 }

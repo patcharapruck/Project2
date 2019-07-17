@@ -30,7 +30,7 @@ public class Img_Pojo {
         Image = image;
     }
 
-    public boolean getResponse() {
+    public boolean isResponse() {
         return Response;
     }
 

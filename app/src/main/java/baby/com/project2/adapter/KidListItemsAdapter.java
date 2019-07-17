@@ -2,9 +2,12 @@ package baby.com.project2.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +48,10 @@ public class KidListItemsAdapter extends RecyclerView.Adapter<KidListItemsAdapte
             }else {
                 customViewKidsList.ImageViewKids.setImageResource(R.mipmap.ic_baby_gril);
             }
+        }else{
+            byte[] decodedString = Base64.decode(items.get(i).getImage(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            customViewKidsList.ImageViewKids.setImageBitmap(decodedByte);
         }
 
         customViewKidsList.TextViewNicknameKids.setText(items.get(i).getNickName());

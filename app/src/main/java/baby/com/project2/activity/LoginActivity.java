@@ -51,14 +51,14 @@ import static android.provider.ContactsContract.Intents.Insert.EMAIL;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     CardView BtnLogin;
-    private LoginButton BtnFace;
+    LoginButton BtnFace;
     TextInputEditText UserId,PassId;
     CheckBox CbRemember;
     TextView CreateAccount;
 
     Context context = Contextor.getInstance().getmContext();
 
-    private CallbackManager callbackManager;
+    CallbackManager callbackManager;
 
     String user="",pass="";
 
@@ -171,6 +171,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             finish();
             startActivity(intent);
+        }
+
+        if(!SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).getLoginFace()){
+            BtnFace.clearPermissions();
         }
     }
 
