@@ -32,10 +32,14 @@ import java.util.Arrays;
 
 import baby.com.project2.R;
 import baby.com.project2.dto.LoginItemsDto;
+import baby.com.project2.dto.RegisterDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpLoginManager;
+import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.LoginManager;
+import baby.com.project2.manager.singleton.RegisterManager;
 import baby.com.project2.util.SharedPrefUser;
+import baby.com.project2.util.SharedPrefUserFace;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -57,6 +61,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CallbackManager callbackManager;
 
     String user="",pass="";
+
+    String id,email,last_name,first_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,12 +134,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onCompleted(JSONObject object, GraphResponse response) {
 
                 try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
-                    String email = object.getString("email");
-                    String id = object.getString("id");
+                    first_name = object.getString("first_name");
+                    last_name = object.getString("last_name");
+                    email = object.getString("email");
+                    id = object.getString("id");
 
-                    Toast.makeText(LoginActivity.this,id,Toast.LENGTH_LONG).show();
+                    SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).saveLoginface(first_name,last_name,email,"",true);
+                    reqregister(id,id,first_name+" "+last_name);
+                   // Toast.makeText(LoginActivity.this,id,Toast.LENGTH_LONG).show();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -196,7 +204,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(response.isSuccessful()){
                     LoginItemsDto dto = response.body();
                     LoginManager.getInstance().setItemsDto(dto);
-                    SharedPrefUser.getInstance(mcontext).saveLogin(user,pass,b,dto.getId());
+
+                    if(SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).getLoginFace()){
+                        SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).saveUidFace(dto.getId());
+                    }else {
+                        SharedPrefUser.getInstance(mcontext).saveLogin(user,pass,b,dto.getId());
+                    }
+
                     if(response.body().isConnect()){
                             if(dto.isChildchecked()){
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -215,6 +229,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onFailure(Call<LoginItemsDto> call, Throwable t) {
                 Toast.makeText(LoginActivity.this,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    public void reqregister(String email,String password,String name) {
+
+        final Context mcontext = Contextor.getInstance().getmContext();
+        String reqBody = "{\"user_email\": \""+email+"\",\"user_pass\":\""+password+"\",\"user_name\":\""+name+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<RegisterDto> call = HttpManager.getInstance().getService().loadAPIRegister(requestBody);
+        call.enqueue(new Callback<RegisterDto>() {
+
+            @Override
+            public void onResponse(Call<RegisterDto> call, Response<RegisterDto> response) {
+                    RegisterDto dto = response.body();
+                    RegisterManager.getInstance().setItemsDto(dto);
+
+                  reqLogin(id,id,true);
+
+            }
+            @Override
+            public void onFailure(Call<RegisterDto> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
             }
         });
     }

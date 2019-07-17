@@ -38,6 +38,7 @@ import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.LoginManager;
 import baby.com.project2.manager.singleton.child.SelectChildManager;
 import baby.com.project2.util.SharedPrefUser;
+import baby.com.project2.util.SharedPrefUserFace;
 import baby.com.project2.view.KidModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -109,7 +110,14 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setShowDataChild() {
         DecimalFormat formatter = new DecimalFormat("00");
-        String uid = SharedPrefUser.getInstance(HomeActivity.this).getUid();
+
+        String uid;
+        if(SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).getLoginFace()){
+            uid  = SharedPrefUserFace.getInstance(HomeActivity.this).getKeyUid();
+        }else {
+             uid  = SharedPrefUser.getInstance(HomeActivity.this).getUid();
+        }
+
         reqselectchild(uid);
     }
 
