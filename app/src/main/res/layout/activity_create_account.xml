@@ -53,6 +53,16 @@
                 android:orientation="vertical"
                 android:padding="@dimen/padding_login">
 
+                <TextView
+                    android:id="@+id/alert_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/prompt_medium"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#FF0303"
+                    android:textSize="9sp" />
+
                 <EditText
                     android:id="@+id/edittext_name"
                     android:layout_width="match_parent"
@@ -63,6 +73,16 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
+                <TextView
+                    android:id="@+id/alert_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/prompt_medium"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#FF0303"
+                    android:textSize="9sp" />
+
                 <EditText
                     android:id="@+id/edittext_email"
                     android:layout_width="match_parent"
@@ -71,6 +91,16 @@
                     android:hint="Email ผู้ใช้"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/alert_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/prompt_medium"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#FF0303"
+                    android:textSize="9sp" />
 
                 <EditText
                     android:id="@+id/edittext_password"
@@ -81,6 +111,16 @@
                     android:inputType="textPassword"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/alert_confirmpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/prompt_medium"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#FF0303"
+                    android:textSize="9sp" />
 
                 <EditText
                     android:id="@+id/edittext_confirmpassword"

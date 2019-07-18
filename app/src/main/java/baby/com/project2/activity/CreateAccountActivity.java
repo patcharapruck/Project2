@@ -10,10 +10,12 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import baby.com.project2.R;
 import baby.com.project2.dto.RegisterDto;
+import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.RegisterManager;
 import okhttp3.MediaType;
@@ -27,6 +29,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     EditText EditTextName,EditTextEmail,EditTextPassword,EditTextConfirmPassword;
     CheckBox Cbrobod;
     CardView BtnSignup;
+    TextView alert_name,alert_email,alert_pass,alert_confirmpassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,11 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         EditTextConfirmPassword = (EditText)findViewById(R.id.edittext_confirmpassword);
         Cbrobod                 = (CheckBox) findViewById(R.id.cbrobod);
         BtnSignup               = (CardView)findViewById(R.id.btnsignup);
+
+        alert_confirmpassword = (TextView)findViewById(R.id.alert_confirmpassword);
+        alert_name = (TextView)findViewById(R.id.alert_name);
+        alert_pass = (TextView)findViewById(R.id.alert_pass);
+        alert_email = (TextView)findViewById(R.id.alert_email);
 
         BtnSignup.setOnClickListener(this);
     }
@@ -92,19 +100,29 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         confirm = EditTextConfirmPassword.getText().toString();
         checked = Cbrobod.isChecked();
 
+        alert_confirmpassword.setText("");
+        alert_name.setText("");
+        alert_pass.setText("");
+        alert_email.setText("");
+
         if(name.length()<1){
+            alert_name.setText("กรุณากรอกข้อมูล");
             checked_reg = false;
         }
         if(email.length()<1){
+            alert_email.setText("กรุณากรอกข้อมูล");
             checked_reg = false;
         }
-        if(pass.length()<1){
+        if(pass.length()<6){
+            alert_pass.setText("กรุณากรอกข้อมูลรหัสผ่านอย่างน้อย 6 ตัว");
             checked_reg = false;
         }
-        if(confirm.length()<1){
+        if(confirm.length()<6){
+            alert_confirmpassword.setText("กรุณากรอกข้อมูลรหัสผ่านอย่างน้อย 6 ตัว");
             checked_reg = false;
         }
         if(!pass.equals(confirm)){
+            Toast.makeText(Contextor.getInstance().getmContext(),"รหัสผ่านไม่ตรงกัน",Toast.LENGTH_LONG).show();
             checked_reg = false;
         }
         if(!checked){
