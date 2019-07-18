@@ -172,10 +172,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
             startActivity(intent);
         }
-
-        if(!SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).getLoginFace()){
-            BtnFace.clearPermissions();
-        }
     }
 
     @Override
@@ -188,9 +184,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(v == BtnLogin){
             reqLogin(UserId.getText().toString(),PassId.getText().toString(),CbRemember.isChecked());
-
         }
-
         if(v == CreateAccount){
             Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
             startActivity(intent);
@@ -208,7 +202,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(response.isSuccessful()){
                     LoginItemsDto dto = response.body();
                     LoginManager.getInstance().setItemsDto(dto);
+
                     SharedPrefUser.getInstance(mcontext).saveLogin(user,pass,b,dto.getId());
+
                     if(response.body().isConnect()){
                             if(dto.isChildchecked()){
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);

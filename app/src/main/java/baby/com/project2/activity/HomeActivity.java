@@ -68,8 +68,6 @@ public class HomeActivity extends AppCompatActivity {
         if (id == R.id.item_logout) {
             SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).logout();
             SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).logoutface();
-
-
             Intent intent = new Intent(HomeActivity.this,LoginActivity.class);
             this.startActivity(intent);
             return true;
