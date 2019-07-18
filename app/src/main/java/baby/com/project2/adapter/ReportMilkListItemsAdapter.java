@@ -2,9 +2,12 @@ package baby.com.project2.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +47,15 @@ public class ReportMilkListItemsAdapter extends RecyclerView.Adapter<ReportMilkL
         customViewReportMilkList.TextViewReportNameMilk.setText(items.get(i).getM_namefood());
         customViewReportMilkList.TextViewReportAmountMilk.setText(String.valueOf(items.get(i).getM_amount()));
         customViewReportMilkList.TextViewReportVolumeMilk.setText(items.get(i).getM_volume());
+
+        if(items.get(i).getM_image().length()<1||items.get(i).getM_image()==null){
+                customViewReportMilkList.ImageViewFood.setImageResource(R.mipmap.ic_baby_milk);
+        }else{
+            byte[] decodedString = Base64.decode(items.get(i).getM_image(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            customViewReportMilkList.ImageViewFood.setImageBitmap(decodedByte);
+        }
+
         customViewReportMilkList.CardViewReportMilk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +69,7 @@ public class ReportMilkListItemsAdapter extends RecyclerView.Adapter<ReportMilkL
                 intent.putExtra("time",items.get(i).getM_time());
                 intent.putExtra("amount",items.get(i).getM_amount());
                 intent.putExtra("volum",items.get(i).getM_volume());
+                intent.putExtra("image",items.get(i).getM_image());
                 context.startActivity(intent);
             }
         });

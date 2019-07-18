@@ -4,12 +4,17 @@ import android.app.DatePickerDialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +30,8 @@ import android.widget.Toast;
 
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -37,9 +44,13 @@ import java.util.Locale;
 import baby.com.project2.R;
 import baby.com.project2.dto.DateDto;
 import baby.com.project2.dto.milk.InsertMilkDto;
+import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.milk.InsertMilkManager;
+import baby.com.project2.sentImage.ApiClient;
+import baby.com.project2.sentImage.Img_Pojo;
+import baby.com.project2.sentImage.Img_Pojo_milk;
 import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -54,7 +65,7 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
     private EditText EditTextAddMilkNamefood,EditTextAddMilkAge,EditTextVolume;
     private Spinner SpinnerFood,SpinnerVolume;
     private ImageView  CloseImgbtnAddmilk,ImageAlertNameAddmilk,ImageViewCalendarAddMilk,ImageViewClock;
-    private ImageButton ImagebtnAddprofileAddMilk;
+    private ImageView ImagebtnAddprofileAddMilk;
     private Button BtnAddMilk;
 
     private ArrayList<String> mTypeSearch = new ArrayList<String>();
@@ -69,6 +80,9 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
 
     private String Volume="",NameType="";
 
+    Bitmap bitmap,resize;
+    private  static final int IMAGE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +96,7 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
         super.onPostCreate(savedInstanceState);
         getDateTime();
         getTime();
+        ImagebtnAddprofileAddMilk.setOnClickListener(this);
         ImageViewCalendarAddMilk.setOnClickListener(this);
         TextViewAddMilkBirthday.setOnClickListener(this);
         ImageViewClock.setOnClickListener(this);
@@ -113,13 +128,14 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
         ImageViewClock = (ImageView)findViewById(R.id.imageview_clock);
         CloseImgbtnAddmilk = (ImageView)findViewById(R.id.close_imgbtn_addmilk);
         ImageAlertNameAddmilk = (ImageView)findViewById(R.id.image_alert_name_addmilk);
-        ImagebtnAddprofileAddMilk = (ImageButton)findViewById(R.id.imagebtn_addprofile_addmilk);
+        ImagebtnAddprofileAddMilk = (ImageView) findViewById(R.id.imagebtn_addprofile_addmilk);
         BtnAddMilk = (Button)findViewById(R.id.btn_add_milk);
 
         CloseImgbtnAddmilk.setVisibility(View.INVISIBLE);
         ImageAlertNameAddmilk.setVisibility(View.INVISIBLE);
 
         BtnAddMilk.setOnClickListener(this);
+        EditTextAddMilkAge.setText(String.valueOf(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyBrithint()));
 
         createTypeSearchData();
         createTypeData();
@@ -262,7 +278,15 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
                     InsertMilkDto dto = response.body();
                     InsertMilkManager.getInstance().setItemsDto(dto);
                     if(response.body().isSuccess()){
+                        DecimalFormat formatter = new DecimalFormat("00");
                         ShowAlertDialog(response.body().isSuccess());
+
+                        try {
+                            uploadImage(formatter.format(dto.getId()));
+                        }catch (Exception e){
+
+                        }
+
                     }
                     else{
                         ShowAlertDialog(response.body().isSuccess());
@@ -322,12 +346,8 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
         time = TextViewClock.getText().toString();
         volume = Volume;
         nametype = NameType;
+        age = SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyBrithint();
 
-        try {
-            age = Integer.valueOf(EditTextAddMilkAge.getText().toString());
-        }catch (Exception e){
-            age = 0;
-        }
         try {
             amount = Integer.valueOf(EditTextVolume.getText().toString());
         }catch (Exception e){
@@ -355,6 +375,32 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
         if(v == ImageViewClock||v == TextViewClock){
             setTimeDialog();
         }
+        if(v == ImagebtnAddprofileAddMilk){
+            android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(AddMilkActivity.this);
+            alertDialog.setTitle(R.string.pick_profile_picture);
+
+            alertDialog.setItems(R.array.change_button_items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    if (which == 0) {
+                        // Open Camera
+//                        captureImage();
+                    }
+                    if (which == 1) {
+
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(intent, IMAGE);
+                    }
+                    if (which == 2) {
+                        ImagebtnAddprofileAddMilk.setBackgroundResource(R.mipmap.ic_baby_milk);
+                    }
+
+                }
+            });
+            android.app.AlertDialog alert = alertDialog.create();
+            alert.show();
+        }
     }
 
     private void setTimeDialog() {
@@ -379,5 +425,74 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
         DecimalFormat formatter = new DecimalFormat("00");
         currentDateTimeString = formatter.format(hourStart)+":"+formatter.format(minuteStart);
         TextViewClock.setText(currentDateTimeString);
+    }
+
+
+    private String convertToString()
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        resize = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.5), (int)(bitmap.getHeight()*0.5), true);
+        resize.compress(Bitmap.CompressFormat.JPEG,1,byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte,Base64.DEFAULT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== IMAGE && resultCode==RESULT_OK && data!=null)
+        {
+            Uri path = data.getData();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),path);
+                ImagebtnAddprofileAddMilk.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void uploadImage(String format) {
+
+        ArrayList<String[]> ttt = new ArrayList<>();
+        final String image = convertToString();
+        image.replaceAll("\\\\n", "\n");
+        ttt.add(image.split("\\n"));
+        String zz="";
+        String[] a = ttt.get(0);
+        int size = a.length;
+
+        for(int i=0;i<size;i++){
+            zz = zz + a[i];
+        }
+
+        String imageName= "testUploed";
+        final Context mcontext = Contextor.getInstance().getmContext();
+        String reqBody = "{\"image\":\""+zz+"\",\"image_name\": \""+imageName+"\",\"mid\":\""+format+"\"}";
+        final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
+        Call<Img_Pojo_milk> call = ApiClient.getInstance().getService().uploadImageMilk(requestBody);
+        call.enqueue(new Callback<Img_Pojo_milk>() {
+
+            @Override
+            public void onResponse(Call<Img_Pojo_milk> call, Response<Img_Pojo_milk> response) {
+                if(response.isSuccessful()){
+                    Img_Pojo_milk dto = response.body();
+                    if(response.body().isResponse()){
+                        Toast.makeText(mcontext,dto.getImage(),Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(mcontext,"ลงไม่ได้บักโง่",Toast.LENGTH_LONG).show();
+                    }
+                }else {
+                    Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Img_Pojo_milk> call, Throwable t) {
+                Toast.makeText(mcontext,t.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

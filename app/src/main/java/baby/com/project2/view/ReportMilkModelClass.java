@@ -3,11 +3,11 @@ package baby.com.project2.view;
 public class ReportMilkModelClass {
 
     private int M_id;
-    private String M_date,M_time,M_namefood,M_foodtype,M_volume;
+    private String M_date,M_time,M_namefood,M_foodtype,M_volume,M_image;
     private int M_amount,M_age;
 
     public ReportMilkModelClass(int m_id, String m_date ,String m_time, String m_namefood,
-                                int m_age,String m_foodtype,String m_volume,int m_amount){
+                                int m_age,String m_foodtype,String m_volume,int m_amount,String m_image){
         this.M_id = m_id;
         this.M_date = m_date;
         this.M_time = m_time;
@@ -16,6 +16,11 @@ public class ReportMilkModelClass {
         this.M_foodtype = m_foodtype;
         this.M_volume = m_volume;
         this.M_amount = m_amount;
+        this.M_image = m_image;
+    }
+
+    public String getM_image() {
+        return M_image;
     }
 
     public int getM_id() {

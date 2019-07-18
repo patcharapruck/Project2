@@ -6,11 +6,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +31,8 @@ import android.widget.Toast;
 
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -60,7 +67,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
     private EditText EditTextEditMilkNamefood, EditTextEditMilkAge,EditTextVolume;
     private Spinner SpinnerFood,SpinnerVolume;
     private ImageView CloseImgbtnEditmilk, ImageAlertNameEditmilk, ImageViewCalendarEditMilk,ImageViewClock,DeleteMilk;
-    private ImageButton ImagebtnAddprofileEditMilk;
+    private ImageView ImagebtnAddprofileEditMilk;
     private Button BtnEditMilk;
 
     private ArrayList<String> mTypeSearch = new ArrayList<String>();
@@ -74,8 +81,11 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
 
     private String Volume="",NameType="";
 
-    private String Mid,mnamefood,mtypefood,volume,time;
+    private String Mid,mnamefood,mtypefood,volume,time,image;
     private int mid,amount,age;
+
+    Bitmap bitmap,resize;
+    private  static final int IMAGE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +101,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         time = id.getStringExtra("time");
         age = id.getIntExtra("age",0);
         amount = id.getIntExtra("amount",0);
+        image = id.getStringExtra("image");
 
         initInstances();
     }
@@ -100,6 +111,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         super.onPostCreate(savedInstanceState);
         ImageViewCalendarEditMilk.setOnClickListener(this);
         TextViewEditMilkBirthday.setOnClickListener(this);
+        ImagebtnAddprofileEditMilk.setOnClickListener(this);
         ImageViewClock.setOnClickListener(this);
         TextViewClock.setOnClickListener(this);
         getDateTime();
@@ -130,7 +142,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         ImageViewClock = (ImageView)findViewById(R.id.imageview_clock);
         CloseImgbtnEditmilk = (ImageView)findViewById(R.id.close_imgbtn_editmilk);
         ImageAlertNameEditmilk = (ImageView)findViewById(R.id.image_alert_name_editmilk);
-        ImagebtnAddprofileEditMilk = (ImageButton)findViewById(R.id.imagebtn_addprofile_editmilk);
+        ImagebtnAddprofileEditMilk = (ImageView) findViewById(R.id.imagebtn_addprofile_editmilk);
         BtnEditMilk = (Button)findViewById(R.id.btn_edit_milk);
         DeleteMilk = (ImageView)findViewById(R.id.delete_milk);
 
@@ -153,6 +165,16 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         EditTextEditMilkAge.setText(String.valueOf(age));
         EditTextVolume.setText(String.valueOf(amount));
         TextViewClock.setText(time);
+
+        if(image.length()<1||image==null){
+            ImagebtnAddprofileEditMilk.setImageResource(R.mipmap.ic_baby_milk);
+            image = "";
+        }else{
+            byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            ImagebtnAddprofileEditMilk.setImageBitmap(decodedByte);
+            ImagebtnAddprofileEditMilk.setImageResource(0);
+        }
 
     }
 
@@ -269,11 +291,11 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         Year = calendar.get(Calendar.YEAR);
     }
 
-    public void requpdate(String mid,String nameType,String name,int age,int amount,String volume,String birthday,String time) {
+    public void requpdate(String mid,String nameType,String name,int age,int amount,String volume,String birthday,String time,String image) {
 
         final Context mcontext = EditMilkActivity.this;
         String reqBody = "{\"M_id\":\""+mid+"\",\"M_foodname\": \""+name+"\",\"M_Milk\":\""+nameType+"\",\"M_age\" :"+age+",\"M_amount\":"+amount+","+
-                "\"M_unit\":\""+volume+"\",\"M_date\":\""+birthday+"\",\"M_time\":\""+time+"\"}";
+                "\"M_unit\":\""+volume+"\",\"M_date\":\""+birthday+"\",\"M_time\":\""+time+"\",\"M_image\":\""+image+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<UpdateMilkDto> call = HttpManager.getInstance().getService().loadAPIupdateMilk(requestBody);
         call.enqueue(new Callback<UpdateMilkDto>() {
@@ -342,11 +364,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         time = TextViewClock.getText().toString();
         volume = Volume;
         mtypefood = NameType;
-        try {
-            age = Integer.valueOf(EditTextEditMilkAge.getText().toString());
-        }catch (Exception e){
-            age = 0;
-        }
+        age = Integer.valueOf(EditTextEditMilkAge.getText().toString());
 
         try {
             amount = Integer.valueOf(EditTextVolume.getText().toString());
@@ -358,8 +376,14 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         if(mnamefood.length()<1){
             ImageAlertNameEditmilk.setVisibility(View.VISIBLE);
         }else {
+            try {
+                image = uploadImage();
+            }catch (Exception e){
+                image = "";
+            }
+
             ImageAlertNameEditmilk.setVisibility(View.INVISIBLE);
-            requpdate(Mid,mtypefood,mnamefood,age,amount,volume,formatDate,time);
+            requpdate(Mid,mtypefood,mnamefood,age,amount,volume,formatDate,time,image);
         }
 
     }
@@ -460,6 +484,34 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         if(v == ImageViewClock||v == TextViewClock){
             setTimeDialog();
         }
+        if(v == ImagebtnAddprofileEditMilk){
+            android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(EditMilkActivity.this);
+            alertDialog.setTitle(R.string.pick_profile_picture);
+
+            alertDialog.setItems(R.array.change_button_items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    if (which == 0) {
+                        // Open Camera
+//                        captureImage();
+                    }
+                    if (which == 1) {
+
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(intent, IMAGE);
+                    }
+                    if (which == 2) {
+                        ImagebtnAddprofileEditMilk.setBackgroundResource(R.mipmap.ic_baby_milk);
+                        ImagebtnAddprofileEditMilk.setImageResource(0);
+                        image = "";
+                    }
+
+                }
+            });
+            android.app.AlertDialog alert = alertDialog.create();
+            alert.show();
+        }
     }
 
     private void setTimeDialog() {
@@ -483,5 +535,48 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         DecimalFormat formatter = new DecimalFormat("00");
         formatDate = formatter.format(hourStart)+":"+formatter.format(minuteStart );
         TextViewClock.setText(formatDate);
+    }
+
+    private String convertToString()
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        resize = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.5), (int)(bitmap.getHeight()*0.5), true);
+        resize.compress(Bitmap.CompressFormat.JPEG,1,byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte,Base64.DEFAULT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== IMAGE && resultCode==RESULT_OK && data!=null)
+        {
+            Uri path = data.getData();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),path);
+                ImagebtnAddprofileEditMilk.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public String uploadImage() {
+
+        ArrayList<String[]> ttt = new ArrayList<>();
+        final String image = convertToString();
+        image.replaceAll("\\\\n", "\n");
+        ttt.add(image.split("\\n"));
+        String zz="";
+        String[] a = ttt.get(0);
+        int size = a.length;
+
+        for(int i=0;i<size;i++){
+            zz = zz + a[i];
+        }
+
+        return zz;
     }
 }

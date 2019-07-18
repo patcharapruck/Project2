@@ -15,4 +15,7 @@ public interface ApiInterface {
 
     @POST("testpro/upload.php")
     Call<Img_Pojo> uploadImage(@Body RequestBody requestBody);
+
+    @POST("testpro/uploadImgMilk.php")
+    Call<Img_Pojo_milk> uploadImageMilk(@Body RequestBody requestBody);
 }

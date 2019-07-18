@@ -104,7 +104,8 @@ public class ReportMilkFragment extends Fragment {
                         ,dto.getMilk().get(i).getM_age()
                         ,dto.getMilk().get(i).getM_Milk()
                         ,dto.getMilk().get(i).getM_unit()
-                        ,dto.getMilk().get(i).getM_amount()));
+                        ,dto.getMilk().get(i).getM_amount()
+                ,dto.getMilk().get(i).getM_image()));
             }catch (ArrayIndexOutOfBoundsException e){
                 break;
             }

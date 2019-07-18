@@ -186,6 +186,7 @@ public class HomeMainFragment extends Fragment implements View.OnClickListener {
         if(Sum>24){
             Sum = 24;
         }
+        SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).saveChidIdDate(Sum);
         DateAge = Sum+" เดือน "+Day+" วัน";
 
     }

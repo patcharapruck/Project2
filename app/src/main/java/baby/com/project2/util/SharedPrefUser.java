@@ -10,6 +10,7 @@ public class SharedPrefUser {
 
     private static final String SHARED_LOGIN = "myaccount";
     private static final String SHARED_TOKEN = "myaccount2";
+    private static final String SHARED_SUM = "myaccount3";
     private static final String KEY_USER = "user";
     private static final String KEY_PASS = "pass";
     private static final String KEY_ID = "id";
@@ -19,6 +20,7 @@ public class SharedPrefUser {
     private static final String KEY_REMEMBER = "remember";
     private static final String KEY_USER2 = "user2";
     private static final String KEY_PASS2= "pass2";
+    private static final String KEY_BRITH_INT= "b1";
 
     SharedPrefUser(Context context){
         mCtx = context;
@@ -64,12 +66,26 @@ public class SharedPrefUser {
         return true;
     }
 
+    public boolean saveChidIdDate(int br){
+
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_SUM, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(KEY_BRITH_INT,br);
+        editor.apply();
+        return true;
+    }
+
     public boolean logout(){
 
         SharedPreferences sharedPreferences= mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
         SharedPreferences.Editor c = sharedPreferences.edit();
         c.clear();
         c.apply();
+
+        SharedPreferences sharedPreferences2= mCtx.getSharedPreferences(SHARED_SUM, Context.MODE_PRIVATE);
+        SharedPreferences.Editor c2 = sharedPreferences.edit();
+        c2.clear();
+        c2.apply();
 
         return true;
     }
@@ -100,6 +116,11 @@ public class SharedPrefUser {
     public int getGender(){
         SharedPreferences sharedPreferences2 = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
         return sharedPreferences2.getInt(KEY_GENDER,0);
+    }
+
+    public int getKeyBrithint(){
+        SharedPreferences sharedPreferences2 = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
+        return sharedPreferences2.getInt(KEY_BRITH_INT,0);
     }
 
     public String getKeyBrith(){

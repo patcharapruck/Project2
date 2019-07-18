@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:padding="20dp">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/imagebtn_addprofile_editmilk"
                 android:layout_width="@dimen/imagebtn_add_child_width"
                 android:layout_height="@dimen/imagebtn_add_child_height"
@@ -65,7 +65,7 @@
                 android:background="@mipmap/ic_baby_milk"
                 android:scaleType="centerInside">
 
-            </ImageButton>
+            </ImageView>
 
             <ImageView
                 android:id="@+id/close_imgbtn_editmilk"

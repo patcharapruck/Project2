@@ -3,12 +3,16 @@ package baby.com.project2.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +46,8 @@ public class MilkHomeFragment extends Fragment implements View.OnClickListener {
     private TextView TextviewDateUpdate,TextviewTimeUpdate,TextviewReportTypeMilk,TextviewReportNameMilk,TextviewReportAmountMilk
             ,TextviewReportVolumeMilk;
 
+    private ImageView ImageViewFood;
+
     private String cid;
 
     SelectMilkDto dto;
@@ -68,6 +74,7 @@ public class MilkHomeFragment extends Fragment implements View.OnClickListener {
         TextviewReportTypeMilk = (TextView)rootView.findViewById(R.id.textview_report_type_milk);
         TextviewReportAmountMilk = (TextView)rootView.findViewById(R.id.textview_report_amount_milk);
         TextviewReportVolumeMilk = (TextView)rootView.findViewById(R.id.textview_report_volume_milk);
+        ImageViewFood = (ImageView)rootView.findViewById(R.id.imageview_food);
         ButtonAddData.setOnClickListener(this);
         cid = SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild();
     }
@@ -143,6 +150,16 @@ public class MilkHomeFragment extends Fragment implements View.OnClickListener {
         TextviewReportTypeMilk.setText(dto.getMilk().get(index).getM_Milk());
         TextviewReportAmountMilk.setText(String.valueOf(dto.getMilk().get(index).getM_amount()));
         TextviewReportVolumeMilk.setText(dto.getMilk().get(index).getM_unit());
+
+        if(dto.getMilk().get(index).getM_image().length()<1||dto.getMilk().get(index).getM_image()==null){
+            ImageViewFood.setBackgroundResource(R.mipmap.ic_baby_milk);
+            ImageViewFood.setImageResource(0);
+        }else{
+            byte[] decodedString = Base64.decode(dto.getMilk().get(index).getM_image(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            ImageViewFood.setBackgroundResource(0);
+            ImageViewFood.setImageBitmap(decodedByte);
+        }
     }
 
 }

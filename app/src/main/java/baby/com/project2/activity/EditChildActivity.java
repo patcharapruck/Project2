@@ -5,11 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +30,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -49,6 +56,8 @@ import baby.com.project2.manager.singleton.LoginManager;
 import baby.com.project2.manager.singleton.child.SelectChildManager;
 import baby.com.project2.manager.singleton.child.UpdateChildManager;
 import baby.com.project2.manager.singleton.growup.InsertGrowupManager;
+import baby.com.project2.sentImage.ApiClient;
+import baby.com.project2.sentImage.Img_Pojo;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -58,7 +67,7 @@ import retrofit2.Response;
 
 public class EditChildActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageButton ImageBtnAddProfileEditChild;
+    private ImageView ImageBtnAddProfileEditChild;
     private ImageView CloseImgbtnEditChild, ImageAlertNameEditChild, ImageViewCalendarEditChild,DeleteChild;
     private TextView TextViewEditChildBirthday;
     private EditText EditTextEditChildName, EditTextEditChildWeight, EditTextEditChildHeight;
@@ -79,6 +88,9 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
     private int CId;
     private String cid;
 
+    Bitmap bitmap,resize;
+    private  static final int IMAGE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,12 +108,13 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         super.onPostCreate(savedInstanceState);
         getDateTime();
         ImageViewCalendarEditChild.setOnClickListener(this);
+        ImageBtnAddProfileEditChild.setOnClickListener(this);
     }
 
     private void initInstances() {
 
         toolbar                     = (Toolbar)findViewById(R.id.toolbar);
-        ImageBtnAddProfileEditChild = (ImageButton)findViewById(R.id.imagebtn_addprofile_editchild);
+        ImageBtnAddProfileEditChild = (ImageView) findViewById(R.id.imagebtn_addprofile_editchild);
         CloseImgbtnEditChild        = (ImageView)findViewById(R.id.close_imgbtn_editchild);
         ImageAlertNameEditChild     = (ImageView)findViewById(R.id.image_alert_name_editchild);
         ImageViewCalendarEditChild  = (ImageView)findViewById(R.id.imageview_calendar_editchild);
@@ -156,6 +169,18 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
             EditTextEditChildHeight.setText(childItemsDto.getC_height()+"");
         }catch (Exception e){
             EditTextEditChildHeight.setText("");
+        }
+
+        if(childItemsDto.getC_image().length()<1||childItemsDto.getC_image()==null){
+            if(childItemsDto.getC_gender() == 1){
+                ImageBtnAddProfileEditChild.setImageResource(R.mipmap.ic_baby_boy);
+            }else {
+                ImageBtnAddProfileEditChild.setImageResource(R.mipmap.ic_baby_gril);
+            }
+        }else{
+            byte[] decodedString = Base64.decode(childItemsDto.getC_image(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            ImageBtnAddProfileEditChild.setImageBitmap(decodedByte);
         }
 
     }
@@ -292,6 +317,12 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         if(name.length()<1){
             ImageAlertNameEditChild.setVisibility(View.VISIBLE);
         }else {
+            try{
+                image = uploadImage();
+            }catch (Exception e){
+                image = "";
+            }
+
             ImageAlertNameEditChild.setVisibility(View.INVISIBLE);
             requpdate(id,name,gender,weigth,height,brithday,blood,image);
         }
@@ -308,6 +339,32 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         }
         if(v == DeleteChild){
             ShowAlertDialogConfirm();
+        }
+        if(v == ImageBtnAddProfileEditChild){
+            android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(EditChildActivity.this);
+            alertDialog.setTitle(R.string.pick_profile_picture);
+
+            alertDialog.setItems(R.array.change_button_items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    if (which == 0) {
+                        // Open Camera
+//                        captureImage();
+                    }
+                    if (which == 1) {
+
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(intent, IMAGE);
+                    }
+                    if (which == 2) {
+                        ImageBtnAddProfileEditChild.setBackgroundResource(R.mipmap.ic_add_baby);
+                    }
+
+                }
+            });
+            android.app.AlertDialog alert = alertDialog.create();
+            alert.show();
         }
     }
 
@@ -455,5 +512,49 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+
+    private String convertToString()
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        resize = Bitmap.createScaledBitmap(bitmap,(int)(bitmap.getWidth()*0.5), (int)(bitmap.getHeight()*0.5), true);
+        resize.compress(Bitmap.CompressFormat.JPEG,1,byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte,Base64.DEFAULT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== IMAGE && resultCode==RESULT_OK && data!=null)
+        {
+            Uri path = data.getData();
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),path);
+                ImageBtnAddProfileEditChild.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public String uploadImage() {
+
+        ArrayList<String[]> ttt = new ArrayList<>();
+        final String image = convertToString();
+        image.replaceAll("\\\\n", "\n");
+        ttt.add(image.split("\\n"));
+        String zz="";
+        String[] a = ttt.get(0);
+        int size = a.length;
+
+        for(int i=0;i<size;i++){
+            zz = zz + a[i];
+        }
+
+        return zz;
     }
 }

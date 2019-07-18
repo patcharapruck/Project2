@@ -72,19 +72,6 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
     Bitmap bitmap,resize;
     private  static final int IMAGE = 100;
 
-//    private static final int REQUEST_TAKE_PHOTO = 0;
-//    private static final int REQUEST_PICK_PHOTO = 2;
-//    private Uri mMediaUri;
-//    private static final int CAMERA_PIC_REQUEST = 1111;
-//    private static final String TAG = AddChildActivity.class.getSimpleName();
-//    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
-//    public static final int MEDIA_TYPE_IMAGE = 1;
-//    private Uri fileUri;
-//    private String mediaPath;
-//    private String mImageFileLocation = "";
-//    public static final String IMAGE_DIRECTORY_NAME = "Android File Upload";
-//    ProgressDialog pDialog;
-//    private String postPath;
 
 
     private ArrayList<String> mTypeSearch = new ArrayList<String>();
@@ -384,17 +371,6 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
 //                        captureImage();
                     }
                     if (which == 1) {
-                        //Select from Gallery
-//                        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
-//
-//                        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-//                        String pictureDirectoryPath = pictureDirectory.getPath();
-//
-//                        Uri data = Uri.parse(pictureDirectoryPath);
-//
-//                        galleryIntent.setDataAndType(data,"image/*");
-//
-//                        startActivityForResult(galleryIntent,REQUEST_PICK_PHOTO);
 
                         Intent intent = new Intent();
                         intent.setType("image/*");
