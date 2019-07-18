@@ -91,7 +91,13 @@ public class VaccineHomeFragment extends Fragment implements View.OnClickListene
             public void onResponse(Call<SelectVaccineDto> call, Response<SelectVaccineDto> response) {
                 if(response.isSuccessful()){
                     dto = response.body();
-                    setDate();
+
+                    try{
+                        setDate();
+                    }catch (Exception e){
+
+                    }
+
 
                 }else {
                     Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();

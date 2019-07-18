@@ -378,7 +378,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
                         startActivityForResult(intent, IMAGE);
                     }
                     if (which == 2) {
-                        ImageBtnAddProfileAddChild.setBackgroundResource(R.mipmap.ic_add_baby);
+                        ImageBtnAddProfileAddChild.setBackgroundResource(R.mipmap.ic_baby_add);
                     }
 
                 }
@@ -446,6 +446,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),path);
                 ImageBtnAddProfileAddChild.setImageBitmap(bitmap);
+                ImageBtnAddProfileAddChild.setBackgroundResource(0);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -480,7 +481,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
                 if(response.isSuccessful()){
                     Img_Pojo dto = response.body();
                     if(response.body().isResponse()){
-                        Toast.makeText(mcontext,dto.getImage(),Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(mcontext,dto.getImage(),Toast.LENGTH_LONG).show();
                     }
                     else{
                         Toast.makeText(mcontext,"ลงไม่ได้บักโง่",Toast.LENGTH_LONG).show();
