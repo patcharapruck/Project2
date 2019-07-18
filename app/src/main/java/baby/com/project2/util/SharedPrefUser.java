@@ -83,7 +83,7 @@ public class SharedPrefUser {
         c.apply();
 
         SharedPreferences sharedPreferences2= mCtx.getSharedPreferences(SHARED_SUM, Context.MODE_PRIVATE);
-        SharedPreferences.Editor c2 = sharedPreferences.edit();
+        SharedPreferences.Editor c2 = sharedPreferences2.edit();
         c2.clear();
         c2.apply();
 

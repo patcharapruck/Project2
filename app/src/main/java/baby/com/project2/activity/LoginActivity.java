@@ -208,13 +208,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(response.isSuccessful()){
                     LoginItemsDto dto = response.body();
                     LoginManager.getInstance().setItemsDto(dto);
-
-                    if(SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).getLoginFace()){
-                        SharedPrefUserFace.getInstance(Contextor.getInstance().getmContext()).saveUidFace(dto.getId());
-                    }else {
-                        SharedPrefUser.getInstance(mcontext).saveLogin(user,pass,b,dto.getId());
-                    }
-
+                    SharedPrefUser.getInstance(mcontext).saveLogin(user,pass,b,dto.getId());
                     if(response.body().isConnect()){
                             if(dto.isChildchecked()){
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);

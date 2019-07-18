@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     CheckBox Cbrobod;
     CardView BtnSignup;
     TextView alert_name,alert_email,alert_pass,alert_confirmpassword;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,11 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initInstances() {
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         EditTextName            = (EditText)findViewById(R.id.edittext_name);
         EditTextEmail           = (EditText)findViewById(R.id.edittext_email);
@@ -54,6 +62,16 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         alert_email = (TextView)findViewById(R.id.alert_email);
 
         BtnSignup.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void reqregister(String email,String password,String name) {
