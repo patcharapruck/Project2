@@ -120,8 +120,6 @@ public class HomeMainFragment extends Fragment implements View.OnClickListener {
                 ima = "";
             }
 
-            setDate(birthday);
-
             try {
                 items.add(new KidModelClass(dto.getResult().get(i).getC_id(),ima,name,DateAge,dto.getResult().get(i).getC_gender()
                         ,dto.getResult().get(i).getC_birthday()));
@@ -131,6 +129,8 @@ public class HomeMainFragment extends Fragment implements View.OnClickListener {
 
             adapter.notifyDataSetChanged();
         }
+
+        setDate(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyBrith());
     }
 
     private void setDate(String dateAge) {

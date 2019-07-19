@@ -31,7 +31,7 @@
                         android:fontFamily="@font/prompt_medium"
                         android:text="ด้าน"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

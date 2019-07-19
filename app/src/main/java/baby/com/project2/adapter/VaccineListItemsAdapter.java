@@ -35,6 +35,7 @@ import baby.com.project2.activity.EditMilkActivity;
 import baby.com.project2.activity.InsertDevActivity;
 import baby.com.project2.activity.InsertVacActivity;
 import baby.com.project2.dto.DateDto;
+import baby.com.project2.dto.SizeVacDto;
 import baby.com.project2.dto.vaccine.InsertVaccineDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
 import baby.com.project2.dto.vaccine.SelectVaccineDto;
@@ -43,6 +44,7 @@ import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.vaccine.DataVaccineManager;
 import baby.com.project2.manager.singleton.DateManager;
 import baby.com.project2.manager.singleton.vaccine.InsertVaccineManager;
+import baby.com.project2.manager.singleton.vaccine.SizeVacManager;
 import baby.com.project2.manager.singleton.vaccine.VaccineManager;
 import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.VaccineModelClass;
@@ -137,8 +139,8 @@ public class VaccineListItemsAdapter extends RecyclerView.Adapter<VaccineListIte
 
     @Override
     public int getItemCount() {
-        SelectVaccineDto vaccineDto = VaccineManager.getInstance().getItemsDto();
-        return vaccineDto.getVaccine().size();
+        SizeVacDto sizeVacDto = SizeVacManager.getInstance().getItemsDto();
+        return sizeVacDto.getSize_dev();
     }
 
     public class CustomViewVaccineList extends RecyclerView.ViewHolder {

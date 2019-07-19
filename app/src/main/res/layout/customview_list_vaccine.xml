@@ -37,7 +37,7 @@
                         android:fontFamily="@font/prompt_medium"
                         android:text="Vaccine"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:maxLines="2"/>
 
@@ -48,7 +48,7 @@
                         android:layout_margin="5dp"
                         android:fontFamily="@font/prompt_medium"
                         android:text="Type"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:textStyle="italic"
                         android:maxLines="2"/>
 

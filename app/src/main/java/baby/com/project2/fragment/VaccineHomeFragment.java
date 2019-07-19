@@ -16,6 +16,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -23,13 +24,16 @@ import java.util.Locale;
 import baby.com.project2.R;
 import baby.com.project2.activity.DevelopMentActivity;
 import baby.com.project2.activity.VaccineActivity;
+import baby.com.project2.dto.SizeVacDto;
 import baby.com.project2.dto.vaccine.SelectDataVaccineDto;
 import baby.com.project2.dto.vaccine.SelectVaccineDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.vaccine.DataVaccineManager;
+import baby.com.project2.manager.singleton.vaccine.SizeVacManager;
 import baby.com.project2.manager.singleton.vaccine.VaccineManager;
 import baby.com.project2.util.SharedPrefUser;
+import baby.com.project2.view.VaccineModelClass;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -50,6 +54,8 @@ public class VaccineHomeFragment extends Fragment implements View.OnClickListene
     SelectVaccineDto dto;
     SelectDataVaccineDto dataVaccineDto;
 
+    ArrayList<String> stringArrayList;
+
     public VaccineHomeFragment() {
         // Required empty public constructor
     }
@@ -68,9 +74,14 @@ public class VaccineHomeFragment extends Fragment implements View.OnClickListene
         ButtonAddData         = (Button)rootView.findViewById(R.id.button_add_data);
         TextViewStatusVaccine = (TextView)rootView.findViewById(R.id.textview_status_vaccine);
         cid = SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild();
-
-        reqDatavaccine(cid);
         ButtonAddData.setOnClickListener(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        reqDatavaccine(cid);
+        Vac();
     }
 
     @Override
@@ -91,14 +102,10 @@ public class VaccineHomeFragment extends Fragment implements View.OnClickListene
             public void onResponse(Call<SelectVaccineDto> call, Response<SelectVaccineDto> response) {
                 if(response.isSuccessful()){
                     dto = response.body();
-
                     try{
                         setDate();
                     }catch (Exception e){
-
                     }
-
-
                 }else {
                     Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
                 }
@@ -198,80 +205,85 @@ public class VaccineHomeFragment extends Fragment implements View.OnClickListene
 
     private void Showdata(int sum) {
 
+        int all = vacAll(sum);
+        int succ = 0;
+
         int size = dataVaccineDto.getDatavaccine().size();
-
-
-        if(sum == 0){
-            vv = 2;
-        }
-        else if(sum <= 2){
-            vv = 2;
-        }else if(sum <= 4){
-            vv = 5;
-        }else if(sum <= 6){
-            vv = 7;
-        }else if(sum <= 12){
-            vv =10;
-        }else if(sum <= 18){
-            vv = 11;
-        }else if(sum <= 24){
-            vv = 15;
+        for (int i = 0; i < size; i++) {
+            if(dataVaccineDto.getDatavaccine().get(i).getFKcv_status()==1){
+                succ++;
+            }
         }
 
-        for(int j=0;j<size;j++){
+        TextViewStatusVaccine.setText("ฉีดแล้ว "+ succ +" จาก "+all);
 
-            int sizeV = dto.getVaccine().size();
-            DecimalFormat formatter = new DecimalFormat("00");
+    }
 
-            for (int k=0;k<sizeV;k++){
+    private int vacAll(int sum) {
+        int size = dto.getVaccine().size();
+        int s = 0;
+        if (sum >= 18) {
 
-                if(formatter.format(dataVaccineDto.getDatavaccine().get(j).getV_id())
-                        .equals(dto.getVaccine().get(k).getV_id())){
-
-                    if(dto.getVaccine().get(k).getV_type().equals("วัคซีนหลัก")){
-                            if(dto.getVaccine().get(k).getId_agevac().equals("01")){
-                                ageV = 0;
-                            }
-                            else if(dto.getVaccine().get(k).getId_agevac().equals("02")||
-                                    dto.getVaccine().get(k).getId_agevac().equals("03")){
-                                ageV = 2;
-                            }else if(dto.getVaccine().get(k).getId_agevac().equals("04")){
-                                ageV = 4;
-                            }else if(dto.getVaccine().get(k).getId_agevac().equals("05")){
-                                ageV = 6;
-                            }else if(dto.getVaccine().get(k).getId_agevac().equals("06")){
-                                ageV = 12;
-                            }else if(dto.getVaccine().get(k).getId_agevac().equals("07")){
-                                ageV = 18;
-                            }else if(dto.getVaccine().get(k).getId_agevac().equals("08")){
-                                ageV = 24;
-                            }else if(dto.getVaccine().get(k).getId_agevac().equals("07")||
-                                    dto.getVaccine().get(k).getId_agevac().equals("10")||
-                                    dto.getVaccine().get(k).getId_agevac().equals("12")){
-                                ageV = 18;
-                            }else {
-                                ageV = 24;
-                            }
-
-
-                            if(sum>ageV){
-                                vv2++;
-                            }
-                    }
-
-                }
+            for (int i = 0; i < size; i++) {
+                    s++;
 
             }
 
+
+        } else {
+            int sizeType = stringArrayList.size();
+            for (int i = 0; i < sizeType; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (dto.getVaccine().get(j).getId_agevac().equals(stringArrayList.get(i))) {
+                            s++;
+
+                    }
+                }
+            }
         }
 
-        int s=0;
-        if (vv>=vv2){
-            s = vv-vv2;
+        return s;
+    }
+
+    private void Vac() {
+        stringArrayList = new ArrayList<>();
+        int sum = SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyBrithint();
+
+        if (sum == 0) {
+            stringArrayList.add("01");
+        } else if (sum < 4) {
+            stringArrayList.add("01");
+            stringArrayList.add("02");
+            stringArrayList.add("03");
+        } else if (sum < 6) {
+            stringArrayList.add("01");
+            stringArrayList.add("02");
+            stringArrayList.add("03");
+            stringArrayList.add("04");
+        } else if (sum < 12) {
+            stringArrayList.add("01");
+            stringArrayList.add("02");
+            stringArrayList.add("03");
+            stringArrayList.add("04");
+            stringArrayList.add("05");
+        } else if (sum < 18) {
+            stringArrayList.add("01");
+            stringArrayList.add("02");
+            stringArrayList.add("03");
+            stringArrayList.add("04");
+            stringArrayList.add("05");
+            stringArrayList.add("06");
+        } else if (sum < 24) {
+            stringArrayList.add("01");
+            stringArrayList.add("02");
+            stringArrayList.add("03");
+            stringArrayList.add("04");
+            stringArrayList.add("05");
+            stringArrayList.add("06");
+            stringArrayList.add("07");
+            stringArrayList.add("10");
+            stringArrayList.add("12");
         }
-
-        TextViewStatusVaccine.setText("วัคซีนที่ยังไม่ฉีดมี " +s+" ชนิด");
-
     }
 
 

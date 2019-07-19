@@ -119,7 +119,7 @@ public class SharedPrefUser {
     }
 
     public int getKeyBrithint(){
-        SharedPreferences sharedPreferences2 = mCtx.getSharedPreferences(SHARED_TOKEN, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences2 = mCtx.getSharedPreferences(SHARED_SUM, Context.MODE_PRIVATE);
         return sharedPreferences2.getInt(KEY_BRITH_INT,0);
     }
 
