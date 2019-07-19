@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -205,7 +207,14 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
 
         dateStr = dateFormat.format(calendar.getTime());
 
-        TextViewAddChildBirthday.setText(dateStr);
+        Format formatter = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+        String f= formatter.format(calendar.getTime());
+        String f2 = formatter2.format(calendar.getTime());
+        int yth = Integer.parseInt(f2)+543;
+        String datefullTh = f+" "+yth;
+
+        TextViewAddChildBirthday.setText(datefullTh);
 
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH)+1;
@@ -232,11 +241,28 @@ public class ChildGrowActivity extends AppCompatActivity implements View.OnClick
                 String dd = formatter.format(dayOfMonth);;
 
                 String fulldate = year+ "-" + mm + "-" +dd;
+                dateStr = fulldate;
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+                Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+                Date d = null;
+                try {
+                    d = sdf.parse(fulldate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendartoday = Calendar.getInstance();
+                calendartoday.setTime(d);
+                String f = form.format(d);
+                String f2 = formatter2.format(d);
+                int yth = Integer.parseInt(f2)+543;
+                String datefullTh = f+" "+yth;
 
                 Day = dayOfMonth;
                 Month = month+1;
                 Year = year;
-                TextViewAddChildBirthday.setText(fulldate);
+                TextViewAddChildBirthday.setText(datefullTh);
 
             }
         },Year,Month-1,Day);

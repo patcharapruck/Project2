@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -122,7 +123,24 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
         C_id = SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild();
         TextViewTypeDev.setText(typeStr);
         TextViewDataDev.setText(DataStr);
-        TextViewDevBirthday.setText(dateStr);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+        Date d = null;
+        try {
+            d = sdf.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendartoday = Calendar.getInstance();
+        calendartoday.setTime(d);
+        String f = form.format(d);
+        String f2 = formatter2.format(d);
+        int yth = Integer.parseInt(f2)+543;
+        String datefullTh = f+" "+yth;
+
+        TextViewDevBirthday.setText(datefullTh);
 
         if(update == 1){
             DeleteDev.setVisibility(View.VISIBLE);
@@ -177,10 +195,27 @@ public class InsertDevActivity extends AppCompatActivity implements View.OnClick
 
                 dateStr = fulldate;
 
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+                Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+                Date d = null;
+                try {
+                    d = sdf.parse(fulldate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendartoday = Calendar.getInstance();
+                calendartoday.setTime(d);
+                String f = form.format(d);
+                String f2 = formatter2.format(d);
+                int yth = Integer.parseInt(f2)+543;
+                String datefullTh = f+" "+yth;
+
                 Day = dayOfMonth;
                 Month = month+1;
                 Year = year;
-                TextViewDevBirthday.setText(fulldate);
+                TextViewDevBirthday.setText(datefullTh);
 
             }
         },Year,Month-1,Day);

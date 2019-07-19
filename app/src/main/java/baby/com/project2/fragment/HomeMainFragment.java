@@ -31,6 +31,7 @@ import baby.com.project2.dto.child.SelectChildDto;
 import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.http.HttpManager;
 import baby.com.project2.manager.singleton.child.SelectChildManager;
+import baby.com.project2.util.SharedPrefDayMonthYear;
 import baby.com.project2.util.SharedPrefUser;
 import baby.com.project2.view.KidModelClass;
 import okhttp3.MediaType;
@@ -187,7 +188,24 @@ public class HomeMainFragment extends Fragment implements View.OnClickListener {
             Sum = 24;
         }
         SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).saveChidIdDate(Sum);
-        DateAge = Sum+" เดือน "+Day+" วัน";
+
+        Year = Sum/12;
+        Month = Sum%12;
+
+        String dmy = "";
+        if(Year>0){
+            dmy = dmy + Year +" ปี ";
+        }
+        if(Month>0){
+            dmy = dmy + Month + " เดือน ";
+        }
+        if(Day>0){
+            dmy = dmy + Day + " วัน";
+        }
+
+        DateAge = dmy;
+
+        SharedPrefDayMonthYear.getInstance(Contextor.getInstance().getmContext()).saveage(Day,Month,Year,dmy);
 
     }
 

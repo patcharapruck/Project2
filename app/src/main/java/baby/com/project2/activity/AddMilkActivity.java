@@ -34,6 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ import baby.com.project2.manager.singleton.milk.InsertMilkManager;
 import baby.com.project2.sentImage.ApiClient;
 import baby.com.project2.sentImage.Img_Pojo;
 import baby.com.project2.sentImage.Img_Pojo_milk;
+import baby.com.project2.util.SharedPrefDayMonthYear;
 import baby.com.project2.util.SharedPrefUser;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -77,6 +79,7 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
     private int Year;
     private String currentDateTimeString;
     private String formatDateTimeToday;
+    private String formatDateTime;
 
     private String Volume="",NameType="";
 
@@ -135,7 +138,7 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
         ImageAlertNameAddmilk.setVisibility(View.INVISIBLE);
 
         BtnAddMilk.setOnClickListener(this);
-        EditTextAddMilkAge.setText(String.valueOf(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyBrithint()));
+        EditTextAddMilkAge.setText(SharedPrefDayMonthYear.getInstance(Contextor.getInstance().getmContext()).getKeydateformat());
 
         createTypeSearchData();
         createTypeData();
@@ -219,11 +222,28 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
                 String dd = formatter.format(dayOfMonth);;
 
                 String fulldate = year+ "-" + mm + "-" +dd;
+                formatDateTime = fulldate;
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+                Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+                Date d = null;
+                try {
+                    d = sdf.parse(fulldate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendartoday = Calendar.getInstance();
+                calendartoday.setTime(d);
+                String f = form.format(d);
+                String f2 = formatter2.format(d);
+                int yth = Integer.parseInt(f2)+543;
+                String datefullTh = f+" "+yth;
 
                 Day = dayOfMonth;
                 Month = month+1;
                 Year = year;
-                TextViewAddMilkBirthday.setText(fulldate);
+                TextViewAddMilkBirthday.setText(datefullTh);
 
             }
         },Year,Month-1,Day);
@@ -244,10 +264,17 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
-        String formatDateTime = dateFormat.format(calendar.getTime());
+        formatDateTime = dateFormat.format(calendar.getTime());
         formatDateTimeToday = dateFormat2.format(calendar.getTime());
 
-        TextViewAddMilkBirthday.setText(formatDateTime);
+        Format formatter = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+        String f= formatter.format(calendar.getTime());
+        String f2 = formatter2.format(calendar.getTime());
+        int yth = Integer.parseInt(f2)+543;
+        String datefullTh = f+" "+yth;
+
+        TextViewAddMilkBirthday.setText(datefullTh);
 
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH)+1;
@@ -263,10 +290,10 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
         DateManager.getInstance().setDateDto(dateDto);
     }
 
-    public void reqinsert(String nameType,String name,int age,int amount,String volume,String birthday,String time,String cid) {
+    public void reqinsert(String nameType,String name,String age,int amount,String volume,String birthday,String time,String cid) {
 
         final Context mcontext = AddMilkActivity.this;
-        String reqBody = "{\"M_foodname\": \""+name+"\",\"M_Milk\":\""+nameType+"\",\"M_age\" :"+age+",\"M_amount\":"+amount+","+
+        String reqBody = "{\"M_foodname\": \""+name+"\",\"M_Milk\":\""+nameType+"\",\"M_age\" :\""+age+"\",\"M_amount\":"+amount+","+
                 "\"M_unit\":\""+volume+"\",\"M_date\":\""+birthday+"\",\"M_time\":\""+time+"\",\"C_id\":\""+cid+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<InsertMilkDto> call = HttpManager.getInstance().getService().loadAPIInsertMilk(requestBody);
@@ -281,11 +308,7 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
                         DecimalFormat formatter = new DecimalFormat("00");
                         ShowAlertDialog(response.body().isSuccess());
 
-                        try {
-                            uploadImage(formatter.format(dto.getId()));
-                        }catch (Exception e){
-
-                        }
+                        uploadImage(formatter.format(dto.getId()));
 
                     }
                     else{
@@ -337,16 +360,16 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
 
     private void DataAddMilk() {
 
-        String name,brithday,volume,nametype,cid,time;
-        int age,amount;
+        String age,name,brithday,volume,nametype,cid,time;
+        int amount;
 
         cid = SharedPrefUser.getInstance(AddMilkActivity.this).getKeyChild();
         name = EditTextAddMilkNamefood.getText().toString();
-        brithday = TextViewAddMilkBirthday.getText().toString();
+        brithday = formatDateTime;
         time = TextViewClock.getText().toString();
         volume = Volume;
         nametype = NameType;
-        age = SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyBrithint();
+        age = SharedPrefDayMonthYear.getInstance(Contextor.getInstance().getmContext()).getKeydateformat();
 
         try {
             amount = Integer.valueOf(EditTextVolume.getText().toString());
@@ -457,7 +480,14 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
     public void uploadImage(String format) {
 
         ArrayList<String[]> ttt = new ArrayList<>();
-        final String image = convertToString();
+        String image ="";
+
+        try{
+            image = convertToString();
+        }catch (Exception e){
+            image = "";
+        }
+
         image.replaceAll("\\\\n", "\n");
         ttt.add(image.split("\\n"));
         String zz="";
@@ -480,7 +510,7 @@ public class AddMilkActivity extends AppCompatActivity implements RangeTimePicke
                 if(response.isSuccessful()){
                     Img_Pojo_milk dto = response.body();
                     if(response.body().isResponse()){
-                        Toast.makeText(mcontext,dto.getImage(),Toast.LENGTH_LONG).show();
+
                     }
                     else{
                         Toast.makeText(mcontext,"ลงไม่ได้บักโง่",Toast.LENGTH_LONG).show();

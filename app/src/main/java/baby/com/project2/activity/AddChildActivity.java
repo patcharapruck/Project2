@@ -32,6 +32,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -181,7 +183,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         return super.onOptionsItemSelected(item);
     }
 
-    public void reqinsert(String name, int gender, float weight, float heightt, String birthday, String blood, String uid) {
+    public void reqinsert(String name, int gender, float weight, float heightt, final String birthday, String blood, String uid) {
         final Context mcontext = Contextor.getInstance().getmContext();
         String reqBody = "{\"c_name\": \"" + name + "\",\"c_gender\":" + gender + ",\"c_weight\" :" + weight + ",\"c_height\":" + heightt + "," +
                 "\"c_birthday\":\"" + birthday + "\",\"c_blood\":\"" + blood + "\",\"u_id\":\"" + uid + "\" }";
@@ -196,8 +198,14 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
                     if (response.body().getSuccess().equals("Acount created")) {
                         InsertChildManager.getInstance().setItemsDto(dto);
                         DecimalFormat formatter = new DecimalFormat("00");
-                        uploadImage(formatter.format(dto.getId()));
-                        reqinsertgrow(formatDateTime, weigth, height, formatter.format(dto.getId()));
+
+                        try {
+                            uploadImage(formatter.format(dto.getId()));
+                        }catch (Exception e){
+
+                        }
+
+                        reqinsertgrow(birthday, weigth, height, formatter.format(dto.getId()));
 
 
                     } else {
@@ -259,11 +267,28 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
                 ;
 
                 String fulldate = year + "-" + mm + "-" + dd;
+                formatDateTime = fulldate;
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+                Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+                Date d = null;
+                try {
+                    d = sdf.parse(fulldate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendartoday = Calendar.getInstance();
+                calendartoday.setTime(d);
+                String f = form.format(d);
+                String f2 = formatter2.format(d);
+                int yth = Integer.parseInt(f2)+543;
+                String datefullTh = f+" "+yth;
 
                 Day = dayOfMonth;
                 Month = month + 1;
                 Year = year;
-                TextViewAddChildBirthday.setText(fulldate);
+                TextViewAddChildBirthday.setText(datefullTh);
 
             }
         }, Year, Month - 1, Day);
@@ -287,7 +312,14 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
         formatDateTime = dateFormat.format(calendar.getTime());
         formatDateTimeToday = dateFormat2.format(calendar.getTime());
 
-        TextViewAddChildBirthday.setText(formatDateTime);
+        Format formatter = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+        String f= formatter.format(calendar.getTime());
+        String f2 = formatter2.format(calendar.getTime());
+        int yth = Integer.parseInt(f2)+543;
+        String datefullTh = f+" "+yth;
+
+        TextViewAddChildBirthday.setText(datefullTh);
 
         Day = calendar.get(Calendar.DAY_OF_MONTH);
         Month = calendar.get(Calendar.MONTH) + 1;
@@ -320,7 +352,7 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
 
         uid = loginItemsDto.getId();
         name = EditTextAddChildName.getText().toString();
-        brithday = TextViewAddChildBirthday.getText().toString();
+        brithday = formatDateTime;
         imageaaa = null;
         blood = BloodType;
         try {
@@ -457,7 +489,13 @@ public class AddChildActivity extends AppCompatActivity implements View.OnClickL
     public void uploadImage(String format) {
 
         ArrayList<String[]> ttt = new ArrayList<>();
-        final String image = convertToString();
+        String image="";
+        try {
+            image = convertToString();
+        }catch (Exception e){
+            image = "";
+        }
+
         image.replaceAll("\\\\n", "\n");
         ttt.add(image.split("\\n"));
         String zz="";

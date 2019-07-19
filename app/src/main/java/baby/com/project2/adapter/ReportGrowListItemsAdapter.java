@@ -10,11 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.EditGrowActivity;
+import baby.com.project2.manager.Contextor;
 import baby.com.project2.manager.singleton.growup.SelectGrowManager;
+import baby.com.project2.util.SharedPrefDayMonthYear;
 import baby.com.project2.view.ReportGrowModelClass;
 
 public class ReportGrowListItemsAdapter extends RecyclerView.Adapter<ReportGrowListItemsAdapter.CustomViewReportGrowList>{
@@ -37,7 +45,26 @@ public class ReportGrowListItemsAdapter extends RecyclerView.Adapter<ReportGrowL
     public void onBindViewHolder(@NonNull CustomViewReportGrowList customViewReportGrowList, final int i) {
         customViewReportGrowList.TextViewHeightGrow.setText(String.valueOf(items.get(i).getG_height()));
         customViewReportGrowList.TextViewWeigthGrow.setText(String.valueOf(items.get(i).getG_weigth()));
-        customViewReportGrowList.TextViewDateReportGrow.setText(items.get(i).getG_date());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+        Date d = null;
+        try {
+            d = sdf.parse(items.get(i).getG_date());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendartoday = Calendar.getInstance();
+        calendartoday.setTime(d);
+        String f = form.format(d);
+        String f2 = formatter2.format(d);
+        int yth = Integer.parseInt(f2)+543;
+        String datefullTh = f+" "+yth;
+
+        customViewReportGrowList.TextViewDateReportGrow.setText(datefullTh);
+        customViewReportGrowList.textview_age_grow.setText(SharedPrefDayMonthYear.getInstance(Contextor.getInstance().getmContext()).getKeydateformat());
+
         customViewReportGrowList.CardViewListGrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +84,7 @@ public class ReportGrowListItemsAdapter extends RecyclerView.Adapter<ReportGrowL
 
     public class CustomViewReportGrowList extends RecyclerView.ViewHolder {
 
-        TextView TextViewDateReportGrow,TextViewHeightGrow,TextViewWeigthGrow;
+        TextView TextViewDateReportGrow,TextViewHeightGrow,TextViewWeigthGrow,textview_age_grow;
         CardView CardViewListGrow;
 
         public CustomViewReportGrowList(@NonNull View itemView) {
@@ -67,6 +94,7 @@ public class ReportGrowListItemsAdapter extends RecyclerView.Adapter<ReportGrowL
             TextViewWeigthGrow = (TextView) itemView.findViewById(R.id.textview_weigth_report_grow);
             TextViewDateReportGrow = (TextView) itemView.findViewById(R.id.textview_date_report_grow);
             CardViewListGrow = (CardView) itemView.findViewById(R.id.cardview_list_grow);
+            textview_age_grow = (TextView) itemView.findViewById(R.id.textview_age_grow);
 
         }
     }

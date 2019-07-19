@@ -5,7 +5,7 @@ public class SelectMilkItemsDto {
     private int M_id;
     private String M_foodname;
     private String M_Milk;
-    private int M_age;
+    private String M_age;
     private int M_amount;
     private String M_unit;
     private String M_date;
@@ -37,11 +37,11 @@ public class SelectMilkItemsDto {
         M_Milk = m_Milk;
     }
 
-    public int getM_age() {
+    public String getM_age() {
         return M_age;
     }
 
-    public void setM_age(int m_age) {
+    public void setM_age(String m_age) {
         M_age = m_age;
     }
 

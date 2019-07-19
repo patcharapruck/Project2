@@ -35,6 +35,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,8 +82,8 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
 
     private String Volume="",NameType="";
 
-    private String Mid,mnamefood,mtypefood,volume,time,image;
-    private int mid,amount,age;
+    private String Mid,mnamefood,mtypefood,volume,time,image,age;
+    private int mid,amount;
 
     Bitmap bitmap,resize;
     private  static final int IMAGE = 100;
@@ -99,7 +100,7 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         formatDate = id.getStringExtra("date");
         volume = id.getStringExtra("volum");
         time = id.getStringExtra("time");
-        age = id.getIntExtra("age",0);
+        age = id.getStringExtra("age");
         amount = id.getIntExtra("amount",0);
         image = id.getStringExtra("image");
 
@@ -160,9 +161,25 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
     private void setDataupdate() {
         DecimalFormat formatter = new DecimalFormat("00");
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+        Date d = null;
+        try {
+            d = sdf.parse(formatDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendartoday = Calendar.getInstance();
+        calendartoday.setTime(d);
+        String f = form.format(d);
+        String f2 = formatter2.format(d);
+        int yth = Integer.parseInt(f2)+543;
+        String datefullTh = f+" "+yth;
+
         EditTextEditMilkNamefood.setText(mnamefood);
-        TextViewEditMilkBirthday.setText(formatDate);
-        EditTextEditMilkAge.setText(String.valueOf(age));
+        TextViewEditMilkBirthday.setText(datefullTh);
+        EditTextEditMilkAge.setText(age);
         EditTextVolume.setText(String.valueOf(amount));
         TextViewClock.setText(time);
 
@@ -256,11 +273,27 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
                 String dd = formatter.format(dayOfMonth);;
 
                 String fulldate = year+ "-" + mm + "-" +dd;
+                formatDate = fulldate;
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+                Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+                Date d = null;
+                try {
+                    d = sdf.parse(fulldate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendartoday = Calendar.getInstance();
+                calendartoday.setTime(d);
+                String f = form.format(d);
+                String f2 = formatter2.format(d);
+                int yth = Integer.parseInt(f2)+543;
+                String datefullTh = f+" "+yth;
 
                 Day = dayOfMonth;
                 Month = month+1;
                 Year = year;
-                TextViewEditMilkBirthday.setText(fulldate);
+                TextViewEditMilkBirthday.setText(datefullTh);
 
             }
         },Year,Month-1,Day);
@@ -291,10 +324,10 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
         Year = calendar.get(Calendar.YEAR);
     }
 
-    public void requpdate(String mid,String nameType,String name,int age,int amount,String volume,String birthday,String time,String image) {
+    public void requpdate(String mid,String nameType,String name,String age,int amount,String volume,String birthday,String time,String image) {
 
         final Context mcontext = EditMilkActivity.this;
-        String reqBody = "{\"M_id\":\""+mid+"\",\"M_foodname\": \""+name+"\",\"M_Milk\":\""+nameType+"\",\"M_age\" :"+age+",\"M_amount\":"+amount+","+
+        String reqBody = "{\"M_id\":\""+mid+"\",\"M_foodname\": \""+name+"\",\"M_Milk\":\""+nameType+"\",\"M_age\" :\""+age+"\",\"M_amount\":"+amount+","+
                 "\"M_unit\":\""+volume+"\",\"M_date\":\""+birthday+"\",\"M_time\":\""+time+"\",\"M_image\":\""+image+"\"}";
         final RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),reqBody);
         Call<UpdateMilkDto> call = HttpManager.getInstance().getService().loadAPIupdateMilk(requestBody);
@@ -360,18 +393,16 @@ public class EditMilkActivity extends AppCompatActivity implements View.OnClickL
 
 
         mnamefood = EditTextEditMilkNamefood.getText().toString();
-        formatDate = TextViewEditMilkBirthday.getText().toString();
         time = TextViewClock.getText().toString();
         volume = Volume;
         mtypefood = NameType;
-        age = Integer.valueOf(EditTextEditMilkAge.getText().toString());
+        age = EditTextEditMilkAge.getText().toString();
 
         try {
             amount = Integer.valueOf(EditTextVolume.getText().toString());
         }catch (Exception e){
             amount = 0;
         }
-
 
         if(mnamefood.length()<1){
             ImageAlertNameEditmilk.setVisibility(View.VISIBLE);

@@ -14,7 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import baby.com.project2.R;
 import baby.com.project2.activity.EditMilkActivity;
@@ -40,13 +46,31 @@ public class ReportMilkListItemsAdapter extends RecyclerView.Adapter<ReportMilkL
     @Override
     public void onBindViewHolder(@NonNull CustomViewReportMilkList customViewReportMilkList, final int i) {
 
-        customViewReportMilkList.TextViewReportDateMilk.setText(items.get(i).getM_date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+        Date d = null;
+        try {
+            d = sdf.parse(items.get(i).getM_date());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendartoday = Calendar.getInstance();
+        calendartoday.setTime(d);
+        String f = form.format(d);
+        String f2 = formatter2.format(d);
+        int yth = Integer.parseInt(f2)+543;
+        String datefullTh = f+" "+yth;
+
+
+        customViewReportMilkList.TextViewReportDateMilk.setText(datefullTh);
         customViewReportMilkList.TextViewReportTimeMilk.setText(items.get(i).getM_time());
-        customViewReportMilkList.TextViewReportAgeMilk.setText(String.valueOf(items.get(i).getM_age()));
+        customViewReportMilkList.TextViewReportAgeMilk.setText(items.get(i).getM_age());
         customViewReportMilkList.TextViewReportTypeMilk.setText(items.get(i).getM_foodtype());
         customViewReportMilkList.TextViewReportNameMilk.setText(items.get(i).getM_namefood());
         customViewReportMilkList.TextViewReportAmountMilk.setText(String.valueOf(items.get(i).getM_amount()));
         customViewReportMilkList.TextViewReportVolumeMilk.setText(items.get(i).getM_volume());
+
 
         if(items.get(i).getM_image().length()<1||items.get(i).getM_image()==null){
                 customViewReportMilkList.ImageViewFood.setImageResource(R.mipmap.ic_baby_milk);

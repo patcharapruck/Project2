@@ -13,8 +13,8 @@
     <dimen name="Textheight_login">60dp</dimen>
 
 
-    <dimen name="textsize_grown_head">15sp</dimen>
-    <dimen name="textsize_grown">12sp</dimen>
+    <dimen name="textsize_grown_head">17sp</dimen>
+    <dimen name="textsize_grown">15sp</dimen>
 
 
     <dimen name="width_card_kids_items">100dp</dimen>
@@ -22,11 +22,11 @@
     <dimen name="text_nickname">14sp</dimen>
     <dimen name="text_brithday_kids_items">12sp</dimen>
 
-    <dimen name="textsize_develor_head">15sp</dimen>
-    <dimen name="textsize_develor">12sp</dimen>
+    <dimen name="textsize_develor_head">17sp</dimen>
+    <dimen name="textsize_develor">15sp</dimen>
 
-    <dimen name="textsize_vaccine_head">15sp</dimen>
-    <dimen name="textsize_vaccine">12sp</dimen>
+    <dimen name="textsize_vaccine_head">17sp</dimen>
+    <dimen name="textsize_vaccine">15sp</dimen>
 
 
     <dimen name="imagebtn_add_child_width">150dp</dimen>

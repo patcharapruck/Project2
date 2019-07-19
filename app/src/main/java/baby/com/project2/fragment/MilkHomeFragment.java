@@ -133,7 +133,8 @@ public class MilkHomeFragment extends Fragment implements View.OnClickListener {
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Format formatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("th", "TH"));
+        Format formatter = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
         Date d = null;
         try {
             d = sdf.parse(dto.getMilk().get(index).getM_date());
@@ -143,8 +144,11 @@ public class MilkHomeFragment extends Fragment implements View.OnClickListener {
         Calendar calendartoday = Calendar.getInstance();
         calendartoday.setTime(d);
         String formatDateTime = formatter.format(d);
+        String formatDateTime2 = formatter2.format(d);
 
-        TextviewDateUpdate.setText(formatDateTime);
+        int yth = Integer.parseInt(formatDateTime2)+543;
+
+        TextviewDateUpdate.setText(formatDateTime+" "+yth);
         TextviewTimeUpdate.setText(dto.getMilk().get(index).getM_time());
         TextviewReportNameMilk.setText(dto.getMilk().get(index).getM_foodname());
         TextviewReportTypeMilk.setText(dto.getMilk().get(index).getM_Milk());

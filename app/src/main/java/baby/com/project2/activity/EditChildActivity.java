@@ -34,6 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -159,7 +160,23 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
                 break;
         }
 
-        TextViewEditChildBirthday.setText(formatDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+        Date d = null;
+        try {
+            d = sdf.parse(formatDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendartoday = Calendar.getInstance();
+        calendartoday.setTime(d);
+        String f = form.format(d);
+        String f2 = formatter2.format(d);
+        int yth = Integer.parseInt(f2)+543;
+        String datefullTh = f+" "+yth;
+
+        TextViewEditChildBirthday.setText(datefullTh);
         try {
             EditTextEditChildWeight.setText(childItemsDto.getC_weight()+"");
         }catch (Exception e){
@@ -234,11 +251,28 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
                 String dd = formatter.format(dayOfMonth);;
 
                 String fulldate = year+ "-" + mm + "-" +dd;
+                formatDate = fulldate;
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                Format form = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+                Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
+                Date d = null;
+                try {
+                    d = sdf.parse(fulldate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar calendartoday = Calendar.getInstance();
+                calendartoday.setTime(d);
+                String f = form.format(d);
+                String f2 = formatter2.format(d);
+                int yth = Integer.parseInt(f2)+543;
+                String datefullTh = f+" "+yth;
 
                 Day = dayOfMonth;
                 Month = month+1;
                 Year = year;
-                TextViewEditChildBirthday.setText(fulldate);
+                TextViewEditChildBirthday.setText(datefullTh);
 
             }
         },Year,Month-1,Day);
@@ -292,7 +326,7 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
         id = formatter.format(Integer.valueOf(cid));
       //  uid = formatter.format(Integer.valueOf(loginItemsDto.getId()));
         name = EditTextEditChildName.getText().toString();
-        brithday = TextViewEditChildBirthday.getText().toString();
+        brithday = formatDate;
         blood = BloodType;
         try {
             height = Float.valueOf(EditTextEditChildHeight.getText().toString());
@@ -405,7 +439,12 @@ public class EditChildActivity extends AppCompatActivity implements View.OnClick
                 if(response.isSuccessful()){
                     UpdateChildDto dto = response.body();
                     if(response.body().isSuccess()){
-                        UpdateChildManager.getInstance().setItemsDto(dto);
+                        try {
+                            UpdateChildManager.getInstance().setItemsDto(dto);
+                        }catch (Exception e){
+
+                        }
+
                         ShowAlertDialog(response.body().isSuccess());
                     }
                     else{

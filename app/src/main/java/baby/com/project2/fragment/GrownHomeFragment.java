@@ -132,7 +132,8 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        Format formatter = new SimpleDateFormat("dd MMMM yyyy", new Locale("th", "TH"));
+        Format formatter = new SimpleDateFormat("dd MMMM", new Locale("th", "TH"));
+        Format formatter2 = new SimpleDateFormat("yyyy", new Locale("th", "TH"));
         Date d = null;
         try {
             d = sdf.parse(dto.getGrowup().get(index).getG_date());
@@ -142,8 +143,11 @@ public class GrownHomeFragment extends Fragment implements View.OnClickListener 
         Calendar calendartoday = Calendar.getInstance();
         calendartoday.setTime(d);
         String formatDateTime = formatter.format(d);
+        String formatDateTime2 = formatter2.format(d);
 
-        TextViewDateUpdate.setText(formatDateTime);
+        int yth = Integer.parseInt(formatDateTime2)+543;
+
+        TextViewDateUpdate.setText(formatDateTime +" "+yth);
         TextViewWidth.setText(String.valueOf(dto.getGrowup().get(index).getG_weight()));
         TextViewHeight.setText(String.valueOf(dto.getGrowup().get(index).getG_height()));
     }
