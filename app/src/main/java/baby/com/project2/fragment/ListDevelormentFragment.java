@@ -72,6 +72,11 @@ public class ListDevelormentFragment extends Fragment {
 
         SpinsDev = (Spinner)rootView.findViewById(R.id.spins_dev);
         recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerview_dev);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         reqDataDevelorment(SharedPrefUser.getInstance(Contextor.getInstance().getmContext()).getKeyChild());
     }
 
@@ -115,7 +120,8 @@ public class ListDevelormentFragment extends Fragment {
                 if(response.isSuccessful()){
                     dtoage = response.body();
                     AgeDevManager.getInstance().setItemsDto(dtoage);
-                    createTypeSearchData();
+                    //createTypeSearchData();
+                    reqDav("");
 
                 }else {
                     Toast.makeText(mcontext,"เกิดข้อผิดพลาด",Toast.LENGTH_LONG).show();
