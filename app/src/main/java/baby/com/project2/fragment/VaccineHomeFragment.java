@@ -229,7 +229,6 @@ public class VaccineHomeFragment extends Fragment implements View.OnClickListene
 
             }
 
-
         } else {
             int sizeType = stringArrayList.size();
             for (int i = 0; i < sizeType; i++) {
